@@ -38,6 +38,7 @@ gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass'
 # User
 gem 'devise'
 gem 'omniauth-twitter'
+gem 'omniauth-facebook'
 gem 'bcrypt'
 
 # API
