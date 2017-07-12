@@ -53,6 +53,7 @@ group :development, :test do
   gem 'scss_lint', require: false
   gem 'faker'
   gem 'gimei'
+  gem 'dotenv-rails'
 end
 
 group :development do
