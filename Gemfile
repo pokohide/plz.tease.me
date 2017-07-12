@@ -23,9 +23,12 @@ gem 'sitemap_generator'
 
 # Data
 gem 'counter_culture', '~> 1.0'
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-objects'
+gem 'sidekiq'
+gem 'natto'
 # gem 'dalli'
-# gem 'redis', '~> 3.0'
-# gem 'sidekiq'
 
 # Frontend
 gem 'gon'

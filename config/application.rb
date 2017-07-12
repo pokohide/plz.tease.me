@@ -19,8 +19,6 @@ module TeaseMe
     config.i18n.default_locale = :ja
 
     config.active_job.queue_adapter = :sidekiq
-
-    # autoload libs
-    config.autoload_paths += Dir[Rails.root.join("lib/autoload")]
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end

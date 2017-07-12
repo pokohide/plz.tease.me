@@ -33,7 +33,7 @@
 #
 
 class User < ApplicationRecord
-  mount_uploader :thumbnail, ImageUploader
+  mount_uploader :thumbnail, ThumbnailUploader
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,

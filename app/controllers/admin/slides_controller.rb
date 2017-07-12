@@ -12,9 +12,10 @@ class Admin::SlidesController < ApplicationController
   end
 
   def create
-    slide = current_user.slides.create!(create_slide_params)
-    Ppt2pdfJob.perform_later(slide)
-    redirect_to edit_admin_slide_path(slide)
+    binding.pry
+    #slide = current_user.slides.create!(create_slide_params)
+    #Ppt2pdfJob.perform_later(slide)
+    #redirect_to edit_admin_slide_path(slide)
   end
 
   def edit
@@ -24,7 +25,7 @@ class Admin::SlidesController < ApplicationController
   def update
     # @slide = current_user.slides.lock.find(params[:id])
     @slide = current_user.slides.find(params[:id])
-    if (original_filename = params[:slide][:original_filen])
+    if (original_filename = params[:slide][:original_file])
       @slide.reupload(original_file)
       redirect_to edit_admin_slide_path(@slide)
     else
@@ -53,7 +54,7 @@ class Admin::SlidesController < ApplicationController
     title.encode!('UTF-8', 'UTF-8-MAC')
     params[:slide][:title] = title
     params[:slide][:published_at] = Time.current
-    params.require(:slide).permit(:title, :original_filen, :published_at)
+    params.require(:slide).permit(:title, :original_file, :published_at)
   end
 
   def update_slide_params

@@ -23,6 +23,10 @@ class Slide < ApplicationRecord
 
   # before_validation :generate_slug
 
+  mount_uploader :original_file, PdfUploader
+  mount_uploader :pdf_file, PdfUploader
+  mount_uploader :image_file, ImageUploader
+
   belongs_to :user
   # has_one :presentation_outline, dependent: :destroy
 
@@ -33,6 +37,17 @@ class Slide < ApplicationRecord
   validates :title,        presence: true
   validates :slug,         presence: true, format: { with: VALID_SLUG_REGEX, message: "英数と-_ のみで入力してください" }
   validates :published_at, presence: true
+
+  # has_attached_file :pdf_file,
+  #   storage: :s3,
+  #   default_style: :original,
+  #   s3_permissions: :public,
+  #   s3_credentials: "#{Rails.root}/config/s3.yml",
+  #   bucket: ENV.fetch('AWS_BUCKET_NAME'),
+  #   path: ":class/:attachment/:id/:style/:filename",
+  #   s3_protocol: 'https'
+
+  #validates_attachment_content_type :download, content_type: [/application\/(x\-)?pdf/i]
 
   private
   def generate_slug
