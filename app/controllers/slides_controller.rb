@@ -1,39 +1,35 @@
 class SlidesController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_user!, if: :format_is_not_atom
 
   def index
+    @slides = Slide.preload(:user).
+                is_public.
+                published_at_desc.
+                paginate(page: params[:page])
+    respond_to do |format|
+      format.html
+      format.atom
+    end
   end
 
   def show
+    @user = User.find_by(username: params[:username])
+    @slide = @user.slides.is_public.find_by(slug: params[:slug])
+    # @slide.access_count.increment
+    render layout: nil
   end
 
-  def new
-  end
-
-  def create
-  end
-
-  def edit
-    @slide = current_user.slides.find(params[:id])
-  end
-
-  def update
-  end
-
-  def destroy
+  def search
+    search_param = { query: { bool: { must: [
+      { multi_match: { minimum_should_match: "100%", query: params[:q], fields: %w(tags title outline) } },
+    ] } } }
+    @slides = Slide.search(search_param).page(params[:page]).records
+    render "index"
   end
 
   private
 
-  def create_slide_params
-    title = File.basename(params[:slide][:original_file].original_filename, '.*')
-    title.encode!('UTF-8', 'UTF-8-MAC')
-    params[:slide][:title] = title
-    params[:slide][:published_at] = Time.current
-    params.require(:slide).permit(:title, :original_filen, :published_at)
-  end
-
-  def update_slide_params
-    params.require(:slide).permit(:title, :is_public, :published_at, :slug, :tag_list)
+  def format_is_not_atom
+    params[:format] != 'atom'
   end
 end
