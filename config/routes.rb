@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
-  devise_for :users
   root to: 'root#index'
+  devise_for :users, path_names: { sign_out: 'login', sign_out: 'logout' }
 end
