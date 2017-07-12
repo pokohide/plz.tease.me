@@ -1,13 +1,35 @@
-.show-sm
-  #nav-toggle-box
-    #nav-toggle-brand
-      a(href='#') Imperavi
+.ui.tiered.huge.nav.menu
+  .ui.container.grid
+    .computer.only.row
+      = link_to 'Tease.me', root_path, class: 'item header'
 
-.hide-sm#top
-  #top-brand
-    a(href='#') Imperavi
-  nav#top-nav-main
+      = link_to 'Theme', '#', class: 'item'
+      = link_to 'Main', '#', class: 'item'
+      = link_to 'Home', '#', class: 'item'
 
+      .right.menu
+        - if user_signed_in?
+          .item
+            | ログインなう
+        - else
+          .item
+            | ログイン
+
+    .tablet.mobile.only.row
+      = link_to 'Tease.me', root_path, class: 'item header'
+      .right.menu
+        .ui.basic.icon.toggle.button
+          i.content.icon
+        - if user_signed_in?
+          .item
+            | ログインなう
+        - else
+          .item
+            | ログイン
+      .ui.vertical.accordion.borderless.fluid.menu
+        = link_to 'Theme', '#', class: 'item'
+        = link_to 'Main', '#', class: 'item'
+        = link_to 'Home', '#', class: 'item'
 
 
 /   .ui.container
