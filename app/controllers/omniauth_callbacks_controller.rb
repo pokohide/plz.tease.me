@@ -1,23 +1,27 @@
-class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  def all
-    # profiderとuidでuserレコードを検索。存在しなければ、新たに作成する
-    user = User.from_omniauth(request.env["omniauth.auth"])
-    # userレコードが既に保存されているか
-    if user.persisted?
-      # ログインに成功
-      flash.notice = "ログインしました!!"
-      sign_in_and_redirect user
-    else
-      # ログインに失敗し、サインイン画面に遷移
-      session["devise.user_attributes"] = user.attributes
+class OmniauthCallbacksController < ApplicationController
+  def facebook
+    callback_from :facebook
+  end
+
+  def twitter
+    callback_from :twitter
+  end
+
+  private
+
+  def callback_from(provider)
+    provider = provider.to_s
+    @user = User.find_for_oauth(request.env['omniauth.auth']) # providerとuidでuserレコードを検索。存在しなければ、新たに作成する
+    if @user.persisted? # ログイン成功
+      flash[:notice] = "#{provider}でログインしました。" # cookies.permanent[:xxx_logined] = { value: @user.created_at }
+      sign_in_and_redirect @user, event: :authentication
+    else # ログインに失敗して、西院画面に遷移
+      if provider == 'twitter'
+        session['devise.twitter_data'] = request.env['omniauth.auth'].except('extra')
+      else
+        session['devise.facebook_data'] = request.env['omniauth.auth'].except('extra')
+      end
       redirect_to new_user_registration_url
     end
   end
-
-  # alias_methodはクラスやモジュールのメソッドに別名をつけます
-  # 実態がallメソッドのtwitterメソッドを定義しています
-  # こうすることで、様々なメソッド名で同じ処理を実装することができます。
-  # OAuthの処理はほとんど同じためこのようにしています。
-  # 例えば、Facebookに対応する場合、alias_method :facebook, :allだけですみます
-  alias_method :twitter, :all
 end

@@ -22,6 +22,7 @@
 #  provider               :string
 #  uid                    :string
 #  username               :string
+#  thumbnail              :string
 #
 # Indexes
 #
@@ -38,28 +39,33 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :omniauthable, omniauth_providers: [:twitter]
 
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :username, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
 
-  def self.from_omniauth(auth)
-    # providerとuidでUserレコードを取得する
-    # 存在しない場合は、ブロック内のコードを実行して作成する
-    where(auth.slice(:provider, :uid)).first_or_create do |user|
-      # auth.provider には "twitter"、
-      # auth.uidには twitterアカウントに基づいた個別のIDが入っている
-      # first_or_createメソッドが自動でproviderとuidを設定してくれるので、
-      # ここでは設定は必要ない
-      user.username = auth.info.nickname # twitterで利用している名前が入る
-      user.email = auth.info.email # twitterの場合入らない
+  def self.find_for_oauth(auth)
+    # providerとuidでUserレコードを取得する。存在しない場合は、ブロック内のコードを実行して作成
+    # user = User.where(provider: auth.provider, uid: auth.uid).first
+    user = User.find_by(provider: auth.provider, uid: auth.uid)
+    unless user
+      user = User.new(
+        uid: auth.uid,
+        provider: auth.provider,
+        username: auth.info.name,
+        email: User.get_email(auth),
+        password: Devise.friendly_token[4, 30],
+        thumbnail: auth.info.image
+      )
+      user.skip_confirmation!
+      user.save!
     end
+    user
   end
 
-  # Devise の RegistrationsController はリソースを生成する前に self.new_sith_session を呼ぶ
-  # つまり、self.new_with_sessionを実装することで、サインアップ前のuserオブジェクトを初期化する
-  # ときに session からデータをコピーすることができます。
-  # OmniauthCallbacksControllerでsessionに値を設定したので、それをuserオブジェクトにコピーします。
+  # Devise の RegistrationsController はリソースを生成する前にself.new_with_controllerを呼ぶ
   def self.new_with_session(params, session)
-    if session["devise.user_attributes"]
-      new(session["devise.user_attributes"], without_protection: true) do |user|
+    if session['devise.user_attributes']
+      new(session['devise.user_attributes'], without_protection: true) do |user|
         user.attributes = params
         user.valid?
       end
@@ -68,9 +74,19 @@ class User < ApplicationRecord
     end
   end
 
-  # providerがある場合（Twitter経由で認証した）は、
-  # passwordは要求しないようにする。
+  # providerがある場合はパスワードを要求しないようにする
   def password_required?
     super && provider.blank?
+  end
+
+  # プロフィールを変更する時に呼ばれる
+  def update_with_password(params, *options)
+    update_attributes(params, *options)
+  end
+
+  def self.get_email(auth)
+    email = auth.info.email
+    email = "#{auth.provider}-#{auth.uid}@example.com" if email.blank?
+    email
   end
 end

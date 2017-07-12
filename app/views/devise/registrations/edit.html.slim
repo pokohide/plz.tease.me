@@ -25,10 +25,11 @@ h2 = "#{resource_name.to_s.humanize}を編集"
     = f.label :password_confirmation
     = f.password_field :password_confirmation, autocomplete: 'off'
 
-  .field
-    = f.label :current_password
-    i (we need your current password to confirm your changes)
-    = f.password_field :current_password, autocomplete: 'off'
+  - if f.object.encrypted_password.present?
+    .field
+      = f.label :current_password
+      i (we need your current password to confirm your changes)
+      = f.password_field :current_password, autocomplete: 'off'
 
   .actions
     = f.submit '更新'

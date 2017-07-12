@@ -5,6 +5,11 @@ body class="#{controller_name} #{action_name}"
   header
     == render 'templates/header'
   main
+    - if notice.present? || alert.present?
+      .ui.negative.message
+        i.close.icon
+        p = notice
+        p = alert
     section.main
       == yield
   footer

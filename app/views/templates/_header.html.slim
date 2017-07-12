@@ -6,6 +6,7 @@
       = link_to 'Theme', '#', class: 'item'
       = link_to 'Main', '#', class: 'item'
       = link_to 'Home', '#', class: 'item'
+      .item = user_signed_in?
 
       .right.menu
         - if user_signed_in?

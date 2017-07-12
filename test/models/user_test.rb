@@ -22,6 +22,7 @@
 #  provider               :string
 #  uid                    :string
 #  username               :string
+#  thumbnail              :string
 #
 # Indexes
 #

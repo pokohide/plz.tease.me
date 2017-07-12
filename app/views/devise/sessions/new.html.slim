@@ -1,3 +1,17 @@
+/ - content_for :header do
+/   = render 'templates/breadcrumb', breadcrumb: { \
+/     "ユーザ一覧": users_path,
+/     "ログイン": new_user_session_path }
+
+/ - content_for :sidebar do
+/   = render "templates/sidebar/tagcloud", tags: @tags
+/   = render "templates/sidebar/search"
+/   = render "templates/sidebar/ranking", evideos: @ranking, daily_evideos: @daily_ranking, monthly_evideos: @monthly_ranking
+
+/ - content_for :page_title, "ログインページ"
+/ - set_meta_tags description: "ユーザのログインページです。[ついまな]はyoutubeの動画を楽しむついでに字幕で英語を学ぶサービスです。"
+
+
 .ui.middle.aligned.center.aligned.grid
   .form-container
     h2.ui.teal.header
@@ -5,7 +19,10 @@
 
     .ui.two.column.middle.aligned.very.relaxed.stackable.grid.segment
       .column
-        = form_for(resource, as: resource_name, url: session_path(resource), class: 'ui large form') do |f|
+        = form_for(resource, as: resource_name, url: session_path(resource_name), class: 'ui large form') do |f|
+
+          .ui.message
+            = devise_error_messages!
           .field
             label = f.label :email, 'メールアドレス'
             .ui.left.icon.fluid.input
@@ -25,9 +42,12 @@
       .ui.vertical.divider(style='left:50%') Or
 
       .center.aligned.column
-         = link_to new_user_registration_path, class: 'ui big green labaled icon button' do
-            i.signup.icon
-            | Sign Up
+        = link_to omniauth_authorize_path(resource_name, :twitter), class: 'ui twitter omniauth button' do
+          i.twitter.icon
+          | Twitterでログイン
+        = link_to omniauth_authorize_path(resource_name, :twitter), class: 'ui facebook omniauth button' do
+          i.facebook.icon
+          | Facebookでログイン
     .ui.message
       p
         = link_to new_user_registration_path, style: 'color:#333' do
