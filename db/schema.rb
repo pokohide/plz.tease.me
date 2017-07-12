@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170712035543) do
+ActiveRecord::Schema.define(version: 20170712120446) do
+
+  create_table "slides", force: :cascade do |t|
+    t.integer  "user_id",                       null: false
+    t.string   "title"
+    t.string   "slug"
+    t.boolean  "is_public",     default: false, null: false
+    t.string   "original_file"
+    t.string   "pdf_file"
+    t.string   "image_file"
+    t.datetime "published_at"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["user_id"], name: "index_slides_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
