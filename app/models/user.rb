@@ -56,7 +56,7 @@ class User < ApplicationRecord
         provider: auth.provider,
         username: auth.info.name,
         email: User.get_email(auth),
-        password: Devise.friendly_token[4, 30],
+        # password: Devise.friendly_token[4, 30],
         thumbnail: auth.info.image
       )
       user.skip_confirmation!

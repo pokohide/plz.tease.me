@@ -1,0 +1,13 @@
+.upload-container
+  .ui.two.steps
+    .step
+      i.movie.icon
+      .content
+        .title スライド
+    .step
+      i.info.icon
+      .content
+        .title 詳細
+  = form_tag(admin_slides_path, class: 'dropzone', id: 'upload-dropzone') do
+    .fallback
+      = file_field_tag('slide[original_file]')

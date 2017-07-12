@@ -12,7 +12,8 @@ gem 'puma', '~> 3.0'
 
 # Image
 gem 'aws-sdk', '< 2.0'
-gem 'paperclip', '~>4'
+gem 'carrierwave'
+# gem 'mini_magick'
 
 # SEO
 gem 'meta-tags'
@@ -20,7 +21,9 @@ gem 'sitemap_generator'
 
 # Data
 gem 'counter_culture', '~> 1.0'
+# gem 'dalli'
 # gem 'redis', '~> 3.0'
+# gem 'sidekiq'
 
 # Frontend
 gem 'gon'
@@ -28,6 +31,7 @@ gem 'kaminari'
 gem 'slim-rails'
 gem 'sprockets-commoner'
 gem 'jquery-rails'
+gem 'dropzonejs-rails'
 # gem 'jquery-ui-rails'
 # gem 'acts-as-taggable-on', '~> 4.0'
 gem 'uglifier', '>= 1.3.0'

@@ -69,10 +69,11 @@ GEM
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.10.0)
     byebug (9.0.6)
+    carrierwave (1.1.0)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     choice (0.2.0)
-    climate_control (0.2.0)
-    cocaine (0.5.8)
-      climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
     counter_culture (1.7.0)
@@ -90,6 +91,8 @@ GEM
     dotenv-rails (2.2.1)
       dotenv (= 2.2.1)
       railties (>= 3.2, < 5.2)
+    dropzonejs-rails (0.8.1)
+      rails (> 3.1)
     erubis (2.7.0)
     execjs (2.7.0)
     faker (1.8.2)
@@ -145,7 +148,6 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
-    mimemagic (0.3.0)
     mini_portile2 (2.2.0)
     minitest (5.10.2)
     multi_json (1.12.1)
@@ -176,12 +178,6 @@ GEM
       omniauth-oauth (~> 1.1)
       rack
     orm_adapter (0.5.0)
-    paperclip (4.3.7)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      cocaine (~> 0.5.5)
-      mime-types
-      mimemagic (= 0.3.0)
     parallel (1.11.2)
     parser (2.4.0.0)
       ast (~> 2.2)
@@ -323,9 +319,11 @@ DEPENDENCIES
   bcrypt
   bullet
   byebug
+  carrierwave
   counter_culture (~> 1.0)
   devise
   dotenv-rails
+  dropzonejs-rails
   faker
   gimei
   gon
@@ -337,7 +335,6 @@ DEPENDENCIES
   meta-tags
   omniauth-facebook
   omniauth-twitter
-  paperclip (~> 4)
   pg
   pry-byebug
   pry-doc
