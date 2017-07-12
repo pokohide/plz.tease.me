@@ -9,11 +9,13 @@
 
       .right.menu
         - if user_signed_in?
-          .item
-            | ログインなう
+          .item = current_user.username
+          = link_to 'プロフィール変更', edit_user_registration_path, method: :delete, class: 'item'
+          = link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'item'
+
         - else
-          .item
-            | ログイン
+          = link_to 'サインイン', new_user_registration_path, class: 'item'
+          = link_to 'ログイン', new_user_session_path, class: 'item'
 
     .tablet.mobile.only.row
       = link_to 'Tease.me', root_path, class: 'item header'
