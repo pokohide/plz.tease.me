@@ -35,7 +35,7 @@ gem 'sass-rails', '~> 5.0'
 # gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass'
 
 # User
-gem 'device'
+gem 'devise'
 gem 'omniauth-twitter'
 gem 'bcrypt'
 
