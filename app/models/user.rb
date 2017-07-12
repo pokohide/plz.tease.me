@@ -33,8 +33,8 @@
 #
 
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  mount_uploader :thumbnail, ImageUploader
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :omniauthable, omniauth_providers: [:twitter, :facebook]
@@ -84,6 +84,14 @@ class User < ApplicationRecord
 
   # プロフィールを変更する時に呼ばれる
   def update_with_password(params, *options)
+    params.delete(:current_password)
+
+    if params[:password].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation) if params[:password_confirmation].blank?
+    end
+
+    clean_up_passwords
     update_attributes(params, *options)
   end
 

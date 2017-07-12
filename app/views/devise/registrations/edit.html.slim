@@ -4,7 +4,13 @@
       .content = "プロフィールを編集"
 
     .ui.very.relaxed.stackable.segment
-      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'ui large form' }) do |f|
+      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'ui large form', multipart: true }) do |f|
+        .field
+          - if current_user.thumbnail.present?
+            = image_tag current_user.thumbnail, class: 'ui centered small image', style: 'margin-bottom: 2em'
+          .ui.fluid.input
+            = f.file_field :thumbnail, class: 'input', accept: 'image/jpg,image/jpeg,image/png,image/gif'
+
         .field
           label = f.label :username
           .ui.left.icon.fluid.input

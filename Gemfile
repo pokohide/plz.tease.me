@@ -13,6 +13,8 @@ gem 'puma', '~> 3.0'
 # Image
 gem 'aws-sdk', '< 2.0'
 gem 'carrierwave'
+gem 'rmagick', '~> 2.13.1'
+gem 'fog'
 # gem 'mini_magick'
 
 # SEO
