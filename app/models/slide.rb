@@ -20,15 +20,16 @@
 #
 
 class Slide < ApplicationRecord
+  acts_as_taggable
+  belongs_to :user
+  has_one :slide_outline, dependent: :destroy
+
 
   before_validation :generate_slug
 
   mount_uploader :original_file, PdfUploader
   mount_uploader :pdf_file, PdfUploader
   mount_uploader :image_file, ImageUploader
-
-  belongs_to :user
-  # has_one :presentation_outline, dependent: :destroy
 
   scope :is_public, -> { where(is_public: true) }
   scope :published_at_desc, -> { order(published_at: :desc) }
