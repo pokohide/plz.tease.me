@@ -1,8 +1,12 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
 
   root to: 'root#index'
   devise_for :users, path_names: { sign_out: 'login', sign_out: 'logout' },
     controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+
+  # get '/mypage', to: 'users#mypage', as: :mypage
 
   resources :slides, only: [:index, :show] do
     collection do

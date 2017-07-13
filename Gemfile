@@ -6,6 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'rails', '~> 5.0.2'
+gem 'sinatra', require: false
 
 # Server
 gem 'puma', '~> 3.0'

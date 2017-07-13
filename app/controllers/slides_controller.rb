@@ -3,7 +3,7 @@ class SlidesController < ApplicationController
 
   def index
     @slides = Slide.preload(:user).
-                is_public.
+                # is_public.
                 published_at_desc.
                 page(params[:page])
     respond_to do |format|
@@ -13,10 +13,11 @@ class SlidesController < ApplicationController
   end
 
   def show
-    @user = User.find_by(username: params[:username])
-    @slide = @user.slides.is_public.find_by(slug: params[:slug])
+    # @user = User.find_by(username: params[:username])
+    @slide = Slide.find(params[:id])
+    # @slide = @user.slides.is_public.find_by(slug: params[:slug])
     # @slide.access_count.increment
-    render layout: nil
+    # render layout: nil
   end
 
   def tag_cloud

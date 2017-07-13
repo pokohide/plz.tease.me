@@ -15,4 +15,12 @@
 
 class SlideOutline < ApplicationRecord
   belongs_to :slide
+
+  after_save :update_slide_document
+
+  private
+
+  def update_slide_document
+    # slide.__elasticsearch__.index_document
+  end
 end

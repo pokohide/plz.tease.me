@@ -14,7 +14,7 @@ class Admin::SlidesController < ApplicationController
   def create
     binding.pry
     slide = current_user.slides.create!(create_slide_params)
-    # Ppt2pdfJob.perform_later(slide)
+    Ppt2pdfJob.perform_later(slide)
     redirect_to edit_admin_slide_path(slide)
   end
 
