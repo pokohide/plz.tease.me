@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170712120446) do
+ActiveRecord::Schema.define(version: 20170713194526) do
+
+  create_table "slide_outlines", force: :cascade do |t|
+    t.integer  "slide_id"
+    t.text     "body",       limit: 16777215
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["slide_id"], name: "index_slide_outlines_on_slide_id"
+  end
 
   create_table "slides", force: :cascade do |t|
     t.integer  "user_id",                       null: false
