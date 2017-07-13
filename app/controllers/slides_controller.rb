@@ -20,13 +20,6 @@ class SlidesController < ApplicationController
     # render layout: nil
   end
 
-  def tag_cloud
-    @tags = Slide.tag_counts_on(:tags).order('count DESC')
-  end
-
-  def tag
-  end
-
   def search
     search_param = { query: { bool: { must: [
       { multi_match: { minimum_should_match: "100%", query: params[:q], fields: %w(tags title outline) } },

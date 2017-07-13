@@ -1,5 +1,9 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
+  get 'tags/index'
+
+  get 'tags/show'
+
   mount Sidekiq::Web => '/sidekiq'
 
   root to: 'root#index'
@@ -7,6 +11,7 @@ Rails.application.routes.draw do
     controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   # get '/mypage', to: 'users#mypage', as: :mypage
+  resources :tags, only: [:index, :show]
 
   resources :slides, only: [:index, :show] do
     collection do
