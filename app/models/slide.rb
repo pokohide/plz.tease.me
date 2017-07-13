@@ -21,7 +21,7 @@
 
 class Slide < ApplicationRecord
 
-  # before_validation :generate_slug
+  before_validation :generate_slug
 
   mount_uploader :original_file, PdfUploader
   mount_uploader :pdf_file, PdfUploader
@@ -38,23 +38,14 @@ class Slide < ApplicationRecord
   validates :slug,         presence: true, format: { with: VALID_SLUG_REGEX, message: "英数と-_ のみで入力してください" }
   validates :published_at, presence: true
 
-  # has_attached_file :pdf_file,
-  #   storage: :s3,
-  #   default_style: :original,
-  #   s3_permissions: :public,
-  #   s3_credentials: "#{Rails.root}/config/s3.yml",
-  #   bucket: ENV.fetch('AWS_BUCKET_NAME'),
-  #   path: ":class/:attachment/:id/:style/:filename",
-  #   s3_protocol: 'https'
-
-  #validates_attachment_content_type :download, content_type: [/application\/(x\-)?pdf/i]
-
   private
+
   def generate_slug
     return if slug # generate only once
 
-    self.slug = Zipang.to_slug(title)
-    if user.presentations.where(slug: self.slug).exists?
+    # self.slug = Zipang.to_slug(title)
+    self.slug = SecureRandom.urlsafe_base64
+    if user.slides.where(slug: self.slug).exists?
       # slug が重複していた場合は現在時刻を付与して重複回避。
       # これで重複したら諦めてエラー
       self.slug += Time.current.strftime("%Y%m%d%H%M%S")

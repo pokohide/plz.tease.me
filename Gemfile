@@ -27,7 +27,6 @@ gem 'redis'
 gem 'redis-namespace'
 gem 'redis-objects'
 gem 'sidekiq'
-gem 'natto'
 # gem 'dalli'
 
 # Frontend

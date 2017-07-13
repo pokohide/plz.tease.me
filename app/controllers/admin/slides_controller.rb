@@ -2,9 +2,9 @@ class Admin::SlidesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @slides = current_user.slides.preload(:user)
+    @slides = current_user.slides.preload(:user).
                 published_at_desc.
-                paginate(page: params[:page])
+                page(params[:page])
     render 'slides/index'
   end
 
@@ -13,9 +13,9 @@ class Admin::SlidesController < ApplicationController
 
   def create
     binding.pry
-    #slide = current_user.slides.create!(create_slide_params)
-    #Ppt2pdfJob.perform_later(slide)
-    #redirect_to edit_admin_slide_path(slide)
+    slide = current_user.slides.create!(create_slide_params)
+    # Ppt2pdfJob.perform_later(slide)
+    redirect_to edit_admin_slide_path(slide)
   end
 
   def edit

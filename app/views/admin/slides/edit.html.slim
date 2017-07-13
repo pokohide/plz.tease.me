@@ -1,0 +1,37 @@
+.ui.middle.aligned.center.aligned.grid
+  .form-container.ui.segment
+    h2.ui.teal.header
+      .content = "スライドを編集"
+
+    = form_for @slide, url: admin_slide_path, html: { method: :put, class: 'ui large form' } do |f|
+      .ui.grid
+        .eight.wide.column
+          = f.file_field(:original_file)
+          = f.submit 'upload'
+
+        .eight.wide.column
+          .field
+            label = f.label :title, 'タイトル'
+            .ui.fluid.input
+              = f.text_field :title, class: 'input'
+
+          .field
+            .ui.toggle.checkbox
+              = f.check_box :is_public, class: 'hidden'
+              label 公開する
+
+        .sixteen.wide.column
+          = f.submit '更新', class: 'ui fluid large teal submit button'
+
+
+
+/ #  user_id       :integer          not null
+/ #  title         :string
+/ #  slug          :string
+/ #  is_public     :boolean          default(FALSE), not null
+/ #  original_file :string
+/ #  pdf_file      :string
+/ #  image_file    :string
+/ #  published_at  :datetime
+/ #  created_at    :datetime         not null
+/ #  updated_at    :datetime         not null
