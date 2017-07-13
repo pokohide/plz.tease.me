@@ -5,7 +5,7 @@ class SlidesController < ApplicationController
     @slides = Slide.preload(:user).
                 is_public.
                 published_at_desc.
-                paginate(page: params[:page])
+                page(params[:page])
     respond_to do |format|
       format.html
       format.atom
@@ -17,6 +17,13 @@ class SlidesController < ApplicationController
     @slide = @user.slides.is_public.find_by(slug: params[:slug])
     # @slide.access_count.increment
     render layout: nil
+  end
+
+  def tag_cloud
+    @tags = Slide.tag_counts_on(:tags).order('count DESC')
+  end
+
+  def tag
   end
 
   def search

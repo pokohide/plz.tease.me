@@ -20,24 +20,37 @@
 #
 
 class Slide < ApplicationRecord
-  acts_as_taggable
+  acts_as_taggable_on :tags
   belongs_to :user
   has_one :slide_outline, dependent: :destroy
 
-
-  before_validation :generate_slug
-
+  # Uploader
   mount_uploader :original_file, PdfUploader
   mount_uploader :pdf_file, PdfUploader
   mount_uploader :image_file, ImageUploader
 
+  # Scope
   scope :is_public, -> { where(is_public: true) }
   scope :published_at_desc, -> { order(published_at: :desc) }
 
+  # Validate
+  before_validation :generate_slug
   VALID_SLUG_REGEX = /\A[0-9A-Za-z\-_]+\z/ # 英数と - _ の 2 つの半角記号
   validates :title,        presence: true
   validates :slug,         presence: true, format: { with: VALID_SLUG_REGEX, message: "英数と-_ のみで入力してください" }
   validates :published_at, presence: true
+
+  # redis-objects override AR lock method
+  class << self
+    alias_method :ar_lock, :lock
+  end
+  include Redis::Objects
+  class << self
+    alias_method :redis_lock, :lock
+    alias_method :lock, :ar_lock
+    remove_method :ar_lock
+  end
+  # include RedisObjectsDestroyable
 
   private
 

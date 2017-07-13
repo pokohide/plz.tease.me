@@ -16,6 +16,11 @@
               = f.text_field :title, class: 'input'
 
           .field
+            label = f.label :tag_list, 'タグ'
+            .ui.fluid.input
+              = f.text_field :tag_list, id: 'tagList'
+
+          .field
             .ui.toggle.checkbox
               = f.check_box :is_public, class: 'hidden'
               label 公開する

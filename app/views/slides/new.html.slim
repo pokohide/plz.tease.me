@@ -1,8 +1,0 @@
-.container
-  = form_tag(admin_slides_path, class: 'dropzone', id: 'upload-dropzone') do
-    .fallback
-      = file_field_tag('slide[original_file]')
-
-  = form_with url: admin_slides_path, class: 'dropzone', id: 'upload-dropzone' do |f|
-    .fallback
-      = f.file_field 'slide[original_file]'

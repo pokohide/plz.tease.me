@@ -4,6 +4,7 @@
 //= require jquery.readyselector
 //= require dropzone
 
+import 'externals/base'
 import 'components/base'
 
 $(document).ready(() => {

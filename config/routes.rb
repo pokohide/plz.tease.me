@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   devise_for :users, path_names: { sign_out: 'login', sign_out: 'logout' },
     controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
-  resources :slides, only: [:index, :show]
+  resources :slides, only: [:index, :show] do
+    collection do
+      get 'tags', to: 'slides#tag_cloud', as: :tags
+      get 'tag/:tag_name', to: 'slides#tag', as: :tag
+    end
+  end
 
   namespace :admin do
     resources :slides, only: [:index, :new, :create, :edit, :update, :destroy]
