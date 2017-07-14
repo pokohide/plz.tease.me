@@ -18,8 +18,6 @@ class Admin::SlidesController < ApplicationController
     slide = current_user.slides.new(create_slide_params)
     original_filename = create_slide_params[:original_file]
 
-    binding.pry
-
     slide.with_lock do
       slide.slide_outline = pdf2outline(original_filename)
       slide.image_file = pdf2png(original_filename)
@@ -63,8 +61,15 @@ class Admin::SlidesController < ApplicationController
   def pdf2outline file
     pdf_file_path = file.path
     # pdf -> txt に xpdf を使う
-    text = `pdftotext -nopgbrk #{pdf_file_path} -`
-    SlideOutline.new(body: text)
+    # text = `pdftotext -nopgbrk #{pdf_file_path} -`
+    # SlideOutline.new(body: text)
+    pdf = Poppler::Document.new(pdf_file_path)
+    outline = ''
+    pdf.pages.each_with_index do |page, index|
+      outline += "#{index + 1}. #{page.get_text}"
+      outline += "\n" if index != pdf.size - 1
+    end
+    SlideOutline.new(body: outline)
   end
 
   def pdf2png file

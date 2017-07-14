@@ -30,6 +30,9 @@ gem 'redis-objects'
 gem 'sidekiq'
 # gem 'dalli'
 
+# PDF Library
+gem 'poppler'
+
 # Frontend
 gem 'gon'
 gem 'kaminari'

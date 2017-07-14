@@ -72,6 +72,9 @@ GEM
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.10.0)
     byebug (9.0.6)
+    cairo (1.15.9)
+      native-package-installer (>= 1.0.3)
+      pkg-config (>= 1.2.2)
     carrierwave (1.1.0)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
@@ -244,9 +247,19 @@ GEM
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (0.2.5)
+    gdk_pixbuf2 (3.1.7)
+      gio2 (= 3.1.7)
     gimei (0.2.0)
+    gio2 (3.1.7)
+      glib2 (= 3.1.7)
+      gobject-introspection (= 3.1.7)
+    glib2 (3.1.7)
+      native-package-installer (>= 1.0.3)
+      pkg-config (>= 1.2.2)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    gobject-introspection (3.1.7)
+      glib2 (= 3.1.7)
     gon (6.1.0)
       actionpack (>= 3.0)
       json
@@ -300,6 +313,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     mustermann (1.0.0)
+    native-package-installer (1.0.4)
     nio4r (2.1.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
@@ -329,6 +343,10 @@ GEM
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.21.0)
+    pkg-config (1.2.3)
+    poppler (3.1.7)
+      cairo (>= 1.14.0)
+      gdk_pixbuf2 (= 3.1.7)
     powerpack (0.1.1)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -510,6 +528,7 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-twitter
   pg
+  poppler
   pry-byebug
   pry-doc
   pry-rails
