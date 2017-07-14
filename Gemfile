@@ -68,6 +68,7 @@ group :development, :test do
   gem 'faker'
   gem 'gimei'
   gem 'dotenv-rails'
+  gem 'rails_best_practices'
 end
 
 group :development do
