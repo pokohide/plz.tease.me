@@ -1,7 +1,11 @@
 <% if @err %>
-  alert('エラー発生');
+  <% @comment.errors.full_messages.each do |message| %>
+    console.log('<%= message %>');
+    alertify.error('<%= message %>');
+  <% end %>
 <% else %>
   $('#comment_body').val('');
-  var html = "<%= j(render partial: 'comments/comment', locals: { comment: @comment }) %>"
+  $('.no-comment').fadeOut(1000);
+  var html = "<%= j(render partial: 'comments/comment', locals: { comment: @comment, slide: @slide }) %>"
   $('.comments').prepend(html)
 <% end %>

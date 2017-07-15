@@ -2,8 +2,9 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @comment = current_user.comments.new(comment_params)
-    @comment.slide_id = params[:slide_id]
+    @slide = current_user.slides.find_by(id: params[:slide_id])
+    @comment = @slide.comments.new(comment_params)
+    @comment.user = current_user
     @err = @comment.save ? false : true
     render
   end

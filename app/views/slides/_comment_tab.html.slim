@@ -7,7 +7,11 @@ section.comment-tab
         .ui.teal.button
           = button_tag '投稿', type: 'submit', id: 'comment-submit-button'
 
-    .ui.comments
-      - comments.each do |comment|
-        == render partial: 'comments/comment', locals: { comment: comment }
+    - if comments.size.zero?
+      .ui.small.message.no-comment
+        | コメントはまだありません。
+    - else
+      .ui.comments
+        - comments.each do |comment|
+          == render partial: 'comments/comment', locals: { comment: comment, slide: slide }
 

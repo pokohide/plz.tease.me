@@ -18,4 +18,8 @@
 class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :slide
+
+  scope :desc, -> { order(created_at: :desc) }
+
+  validates :body, presence: true, length: { maximum: 255 }
 end

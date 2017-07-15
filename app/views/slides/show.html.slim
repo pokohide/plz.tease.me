@@ -13,7 +13,7 @@
         .item ノート
 
       .ui.segment
-        == render partial: 'comment_tab', locals: { slide: @slide, comments: @slide.comments }
+        == render partial: 'comment_tab', locals: { slide: @slide, comments: @comments }
 
       .ui.segment
         = @slide.slide_outline.body
