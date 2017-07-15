@@ -32,6 +32,7 @@ gem 'sidekiq'
 
 # PDF Library
 gem 'poppler'
+gem 'pdfjs_rails'
 
 # Frontend
 gem 'gon'

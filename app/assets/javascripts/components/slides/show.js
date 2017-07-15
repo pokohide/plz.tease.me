@@ -18,4 +18,5 @@ $('.slides.show').ready(() => {
     for(let i = 0; i < tabs.length; i++) $(tabs[i]).hide()
     $(`.${target}-tab`).fadeIn(500)
   })
+
 })

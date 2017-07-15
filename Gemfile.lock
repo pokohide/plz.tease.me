@@ -345,6 +345,7 @@ GEM
     parallel (1.11.2)
     parser (2.4.0.0)
       ast (~> 2.2)
+    pdfjs_rails (0.0.1)
     pg (0.21.0)
     pkg-config (1.2.3)
     poppler (3.1.7)
@@ -541,6 +542,7 @@ DEPENDENCIES
   meta-tags
   omniauth-facebook
   omniauth-twitter
+  pdfjs_rails
   pg
   poppler
   pry-byebug
