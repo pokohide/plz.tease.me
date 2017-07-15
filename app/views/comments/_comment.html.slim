@@ -1,15 +1,14 @@
-- if comment.user.present?
-  - user = comment.user
-  .comment id="comment-#{comment.id}"
-    .avatar
-      = thumbail_tag user
-    .content
-      = link_to user.try(:username), user_path(user), class: 'author'
-      .metadata
-        span.date = distance_of_time_in_words_to_now comment.created_at
-      .text
-        = comment.body
-      .actions
-        a.reply(href='#' data-user="#{user.username}") 返信
-        - if user_signed_in? && user == current_user
-          = link_to '削除', slide_comment_path(slide, comment), remote: true, method: :delete,  data: { confirm: '本当に削除しますか?' }
+- user = comment.user
+.comment id="comment-#{comment.id}"
+  .avatar
+    = thumbail_tag user
+  .content
+    = link_to user.try(:username), user_path(user), class: 'author'
+    .metadata
+      span.date = distance_of_time_in_words_to_now comment.created_at
+    .text
+      = comment.body
+    .actions
+      a.reply(href='#' data-user="#{user.username}") 返信
+      - if user_signed_in? && user == current_user
+        = link_to '削除', slide_comment_path(slide, comment), remote: true, method: :delete,  data: { confirm: '本当に削除しますか?' }

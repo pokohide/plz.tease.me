@@ -1,4 +1,4 @@
-section.comment-tab
+section.comment-tab(data-tab='comment')
   .ui.container
     = form_for([slide, slide.comments.build], remote: true, html: { class: 'ui form comment-form' } ) do |f|
       .ui.fluid.action.input

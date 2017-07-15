@@ -14,5 +14,14 @@
         height: 35px;
       }
     }
+
+    #tabs .item {
+      &:hover {
+        cursor: pointer;
+      }
+      &.active {
+        border-color: #FF7043;
+      }
+    }
   }
 }

@@ -5,15 +5,17 @@
       .ui.segment
         h1.ui.header = @slide.title
 
-
-      .ui.secondary.pointing.menu
-        .item.active コメント
-        .item いいね!
-        .item 統計
-        .item ノート
+      .ui.secondary.pointing.menu#tabs
+        .item.active(data-tab='comment') コメント
+        .item(data-tab='likes') いいね!
+        .item(data-tab='statistics') 統計
+        .item(data-tab='note') ノート
 
       .ui.segment
         == render partial: 'comment_tab', locals: { slide: @slide, comments: @comments }
+        == render partial: 'statistics_tab', locals: { slide: @slide }
+        == render partial: 'likes_tab', locals: { slide: @slide }
+        == render partial: 'note_tab', locals: { slide: @slide }
 
       .ui.segment
         = @slide.slide_outline.body
