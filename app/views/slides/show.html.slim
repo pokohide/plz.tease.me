@@ -6,10 +6,18 @@
         h1.ui.header = @slide.title
 
       .ui.secondary.pointing.menu#tabs
-        .item.active(data-tab='comment') コメント
-        .item(data-tab='likes') いいね!
-        .item(data-tab='statistics') 統計
-        .item(data-tab='note') ノート
+        .item.active(data-tab='comment')
+          i.comment.outline.icon
+          | コメント
+        .item(data-tab='likes')
+          i.empty.heart.icon
+          | いいね
+        .item(data-tab='statistics')
+          i.bar.chart.icon
+          | 統計
+        .item(data-tab='note')
+          i.file.text.outline.icon
+          | ノート
 
       .ui.segment
         == render partial: 'comment_tab', locals: { slide: @slide, comments: @comments }
@@ -18,7 +26,8 @@
         == render partial: 'note_tab', locals: { slide: @slide }
 
       .ui.segment
-        = @slide.slide_outline.body
+        / = simple_format(@slide.slide_outline.body)
+        = @slide.slide_outline.body.strip
 
     .six.wide.column
       .ui.divided.items
