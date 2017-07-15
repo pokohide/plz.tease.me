@@ -1,2 +1,16 @@
-h1 Root#index
-p Find me in app/views/root/index.html.slim
+.ui.container.slides-container
+  .ui.dividing.header 人気の投稿
+  .ui.link.cards
+    - @slides.each do |slide|
+      == render partial: 'slides/slide', locals: { slide: slide }
+
+  .ui.dividing.header 人気の投稿
+  .ui.link.cards
+    - @slides.each do |slide|
+      == render partial: 'slides/slide', locals: { slide: slide }
+
+  .ui.dividing.header 人気の投稿
+  .ui.link.cards
+    - @slides.each do |slide|
+      == render partial: 'slides/slide', locals: { slide: slide }
+

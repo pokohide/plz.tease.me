@@ -1,7 +1,32 @@
-.ui.vertical.footer.top-margin.margin-60.segment(style='background-color:#fff')
-  .ui.inverted.section.divide
-  .ui.center.aligned.container
-    = image_tag 'logo.png', class: 'ui centered small image'
-    .ui.horizontal.small.divided.link.list
-      = link_to 'TOP', root_path, class: 'item'
-      = link_to 'タグ一覧', '#', class: 'item'
+.ui.vertical.inverted.black.footer.segment
+  .container
+    .ui.stackable.inverted.divided.relaxed.grid
+      .three.wide.column
+        h5.ui.blue.inverted.header Theme
+        .ui.inverted.link.list
+          = link_to 'TOP', root_path, class: 'item'
+          = link_to 'TOP', root_path, class: 'item'
+          = link_to 'TOP', root_path, class: 'item'
+
+      .three.wide.column
+        h5.ui.orange.inverted.header Theme
+        .ui.inverted.link.list
+          = link_to 'TOP', root_path, class: 'item'
+          = link_to 'TOP', root_path, class: 'item'
+          = link_to 'TOP', root_path, class: 'item'
+
+      .three.wide.column
+        h5.ui.orange.inverted.header Theme
+        .ui.inverted.link.list
+          = link_to 'TOP', root_path, class: 'item'
+          = link_to 'TOP', root_path, class: 'item'
+          = link_to 'TOP', root_path, class: 'item'
+
+      .six.wide.column
+        h5.ui.inverted.header Tease.me
+        p
+          | made with
+          i.heart.icon
+          | in Teast.me & pokohide
+        p.terms-privacy
+          | © 2017 | About | Privacy

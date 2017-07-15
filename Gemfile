@@ -6,13 +6,17 @@ git_source(:github) do |repo_name|
 end
 
 gem 'rails', '~> 5.0.2'
+gem 'sinatra', require: false
 
 # Server
 gem 'puma', '~> 3.0'
 
 # Image
 gem 'aws-sdk', '< 2.0'
-gem 'paperclip', '~>4'
+gem 'carrierwave'
+gem 'rmagick', '~> 2.13.1'
+gem 'fog'
+# gem 'mini_magick'
 
 # SEO
 gem 'meta-tags'
@@ -20,23 +24,33 @@ gem 'sitemap_generator'
 
 # Data
 gem 'counter_culture', '~> 1.0'
-# gem 'redis', '~> 3.0'
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-objects'
+gem 'sidekiq'
+# gem 'dalli'
+
+# PDF Library
+gem 'poppler'
 
 # Frontend
 gem 'gon'
 gem 'kaminari'
 gem 'slim-rails'
-# gem 'sprockets-commoner'
+gem 'sprockets-commoner'
 gem 'jquery-rails'
+gem 'dropzonejs-rails'
 # gem 'jquery-ui-rails'
-# gem 'acts-as-taggable-on', '~> 4.0'
+gem 'acts-as-taggable-on', '~> 4.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'sass-rails', '~> 5.0'
-# gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass'
+gem 'sass-globbing'
+gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass'
 
 # User
 gem 'devise'
 gem 'omniauth-twitter'
+gem 'omniauth-facebook'
 gem 'bcrypt'
 
 # API
@@ -53,6 +67,8 @@ group :development, :test do
   gem 'scss_lint', require: false
   gem 'faker'
   gem 'gimei'
+  gem 'dotenv-rails'
+  gem 'rails_best_practices'
 end
 
 group :development do

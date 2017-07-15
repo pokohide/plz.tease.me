@@ -1,0 +1,31 @@
+.ui.container.slide-container
+  .ui.grid
+    .ten.wide.column
+      iframe src="//www.slideshare.net/slideshow/embed_code/key/6tIuK4jIXOEKxs" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen
+      .ui.segment
+        h1.ui.header = @slide.title
+
+
+      .ui.secondary.pointing.menu
+        .item.active コメント
+        .item いいね!
+        .item 統計
+        .item ノート
+
+      .ui.segment
+        == render partial: 'comment_tab', locals: { slide: @slide, comments: @slide.comments }
+
+      .ui.segment
+        = @slide.slide_outline.body
+
+    .six.wide.column
+      .ui.divided.items
+        - ['title1', 'title2', 'title3', 'title1', 'title2', 'title3'].each do |title|
+          .item
+            .image
+              = image_tag 'noimage.png'
+            .content
+              .header = title
+              .meta
+                span ここに作者
+              .description hogehogehogehoge

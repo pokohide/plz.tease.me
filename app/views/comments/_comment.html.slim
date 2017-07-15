@@ -1,0 +1,10 @@
+- if comment.user.present?
+  .comment
+    .avatar
+      = thumbail_tag comment.user
+    .content
+      = link_to comment.user.try(:username), user_path(comment.user), class: 'author'
+      .metadata
+        span.date = distance_of_time_in_words_to_now comment.created_at
+      .text
+        = comment.body

@@ -20,5 +20,6 @@ doc/
 .DS_Store
 .idea
 .secret
+.env
 
 node_modules/

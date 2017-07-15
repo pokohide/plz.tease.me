@@ -1,0 +1,7 @@
+<% if @err %>
+  alert('エラー発生');
+<% else %>
+  $('#comment_body').val('');
+  var html = "<%= j(render partial: 'comments/comment', locals: { comment: @comment }) %>"
+  $('.comments').prepend(html)
+<% end %>

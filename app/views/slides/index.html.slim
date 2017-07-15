@@ -1,0 +1,4 @@
+.ui.container.slides-container
+  .ui.link.cards
+    - cache(['slides', @slides.map(&:id), @slides.maximum(:updated_at)]) do
+      = render @slides
