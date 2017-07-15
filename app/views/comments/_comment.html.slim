@@ -10,6 +10,6 @@
       .text
         = comment.body
       .actions
-        a(href='#' data-user="#{user.username}") 返信
+        a.reply(href='#' data-user="#{user.username}") 返信
         - if user_signed_in? && user == current_user
           = link_to '削除', slide_comment_path(slide, comment), remote: true, method: :delete,  data: { confirm: '本当に削除しますか?' }
