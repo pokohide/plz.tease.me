@@ -46,6 +46,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'sass-rails', '~> 5.0'
 gem 'sass-globbing'
 gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass'
+gem 'alertifyjs-rails'
 
 # User
 gem 'devise'

@@ -1,6 +1,5 @@
 <% if @err %>
   <% @comment.errors.full_messages.each do |message| %>
-    console.log('<%= message %>');
     alertify.error('<%= message %>');
   <% end %>
 <% else %>

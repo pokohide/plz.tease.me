@@ -3,6 +3,7 @@
 //= require semantic-ui
 //= require jquery.readyselector
 //= require dropzone
+//= require alertify
 
 import 'externals/base'
 import 'components/base'

@@ -1,2 +1,1 @@
 import './tagging'
-import './alertify'
