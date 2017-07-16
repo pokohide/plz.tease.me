@@ -36,10 +36,10 @@ export default class PdfKit {
       const viewport = page.getViewport(scale)
       this.canvas.height = viewport.height
 
-      this.pageRendering = true
+      this._showLoading()
 
       page.render({ canvasContext: this.context, viewport: viewport }).then(() => {
-        this.pageRendering = false
+        this._hideLoading()
         if (this.pageNumPending !== null) {
           this.renderPage(this.pageNumPending)
           this.pageNumPending = null
@@ -71,6 +71,16 @@ export default class PdfKit {
   _renderError(err) {
     alertify.error('スライドを読み込めませんでした。リロードしてください。')
     // ここにエラー用の画像をcanvasに表示する
+  }
+
+  _showLoading() {
+    this.pageRendering = true
+    // ここでローディングGIFとかをcanvasに差し込む
+  }
+
+  _hideLoading() {
+    this.pageRendering = false
+    // ローディングGIFを消す
   }
 }
 

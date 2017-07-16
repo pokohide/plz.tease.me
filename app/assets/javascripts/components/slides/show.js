@@ -21,13 +21,6 @@ $('.slides.show').ready(() => {
     $(`.${target}-tab`).fadeIn(500)
   })
 
-  const params = {
-    url: gon.pdf_url,
-    httpHeaders: {
-      'Access-Control-Allow-Headers': 'Range'
-    }
-  }
-
   const pdfKit = new PdfKit(gon.pdf_url, 'pdf-viewer')
 
   $('#prev').on('click', () => {
@@ -38,4 +31,6 @@ $('.slides.show').ready(() => {
     pdfKit.goNext()
   })
 
+
+  $('.slide-progress.ui.tiny.progress').progress({ percent: 22 })
 })
