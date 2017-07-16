@@ -19,6 +19,7 @@ class SlidesController < ApplicationController
     # @slide = @user.slides.is_public.find_by(slug: params[:slug])
     # @slide.access_count.increment
     # render layout: nil
+    gon.pdf_url = @slide.original_file.to_s
   end
 
   def search

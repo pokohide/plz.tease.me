@@ -1,3 +1,5 @@
+import PdfKit from '../../utils/pdf-kit'
+
 $('.slides.show').ready(() => {
   $('.comments').on('click', '.reply', function(e) {
     e.preventDefault()
@@ -17,6 +19,23 @@ $('.slides.show').ready(() => {
     const tabs = ['.comment-tab', '.likes-tab' ,'.statistics-tab', '.note-tab']
     for(let i = 0; i < tabs.length; i++) $(tabs[i]).hide()
     $(`.${target}-tab`).fadeIn(500)
+  })
+
+  const params = {
+    url: gon.pdf_url,
+    httpHeaders: {
+      'Access-Control-Allow-Headers': 'Range'
+    }
+  }
+
+  const pdfKit = new PdfKit(gon.pdf_url, 'pdf-viewer')
+
+  $('#prev').on('click', () => {
+    pdfKit.goPrev()
+  })
+
+  $('#next').on('click', () => {
+    pdfKit.goNext()
   })
 
 })
