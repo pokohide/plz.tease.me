@@ -16,7 +16,7 @@
 require 'test_helper'
 
 class SlideOutlineTest < ActiveSupport::TestCase
-  # test "the truth" do
+  # test 'the truth' do
   #   assert true
   # end
 end

@@ -6,6 +6,6 @@ CarrierWave.configure do |config|
     region: 'ap-northeast-1'
   }
 
-  config.fog_directory  = ENV.fetch('AWS_BUCKET_NAME')
+  config.fog_directory = ENV.fetch('AWS_BUCKET_NAME')
   config.cache_storage = :fog
 end

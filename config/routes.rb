@@ -7,11 +7,11 @@ Rails.application.routes.draw do
     controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   # get '/mypage', to: 'users#mypage', as: :mypage
-  resources :tags, only: [:index, :show]
-  resources :users, only: [:index, :show]
+  resources :tags, only: %i(index show)
+  resources :users, only: %i(index show)
 
-  resources :slides, only: [:index, :show] do
-    resources :comments, only: [:create, :destroy]
+  resources :slides, only: %i(index show) do
+    resources :comments, only: %i(create destroy)
     collection do
       get 'tags', to: 'slides#tag_cloud', as: :tags
       get 'tag/:tag_name', to: 'slides#tag', as: :tag
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :slides, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :slides, only: %i(index new create edit update destroy)
   end
 
   get 'upload', to: 'admin/slides#new', as: :upload
