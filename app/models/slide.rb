@@ -38,17 +38,17 @@ class Slide < ApplicationRecord
   before_validation :generate_slug
   VALID_SLUG_REGEX = /\A[0-9A-Za-z\-_]+\z/ # 英数と - _ の 2 つの半角記号
   validates :title,        presence: true
-  validates :slug,         presence: true, format: { with: VALID_SLUG_REGEX, message: "英数と-_ のみで入力してください" }
+  validates :slug,         presence: true, format: { with: VALID_SLUG_REGEX, message: '英数と-_ のみで入力してください' }
   validates :published_at, presence: true
 
   # redis-objects override AR lock method
   class << self
-    alias_method :ar_lock, :lock
+    alias ar_lock lock
   end
   include Redis::Objects
   class << self
-    alias_method :redis_lock, :lock
-    alias_method :lock, :ar_lock
+    alias redis_lock lock
+    alias lock ar_lock
     remove_method :ar_lock
   end
   include RedisObjectsDestroyable
@@ -58,13 +58,13 @@ class Slide < ApplicationRecord
   end
 
   def reupload(file)
-    self.original_file.remove!
-    self.pdf_file.remove!
-    self.image_file.remove!
-    self.presentation_outline.destroy
+    original_file.remove!
+    pdf_file.remove!
+    image_file.remove!
+    presentation_outline.destroy
 
     self.original_file = file
-    self.save!
+    save!
     Ppt2pdfJob.perform_later(self)
   end
 
@@ -75,10 +75,10 @@ class Slide < ApplicationRecord
 
     # self.slug = Zipang.to_slug(title)
     self.slug = SecureRandom.urlsafe_base64
-    if user.slides.where(slug: self.slug).exists?
+    if user.slides.where(slug: slug).exists?
       # slug が重複していた場合は現在時刻を付与して重複回避。
       # これで重複したら諦めてエラー
-      self.slug += Time.current.strftime("%Y%m%d%H%M%S")
+      self.slug += Time.current.strftime('%Y%m%d%H%M%S')
     end
   end
 end

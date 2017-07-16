@@ -1,7 +1,8 @@
 # encoding: utf-8
+
 class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::RMagick
-  resize_to_fit(250, "") # 横250px にリサイズ
+  resize_to_fit(250, '') # 横250px にリサイズ
 
   # if Rails.env.development? || Rails.env.test?
   #   storage :file
@@ -15,6 +16,6 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def extension_white_list
-    %w(png)
+    %w[png]
   end
 end

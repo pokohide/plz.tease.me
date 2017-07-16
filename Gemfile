@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
 
@@ -14,8 +14,8 @@ gem 'puma', '~> 3.0'
 # Image
 gem 'aws-sdk', '< 2.0'
 gem 'carrierwave'
-gem 'rmagick', '~> 2.13.1'
 gem 'fog'
+gem 'rmagick', '~> 2.13.1'
 # gem 'mini_magick'
 
 # SEO
@@ -31,61 +31,61 @@ gem 'sidekiq'
 # gem 'dalli'
 
 # PDF Library
-gem 'poppler'
 gem 'pdfjs_rails'
+gem 'poppler'
 
 # Frontend
+gem 'dropzonejs-rails'
 gem 'gon'
+gem 'jquery-rails'
 gem 'kaminari'
 gem 'slim-rails'
 gem 'sprockets-commoner'
-gem 'jquery-rails'
-gem 'dropzonejs-rails'
 # gem 'jquery-ui-rails'
 gem 'acts-as-taggable-on', '~> 4.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'sass-rails', '~> 5.0'
-gem 'sass-globbing'
-gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass'
 gem 'alertifyjs-rails'
+gem 'sass-globbing'
+gem 'sass-rails', '~> 5.0'
+gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass'
+gem 'uglifier', '>= 1.3.0'
 
 # User
-gem 'devise'
-gem 'omniauth-twitter'
-gem 'omniauth-facebook'
 gem 'bcrypt'
+gem 'devise'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 
 # API
 gem 'jbuilder', '~> 2.5'
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'byebug', platform: :mri
-  gem 'pry-rails'
-  gem 'pry-doc'
-  gem 'pry-byebug'
-  gem 'pry-stack_explorer'
-  gem 'rails-erd'
-  gem 'scss_lint', require: false
+  gem 'dotenv-rails'
   gem 'faker'
   gem 'gimei'
-  gem 'dotenv-rails'
+  gem 'pry-byebug'
+  gem 'pry-doc'
+  gem 'pry-rails'
+  gem 'pry-stack_explorer'
+  gem 'rails-erd'
   gem 'rails_best_practices'
+  gem 'scss_lint', require: false
+  gem 'sqlite3'
 end
 
 group :development do
-  gem 'web-console', '>= 3.3.0'
+  gem 'annotate'
+  gem 'bullet'
+  gem 'letter_opener'
   gem 'listen', '~> 3.0.5'
+  gem 'rubocop', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'annotate'
-  gem 'letter_opener'
-  gem 'rubocop', require: false
-  gem 'bullet'
+  gem 'web-console', '>= 3.3.0'
 end
 
 group :production do
   gem 'pg'
 end
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

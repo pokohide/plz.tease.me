@@ -1,18 +1,18 @@
-class Ppt2pdfJob < ActiveJob::Base
+class Ppt2pdfJob < ApplicationJob
   queue_as :default
 
   def perform(slide)
     original_file_path = slide.original_file.path
-    pdf_file_name = SecureRandom.hex(16) + ".pdf"
+    pdf_file_name = SecureRandom.hex(16) + '.pdf'
     pdf_file_uploader = slide.pdf_file
     pdf_file_path = File.join(pdf_file_uploader.root, pdf_file_uploader.store_dir, pdf_file_name)
 
     Dir.mktmpdir do |dir|
       ext = File.extname(original_file_path)
       case ext
-      when ".ppt", ".pptx"
+      when '.ppt', '.pptx'
         ppt_to_pdf(dir, original_file_path, pdf_file_path)
-      when ".pdf"
+      when '.pdf'
         pdf_to_pdf(dir, original_file_path, pdf_file_path)
       else
         raise "unknown file type: #{ext}"
@@ -30,14 +30,14 @@ class Ppt2pdfJob < ActiveJob::Base
     path = `which soffice`.chomp
     if path.empty?
       # mac support
-      user_path = "~/Applications/LibreOffice.app/Contents/MacOS/soffice"
-      root_path = "/Applications/LibreOffice.app/Contents/MacOS/soffice"
+      user_path = '~/Applications/LibreOffice.app/Contents/MacOS/soffice'
+      root_path = '/Applications/LibreOffice.app/Contents/MacOS/soffice'
       if File.exist?(user_path)
         user_path
       elsif File.exist?(root_path)
         root_path
       else
-        raise "soffice not found"
+        raise 'soffice not found'
       end
     else
       path
@@ -52,7 +52,7 @@ class Ppt2pdfJob < ActiveJob::Base
     FileUtils.mv(pdf_file, pdf_file_path)
   end
 
-  def pdf_to_pdf(dir, original_file_path, pdf_file_path)
+  def pdf_to_pdf(_dir, original_file_path, pdf_file_path)
     # pdf -> pdf は 変換する必要がないのでそのまま使う
     FileUtils.mkdir_p(File.dirname(pdf_file_path))
     FileUtils.cp(original_file_path, pdf_file_path)

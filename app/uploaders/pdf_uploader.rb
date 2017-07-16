@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 class PdfUploader < CarrierWave::Uploader::Base
   # if Rails.env.development? || Rails.env.test?
   #   storage :file

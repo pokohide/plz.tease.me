@@ -14,12 +14,12 @@ module TeaseMe
       g.stylesheets false
       g.javascripts false
     end
-    config.time_zone = "Tokyo"
-    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}").to_s]
+    config.time_zone = 'Tokyo'
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
 
     config.i18n.default_locale = :ja
 
     config.active_job.queue_adapter = :sidekiq
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W[#{config.root}/lib]
   end
 end

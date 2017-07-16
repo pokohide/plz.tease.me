@@ -2,14 +2,13 @@ class Admin::SlidesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @slides = current_user.slides.preload(:user).
-                published_at_desc.
-                page(params[:page])
+    @slides = current_user.slides.preload(:user)
+                          .published_at_desc
+                          .page(params[:page])
     render 'slides/index'
   end
 
-  def new
-  end
+  def new; end
 
   def create
     # slide = current_user.slides.create!(create_slide_params)
@@ -58,7 +57,7 @@ class Admin::SlidesController < ApplicationController
 
   private
 
-  def pdf2outline file
+  def pdf2outline(file)
     pdf_file_path = file.path
     # pdf -> txt に xpdf を使う
     # text = `pdftotext -nopgbrk #{pdf_file_path} -`
@@ -72,7 +71,7 @@ class Admin::SlidesController < ApplicationController
     SlideOutline.new(body: outline)
   end
 
-  def pdf2png file
+  def pdf2png(file)
     pdf_file_path = file.path
     Dir.mktmpdir do |dir|
       png_basename = File.basename(pdf_file_path = file.path, '.*')

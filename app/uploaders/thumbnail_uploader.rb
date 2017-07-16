@@ -1,9 +1,10 @@
 # encoding: utf-8
+
 class ThumbnailUploader < CarrierWave::Uploader::Base
   include CarrierWave::RMagick
 
   # 画像の上限を700pxにする
-  process :resize_to_limit => [700, 700]
+  process resize_to_limit: [700, 700]
 
   # 保存形式をJPGにする
   process convert: 'png'
@@ -30,6 +31,7 @@ class ThumbnailUploader < CarrierWave::Uploader::Base
     name = time.strftime('%Y%m%d%H%M%S') + '.png'
     name.downcase
   end
+
   # 拡張子が同じでないとGIFをJPGとかにコンバートできないので、ファイル名を変更
   def filename
     super.chomp(File.extname(super)) + '.png' if original_filename.present?
@@ -37,6 +39,6 @@ class ThumbnailUploader < CarrierWave::Uploader::Base
 
   # jpg,jpeg,gif,pngしか受け付けない
   def extension_white_list
-    %w(jpg jpeg gif png)
+    %w[jpg jpeg gif png]
   end
 end

@@ -35,5 +35,4 @@ class SlidesControllerTest < ActionDispatch::IntegrationTest
     get slides_destroy_url
     assert_response :success
   end
-
 end

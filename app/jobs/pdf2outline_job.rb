@@ -1,4 +1,4 @@
-class Pdf2outlineJob < ActiveJob::Base
+class Pdf2outlineJob < ApplicationJob
   queue_as :default
 
   def perform(slide)
@@ -14,7 +14,6 @@ class Pdf2outlineJob < ActiveJob::Base
 
     # pdf_file_path = slide.pdf_file.path
     # pdf = Poppler::Document.
-
 
     #     pdf_file_path = file.path
     # # pdf -> txt に xpdf を使う

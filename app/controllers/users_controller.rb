@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @slide = @user.slides.preload(:user).
              # is_public.
-             published_at_desc.
-             page(params[:page])
+             published_at_desc
+                  .page(params[:page])
   end
 end

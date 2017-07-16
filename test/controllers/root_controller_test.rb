@@ -15,5 +15,4 @@ class RootControllerTest < ActionDispatch::IntegrationTest
     get root_contact_url
     assert_response :success
   end
-
 end
