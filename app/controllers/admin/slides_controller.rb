@@ -31,21 +31,15 @@ class Admin::SlidesController < ApplicationController
   end
 
   def update
-    # @slide = current_user.slides.lock.find(params[:id])
-    @slide = current_user.slides.find(params[:id])
-    if (original_filename = params[:slide][:original_file])
-      @slide.reupload(original_file)
+    @slide = current_user.slides.lock.find(params[:id])
+    if params[:slide][:original_file]
+      @slide.reupload(params[:slide][:original_file])
       redirect_to edit_admin_slide_path(@slide)
+    elsif @slide.update(update_slide_params)
+      redirect_to admin_slides_path
     else
-      if @slide.update(update_slide_params)
-        redirect_to admin_slides_path
-      else
-        render :edit
-      end
+      render :edit
     end
-  rescue ActiveRecord::RecordNotUnique
-    @slide.errors.add(:slug, I18n.t('errors.messages.taken'))
-    render :edit
   end
 
   def destroy

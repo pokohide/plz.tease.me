@@ -27,14 +27,9 @@ class ThumbnailUploader < CarrierWave::Uploader::Base
   # ファイル名は日本語が入ってくると嫌なので、下記のようにしてみてもいい。
   # 日付(20131001.jpgみたいなファイル名)で保存する
   def filename
-    time = Time.now
+    time = Time.zone.now
     name = time.strftime('%Y%m%d%H%M%S') + '.png'
     name.downcase
-  end
-
-  # 拡張子が同じでないとGIFをJPGとかにコンバートできないので、ファイル名を変更
-  def filename
-    super.chomp(File.extname(super)) + '.png' if original_filename.present?
   end
 
   # jpg,jpeg,gif,pngしか受け付けない
