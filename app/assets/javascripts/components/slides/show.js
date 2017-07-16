@@ -1,4 +1,5 @@
 import PdfKit from '../../utils/pdf-kit'
+import Fullscreen from '../../utils/fullscreen'
 
 $('.slides.show').ready(() => {
   $('.comments').on('click', '.reply', function(e) {
@@ -26,18 +27,16 @@ $('.slides.show').ready(() => {
     canvas       : '#pdf-viewer',
     progressCount: '.page-counter',
     progressBar  : '.slide-progress',
+    loader       : '.slide-loader',
   })
+  const fs = new Fullscreen($('.slide-viewer-container'), $('#fullscreen'))
 
   pdfKit.loadDocument(gon.pdf_url)
   .catch((err) => {
     alertify.error('スライドを読み込めませんでした。リロードしてください。')
   })
 
-  $('#prev').on('click', () => {
-    pdfKit.goPrev()
-  })
-
-  $('#next').on('click', () => {
-    pdfKit.goNext()
-  })
+  $('#prev').on('click', () => { pdfKit.goPrev() })
+  $('#next').on('click', () => { pdfKit.goNext() })
+  $('#fullscreen').on('click', () => { fs.toggle() })
 })

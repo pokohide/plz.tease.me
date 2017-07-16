@@ -5,22 +5,22 @@
         .slide-viewer
           canvas#pdf-viewer
           .text-layer
+          .ui.active.inverted.dimmer.slide-loader
+            .ui.large.text.loader Loading
         .slide-toolbar-container
           .slide-progress.ui.teal.tiny.progress
             .bar
           .slide-toolbar
-            .ui.grid
-              .four.wide.column
-                = link_to 'Tease.Me', root_path
-              .two.wide.column
-                i.angle.double.left.icon#prev
-              .four.wide.column
-                .page-counter
-              .two.wide.column
-                i.angle.double.right.icon#next
-              .four.wide.column
-                i.expand.icon
-                i.share.icon
+            .brand-title
+              = link_to 'Tease.Me', root_path
+            .slide-pager
+              button.tool-item#prev
+               i.angle.double.left.icon
+              .page-counter
+              button.tool-item#next
+                i.angle.double.right.icon
+            button.tool-item#fullscreen
+              i.expand.icon
       .ui.segment
         h1.ui.header = @slide.title
 

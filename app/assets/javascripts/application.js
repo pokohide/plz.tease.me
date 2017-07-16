@@ -2,10 +2,13 @@
 //= require jquery_ujs
 //= require semantic-ui
 //= require jquery.readyselector
+//= require jquery.fullscreen
+//= require pdf
+//= require pdf.worker
 //= require dropzone
 //= require alertify
 
-import 'externals/base'
+//import 'externals/base'
 import 'components/base'
 
 $(document).ready(() => {
@@ -13,18 +16,6 @@ $(document).ready(() => {
   $('.ui.checkbox').checkbox()
   //$('.ui.checkbox').checkbox()
   // $('.ui.accordion').accordion()
-
-  // /* notificationの閉じるをクリックしたら閉じる */
-  // $('.ui.message .close.icon').on('click', function() {
-  //   $(this).parent().fadeOut()
-  // })
-
-  //  notificationは何もしなくても10秒後に消滅する
-  // setTimeout(() => {
-  //   $('.ui.message').each(function() {
-  //     if(!$(this).attr('data-flash')) $(this).fadeOut('normal')
-  //   })
-  // }, 10000)
 
   // $('img.lazy').lazyload({ effect : "fadeIn" })
 })

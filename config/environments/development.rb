@@ -15,14 +15,17 @@ Rails.application.configure do
   # For Device
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  config.assets.digest = true
-
   config.after_initialize do
     Bullet.enable = true
     Bullet.alert = true
     Bullet.bullet_logger = true
     Bullet.console = true
   end
+
+  # config.assets.digest = true
+
+  config.assets.digest = true
+  config.assets.debug = true
 
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join('tmp/caching-dev.txt').exist?
@@ -48,11 +51,6 @@ Rails.application.configure do
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
-
-  # Debug mode disables concatenation and preprocessing of assets.
-  # This option may cause significant delays in view rendering with a large
-  # number of complex assets.
-  config.assets.debug = true
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true

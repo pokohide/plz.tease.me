@@ -1,5 +1,4 @@
 class SlidesController < ApplicationController
-  before_action :authenticate_user!, if: :format_is_not_atom
 
   def index
     @slides = Slide.preload(:user).

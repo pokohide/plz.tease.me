@@ -4,28 +4,23 @@ PDFJS.cMapPacked = true
 PDFJS.disableRange = true
 
 export default class PdfKit {
-
-  constructor({ container, canvas, progressCount, progressBar }) {
+  constructor({ container, canvas, progressCount, progressBar, loader }) {
     /* $ container */
     this.dom = {
       container    : $(container),
       progressCount: $(progressCount),
       progressBar  : $(progressBar),
       canvas       : $(canvas),
+      loader       : $(loader),
     }
-    // this.$textLayer = $(ids.textLayer)
-
-
-    this.promiseQueue = Promise.resolve()
-
-    this.currentPage = 1
-    this.loading = false
-    this.pageNumPending = null
-
     this.options = {
       scale: 1.0,
       rotate: 0,
     }
+
+    this.currentPage = 1
+    this.loading = false
+    this.pageNumPending = null
   }
 
   goNext() {
@@ -128,6 +123,7 @@ export default class PdfKit {
   //     })
   //   })
   // }
+
   _queueRenderPage(pageNum) {
     if (this.loading) {
       this.pageNumPending = pageNum
@@ -138,13 +134,14 @@ export default class PdfKit {
 
   _showLoading() {
     this.loading = true
-    console.log('now loading...')
+    this.dom.loader.show()
     // ここでローディングGIFとかをcanvasに差し込む
   }
 
   _hideLoading() {
     this.loading = false
     console.log('done.')
+    this.dom.loader.hide()
     // ローディングGIFを消す
   }
 }
