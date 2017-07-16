@@ -4,19 +4,22 @@ PDFJS.cMapPacked = true
 PDFJS.disableRange = true
 
 export default class PdfKit {
-  constructor(url, ids) {
-    /* $ container */
-    this.$container = $(ids.container)
-    this.$canvas = $(ids.canvas)
-    this.$textLayer = $(ids.textLayer)
-    this.$pageCounter = $(ids.pageCounter)
-    this.$progress = $(ids.progress)
 
-    /* Init Document */
-    this.getDocument(url)
+  constructor({ container, canvas, progressCount, progressBar }) {
+    /* $ container */
+    this.dom = {
+      container    : $(container),
+      progressCount: $(progressCount),
+      progressBar  : $(progressBar),
+      canvas       : $(canvas),
+    }
+    // this.$textLayer = $(ids.textLayer)
+
+
+    this.promiseQueue = Promise.resolve()
 
     this.currentPage = 1
-    this.pageRendering = false
+    this.loading = false
     this.pageNumPending = null
 
     this.options = {
@@ -28,33 +31,53 @@ export default class PdfKit {
   goNext() {
     if (this.currentPage >= this.totalPages) return
     this.currentPage += 1
-    this.queueRenderPage(this.currentPage)
+    this._queueRenderPage(this.currentPage)
   }
 
   goPrev() {
     if (this.currentPage <= 1) return
     this.currentPage -= 1
-    this.queueRenderPage(this.currentPage)
+    this._queueRenderPage(this.currentPage)
+  }
+
+  loadDocument(url) {
+    this._showLoading()
+    return PDFJS.getDocument({ url: url }).then((pdf) => {
+      this.document = pdf
+      this.totalPages = pdf.numPages
+      this._renderPage(1)
+    })
   }
 
   /* Private */
-  updatePageCount() {
-    this.$pageCounter.text(`${this.currentPage} / ${this.totalPages}`)
-    this.$progress.progress({ percent: this.currentPage * 100 / this.totalPages })
-  }
 
-  getDocument(url) {
-    PDFJS.getDocument({ url: url }).then((pdf) => {
-      this.document = pdf
-      this.totalPages = pdf.numPages
-      this.renderPage(1)
+  _queueRenderPage(pageNum) {
+    if (this.pdfDoc == null) return this.promiseQueue
+    this.promiseQueue = this.promiseQueue.then(() => {
+      return this._renderPage(pageNum)
     })
-    .catch(err => { this._renderError(err) })
+    return this.promiseQueue
   }
 
-  renderPage(num) {
+  _updateProgress() {
+    this.dom.progressCount.text(`${this.currentPage} / ${this.totalPages}`)
+    this.dom.progressBar.progress({ percent: this.currentPage * 100 / this.totalPages })
+  }
+
+  _fitInSize() {
+    return new Promise((resolve) => {
+      const containerRect = this.pdfContainer.getBoundingClientRect();
+      this.domMapObject.canvas.width = containerRect.width;
+      this.domMapObject.canvas.height = containerRect.height;
+      resolve(containerRect);
+    }).then(() => {
+      return this._queueRenderPage(this.pageNum);
+    })
+  }
+
+  _renderPage(num) {
     this.document.getPage(num).then((page) => {
-      const canvas = this.$canvas.get(0)
+      const canvas = this.dom.canvas.get(0)
       const context = canvas.getContext('2d')
       const scale = canvas.width / page.getViewport(this.options.scale, this.options.rotate).width
       const viewport = page.getViewport(scale)
@@ -66,66 +89,62 @@ export default class PdfKit {
       //  .css('height', `${canvas.height}px`)
       //  .css('width',  `${canvas.width}px`)
 
-      const canvasOffset = this.$canvas.offset()
-      this.$textLayer
-        .css('height', `${viewport.height}px`)
-        .css('width',  `${viewport.width}px`)
-        .offset({
-          top : canvasOffset.top,
-          left: canvasOffset.left,
-        })
+      const canvasOffset = this.dom.canvas.offset()
+      // this.$textLayer
+      //   .css('height', `${viewport.height}px`)
+      //   .css('width',  `${viewport.width}px`)
+      //   .offset({
+      //     top : canvasOffset.top,
+      //     left: canvasOffset.left,
+      //   })
 
       this._showLoading()
 
       page.render({ canvasContext: context, viewport: viewport }).then(() => {
         this._hideLoading()
         if (this.pageNumPending !== null) {
-          this.renderPage(this.pageNumPending)
+          this._renderPage(this.pageNumPending)
           this.pageNumPending = null
         }
-        this.updatePageCount()
+        this._updateProgress()
       })
 
-      // this.renderContent(page, context, viewport)
+      // this._renderContent(page, context, viewport)
     })
   }
 
-  renderContent(page, context, viewport) {
-    pege.getContext().then((textContent) => {
-      const textLayer = new TextLayerBuilder({
-        textLayer: this.$textLayerDiv.get(0),
-        pageIndex: 0,
-      })
+  // _renderContent(page, context, viewport) {
+  //   pege.getContext().then((textContent) => {
+  //     const textLayer = new TextLayerBuilder({
+  //       textLayer: this.$textLayerDiv.get(0),
+  //       pageIndex: 0,
+  //     })
 
-      textLayer.setTextContent(textContent)
-      return page.render({
-        canvasContext: context,
-        viewport     : viewport,
-        textLayer    : textLayer,
-      })
-    })
-  }
-
-  queueRenderPage(num) {
-    if (this.pageRendering) {
-      this.pageNumPending = num
+  //     textLayer.setTextContent(textContent)
+  //     return page.render({
+  //       canvasContext: context,
+  //       viewport     : viewport,
+  //       textLayer    : textLayer,
+  //     })
+  //   })
+  // }
+  _queueRenderPage(pageNum) {
+    if (this.loading) {
+      this.pageNumPending = pageNum
     } else {
-      this.renderPage(num)
+      this._renderPage(pageNum)
     }
   }
 
-  _renderError(err) {
-    alertify.error('スライドを読み込めませんでした。リロードしてください。')
-    // ここにエラー用の画像をcanvasに表示する
-  }
-
   _showLoading() {
-    this.pageRendering = true
+    this.loading = true
+    console.log('now loading...')
     // ここでローディングGIFとかをcanvasに差し込む
   }
 
   _hideLoading() {
-    this.pageRendering = false
+    this.loading = false
+    console.log('done.')
     // ローディングGIFを消す
   }
 }

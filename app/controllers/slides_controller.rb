@@ -13,12 +13,10 @@ class SlidesController < ApplicationController
   end
 
   def show
-    # @user = User.find_by(username: params[:username])
     @slide = Slide.find(params[:id])
     @comments = @slide.comments.desc
     # @slide = @user.slides.is_public.find_by(slug: params[:slug])
     # @slide.access_count.increment
-    # render layout: nil
     gon.pdf_url = @slide.original_file.to_s
   end
 

@@ -21,12 +21,16 @@ $('.slides.show').ready(() => {
     $(`.${target}-tab`).fadeIn(500)
   })
 
-  const pdfKit = new PdfKit(gon.pdf_url, {
-    container  : '.slide-viewer',
-    canvas     : '#pdf-viewer',
-    textLayer  : '.text-layer',
-    pageCounter: '.page-counter',
-    progress   : '.slide-progress',
+  const pdfKit = new PdfKit({
+    container    : '.slide-viewer',
+    canvas       : '#pdf-viewer',
+    progressCount: '.page-counter',
+    progressBar  : '.slide-progress',
+  })
+
+  pdfKit.loadDocument(gon.pdf_url)
+  .catch((err) => {
+    alertify.error('スライドを読み込めませんでした。リロードしてください。')
   })
 
   $('#prev').on('click', () => {
