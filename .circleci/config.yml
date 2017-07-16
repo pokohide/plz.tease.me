@@ -1,19 +1,15 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
 version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-       - image: circleci/ruby:2.4.1-node-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
+      - image: ruby
+        environment:
+          - LANG: ja_JP.UTF-8
+          - LC_ALL: C.UTF-8
+          - LANGUAGE: ja_JP.UTF-8
+      - image: circleci/postgres:9.4
+        environment:
+          - MYSQL_ROOT_PASSWORD:
     working_directory: ~/repo
 
     steps:
@@ -26,6 +22,10 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
+      - run: apt-get update
+
+      # 必要ならここでpopper系もインストール
+
       - run:
           name: install dependencies
           command: |
@@ -36,26 +36,28 @@ jobs:
             - ./venv
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
+      # Bundle install dependencies
+      - run: bundle install -j 4 --path vendor/bundle
+
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
 
-      # run tests!
-      - run:
-          name: run tests
-          command: |
-            mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+      # Run rspec in parallel
+      # - type: shell
+      #   command: |
+      #     bundle exec rspec --profile 10 \
+      #                       --format RspecJunitFormatter \
+      #                       --out /tmp/test-results/rspec.xml \
+      #                       --format progress \
+      #                       $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
-            bundle exec rspec --format progress \
-                            --format RspecJunitFormatter \
-                            --out /tmp/test-results/rspec.xml \
-                            --format progress \
-                            "${TEST_FILES}"
+      - run: bundle exec rubocop -D -R -c .rubocop.yml
 
-      # collect reports
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+      - type: store_artifacts
+        path: tmp/capybara/
+        destination: capybara
+
+      # Save artifacts
+      - type: store_test_results
+        path: /tmp/test-results
