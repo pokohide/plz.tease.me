@@ -1,0 +1,13 @@
+.flash-messages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .ui.message.flash-message {
+    width: 80%;
+    position: absolute;
+    top: 80px;
+    -webkit-transform: translateY(-50%); /* Safari用 */
+    transform: translateY(-50%);
+  }
+}

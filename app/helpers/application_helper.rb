@@ -17,4 +17,27 @@ module ApplicationHelper
       image_tag 'user.png', class: class_name
     end
   end
+
+  def flash_messages
+    content_tag(:div, class: 'flash-messages') do
+      flash.each do |type, msg|
+        concat(
+          content_tag(:div, class: flash_class(type)) do
+            concat content_tag(:p, msg)
+            concat content_tag(:i,'', class: 'close icon')
+          end
+        )
+      end
+    end
+  end
+
+  private
+
+  def flash_class level
+    case level
+    when 'success' then 'ui green message flash-message'
+    when 'error', 'danger', 'alert' then 'ui red message flash-message'
+    when 'notice' then 'ui blue message flash-message'
+    end
+  end
 end

@@ -14,8 +14,10 @@ import 'components/base'
 $(document).ready(() => {
   $('.ui.dropdown').dropdown({ on: 'hover' })
   $('.ui.checkbox').checkbox()
-  //$('.ui.checkbox').checkbox()
-  // $('.ui.accordion').accordion()
+
+  $('.flash-message .close.icon').on('click', function(e) {
+    $(this).parent('.flash-message').fadeOut(500)
+  })
 
   // $('img.lazy').lazyload({ effect : "fadeIn" })
 })
