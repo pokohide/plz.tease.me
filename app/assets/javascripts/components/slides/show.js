@@ -21,7 +21,13 @@ $('.slides.show').ready(() => {
     $(`.${target}-tab`).fadeIn(500)
   })
 
-  const pdfKit = new PdfKit(gon.pdf_url, 'pdf-viewer')
+  const pdfKit = new PdfKit(gon.pdf_url, {
+    container  : '.slide-viewer',
+    canvas     : '#pdf-viewer',
+    textLayer  : '.text-layer',
+    pageCounter: '.page-counter',
+    progress   : '.slide-progress',
+  })
 
   $('#prev').on('click', () => {
     pdfKit.goPrev()
@@ -30,7 +36,4 @@ $('.slides.show').ready(() => {
   $('#next').on('click', () => {
     pdfKit.goNext()
   })
-
-
-  $('.slide-progress.ui.tiny.progress').progress({ percent: 22 })
 })
