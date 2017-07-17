@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714012840) do
+ActiveRecord::Schema.define(version: 20170717040652) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
@@ -31,16 +31,16 @@ ActiveRecord::Schema.define(version: 20170714012840) do
   end
 
   create_table "slides", force: :cascade do |t|
-    t.integer  "user_id",                       null: false
+    t.integer  "user_id",                      null: false
     t.string   "title"
     t.string   "slug"
-    t.boolean  "is_public",     default: false, null: false
-    t.string   "original_file"
+    t.boolean  "is_public",    default: false, null: false
     t.string   "pdf_file"
     t.string   "image_file"
     t.datetime "published_at"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "page_view",    default: 0
     t.index ["user_id"], name: "index_slides_on_user_id"
   end
 
