@@ -35,7 +35,6 @@ gem 'pdfjs_rails'
 gem 'poppler'
 
 # Frontend
-gem 'dropzonejs-rails'
 gem 'gon'
 gem 'jquery-rails'
 gem 'kaminari'
@@ -82,6 +81,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
+  gem 'brakeman', require: false
 end
 
 group :production do
