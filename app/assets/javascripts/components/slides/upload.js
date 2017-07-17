@@ -2,7 +2,7 @@ $('.slides.new, .slides.create').ready(() => {
   Dropzone.autoDiscover = false
   new Dropzone('#upload-dropzone', {
     uploadMultiple: false,
-    paramName: 'slide[original_file]',
+    paramName: 'slide[pdf_file]',
     params: {
       'slide[document_id]': 123
     },

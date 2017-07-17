@@ -16,7 +16,7 @@ class Admin::SlidesController < ApplicationController
     # Ppt2pdfJob.perform_later(slide)
 
     slide = current_user.slides.new(create_slide_params)
-    original_filename = create_slide_params[:original_file]
+    original_filename = create_slide_params[:pdf_file]
 
     slide.with_lock do
       slide.slide_outline = pdf2outline(original_filename)
@@ -32,10 +32,9 @@ class Admin::SlidesController < ApplicationController
   end
 
   def update
-    # @slide = current_user.slides.lock.find(params[:id])
-    @slide = current_user.slides.find(params[:id])
-    if (original_filename = params[:slide][:original_file])
-      @slide.reupload(original_file)
+    @slide = current_user.slides.lock.find(params[:id])
+    if (original_filename = params[:slide][:pdf_file])
+      @slide.reupload(pdf_file)
       redirect_to edit_admin_slide_path(@slide)
     else
       if @slide.update(update_slide_params)
@@ -83,11 +82,11 @@ class Admin::SlidesController < ApplicationController
   end
 
   def create_slide_params
-    title = File.basename(params[:slide][:original_file].original_filename, '.*')
+    title = File.basename(params[:slide][:pdf_file].original_filename, '.*')
     title.encode!('UTF-8', 'UTF-8-MAC')
     params[:slide][:title] = title
     params[:slide][:published_at] = Time.current
-    params.require(:slide).permit(:title, :original_file, :published_at)
+    params.require(:slide).permit(:title, :pdf_file, :published_at)
   end
 
   def update_slide_params

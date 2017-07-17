@@ -6,7 +6,7 @@
     = form_for @slide, url: admin_slide_path, html: { method: :put, class: 'ui large form' } do |f|
       .ui.grid
         .eight.wide.column
-          = f.file_field(:original_file)
+          = f.file_field(:pdf_file)
           = f.submit 'upload'
 
         .eight.wide.column

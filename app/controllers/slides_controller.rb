@@ -16,7 +16,7 @@ class SlidesController < ApplicationController
     @comments = @slide.comments.desc
     # @slide = @user.slides.is_public.find_by(slug: params[:slug])
     # @slide.access_count.increment
-    gon.pdf_url = @slide.original_file.to_s
+    gon.pdf_url = @slide.pdf_file.to_s
   end
 
   def search

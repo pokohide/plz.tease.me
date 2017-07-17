@@ -26,7 +26,6 @@ class Slide < ApplicationRecord
   has_one :slide_outline, dependent: :destroy
 
   # Uploader
-  mount_uploader :original_file, PdfUploader
   mount_uploader :pdf_file, PdfUploader
   mount_uploader :image_file, ImageUploader
 
