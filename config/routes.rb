@@ -23,4 +23,5 @@ Rails.application.routes.draw do
   end
 
   get 'upload', to: 'admin/slides#new', as: :upload
+  post 'upload-pdf', to: 'admin/slides#upload_pdf', as: :upload_pdf
 end

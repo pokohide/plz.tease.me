@@ -27,6 +27,16 @@ class Admin::SlidesController < ApplicationController
     redirect_to edit_admin_slide_path(slide)
   end
 
+  def upload_pdf
+    @slide = current_user.slides.new(create_slide_params)
+    pdf_file = create_slide_params[:pdf_file]
+
+    @slide.with_lock do
+      @slide.image_file = pdf2png(pdf_file)
+      @slide.save!
+    end
+  end
+
   def edit
     @slide = current_user.slides.find(params[:id])
   end

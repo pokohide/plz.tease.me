@@ -1,17 +1,56 @@
 .upload-container
-  .ui.two.steps
-    .step
-      i.movie.icon
+
+  .ui.two.unstackable.steps
+    .active.step.one
+      i.file.powerpoint.outline.icon
       .content
         .title スライド
-    .step
-      i.info.icon
+        .description スライド(PDF)を投稿
+
+    .step.two
+      i.write.icon
       .content
         .title 詳細
-  = form_tag(admin_slides_path, class: 'dropzone', id: 'upload-dropzone') do
-    .fallback
-      = file_field_tag('slide[pdf_file]')
+        .description タイトルを入力
 
-  = form_for(current_user.slides.new, url: admin_slides_path) do |f|
-    = f.file_field(:pdf_file)
-    = f.submit 'upload'
+  = form_for(current_user.slides.new, url: admin_slides_path, class: 'ui large form') do |f|
+
+    .step-content.active.one
+      .ui.segment
+        .drag-and-drop-area
+            span
+              i.file.icon
+            | Drag and Drop your files
+
+        = f.hidden_field :id
+
+    .step-content.two
+      .ui.segment
+        .ui.grid
+          .eight.wide.column
+            .slide-preview
+              .ui.top.attached.teal.progress
+                .bar
+
+          .eight.wide.column
+            .field
+              label = f.label :title, 'タイトル'
+              .ui.fluid.input
+                = f.text_field :title, class: 'input'
+
+            .field
+              label = f.label :slug, 'スラッグ'
+              .ui.fluid.input
+                = f.text_field :slug, class: 'input'
+
+            .field
+              label = f.label :tag_list, 'タグ'
+              .ui.fluid.input
+                = f.text_field :tag_list, id: 'tagList'
+
+            .field
+              .ui.toggle.checkbox
+                = f.check_box :is_public, class: 'hidden'
+                label 公開する
+
+        = f.submit '登録', class: 'ui fluid button', style: 'margin-top: 60px'
