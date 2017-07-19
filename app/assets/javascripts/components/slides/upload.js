@@ -22,23 +22,43 @@ $('.slides.new, .slides.create').ready(() => {
     addedfile: (file) => {
       console.log('addedFile', file)
 
+      uploadPDF(file)
+      .then(({ id, title, slug, pdf_url }) => {
+        //console.log(slide)
+        //const { id, title, slug, pdf_url } = slide
+        $('#slide_id').val(id)
+        $('#slide_title').val(title)
+        $('#slide_slug').val(slug)
+        changeStep(2)
+      })
+      .catch((err) => { alert(err) })
+    }
+  })
+
+  /* PDFをアップロードする */
+  const uploadPDF = file => {
+    return new Promise((resolve, reject) => {
       request
         .post('/upload-pdf')
         .set('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content') )
         .attach('slide[pdf_file]', file)
-        .on('progress', (evt)=> {
-          console.debug(evt.percent);
-        })
+        .on('progress', (evt)=> { console.log('progress', evt.percent) })
         .end((err, res) => {
-          if(err) return alert('エラー発生')
-          const { slide: { id, title, pdf_url } } = res.body
+          if(err) return reject(err)
+          console.log('done', res)
+          return resolve(res.body.slide)
         })
-    }
-  })
+    })
+  }
+
+  /* PDFの処理を要求するAPIを叩く */
+  const processPDF = () => {
+    return new Promsie((resolve, reject) => {
+    })
+  }
 
 
-
-  /* stepは1, 2, 3とする */
+  /* stepは1, 2とする */
   const changeStep = step => {
     if (![1, 2].includes(step)) return
     const nowStep = ['one', 'two'][step - 1]
