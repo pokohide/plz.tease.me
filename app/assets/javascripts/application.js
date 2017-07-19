@@ -8,6 +8,7 @@
 //= require pdf
 //= require pdf.worker
 //= require dropzone
+//= require slick
 //= require alertify
 
 //import 'externals/base'

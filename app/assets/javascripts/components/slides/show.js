@@ -1,5 +1,5 @@
-import PdfKit from '../../utils/pdf-kit'
 import Fullscreen from '../../utils/fullscreen'
+import Slider from '../../utils/slider'
 
 $('.slides.show').ready(() => {
   $('.comments').on('click', '.reply', function(e) {
@@ -22,21 +22,46 @@ $('.slides.show').ready(() => {
     $(`.${target}-tab`).fadeIn(500)
   })
 
-  const pdfKit = new PdfKit({
-    container    : '.slide-viewer',
-    canvas       : '#pdf-viewer',
+  const slider = new Slider({
+    slider       : '.slide-viewer',
     progressCount: '.page-counter',
     progressBar  : '.slide-progress',
     loader       : '.slide-loader',
+    totalPages   : gon.total_pages,
   })
+
   const fs = new Fullscreen($('.slide-viewer-container'), $('#fullscreen'))
 
-  pdfKit.loadDocument(gon.pdf_url)
-  .catch((err) => {
-    alertify.error('スライドを読み込めませんでした。リロードしてください。')
+  $('.slide-viewer').slick({
+      accessibility: true,
+      autoplay     : false,
+      cssEase: 'liner',
+      dots: false,
+      draggable: false,
+      arrows: false,
+      initialSlide: 0,
+      lazyLoad: 'ondemand',
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      swipe: true,
+      vertical: false,
+    　centerMode: true,
+      centerPadding: '0',
   })
 
-  $('#prev').on('click', () => { pdfKit.goPrev() })
-  $('#next').on('click', () => { pdfKit.goNext() })
+  $('#prev').on('click', () => { slider.goPrev() })
+  $('#next').on('click', () => { slider.goNext() })
   $('#fullscreen').on('click', () => { fs.toggle() })
+  $(window).resize(() => { slider.resize() })
+
+  $(document).on('keydown', (e) => {
+    const key = e.keyCode
+    if (key == 39 || key == 40 || key == 13) {
+      slider.goNext()
+      e.preventDefault()
+    } else if (key == 37 || key == 38) {
+      slider.goPrev()
+      e.preventDefault()
+    }
+  })
 })

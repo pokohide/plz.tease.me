@@ -21,7 +21,7 @@ class Admin::SlidesController < ApplicationController
     Pdf2pngJob.perform_later(@slide.id)
 
     if @slide.update(update_slide_params)
-      redirect_to admin_slide_path(@slide), notice: 'スライドを投稿しました。'
+      redirect_to slide_path(@slide), notice: 'スライドを投稿しました。'
     else
       render :edit
     end
