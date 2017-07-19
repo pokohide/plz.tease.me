@@ -8,8 +8,7 @@ class Admin::SlidesController < ApplicationController
     render 'slides/index'
   end
 
-  def new
-  end
+  def new; end
 
   def create
     # slide = current_user.slides.create!(create_slide_params)
@@ -37,6 +36,30 @@ class Admin::SlidesController < ApplicationController
     end
   end
 
+  def process_pdf
+    binding.pry
+    @slide = Slide.find(params[:slide_id])
+
+    blob = open(@slide.pdf_file.to_s).read
+    pdf = Magick::ImageList.new.from_blob(blob)
+
+    num = pdf.size
+
+    pdf.each_with_index do |page_img, index|
+      page = @slide.pages.new(num: index)
+
+      temp_file = Tempfile.new([ 'temp', '.png' ])
+      page_img.write(temp_file.path)
+
+      page.image = temp_file
+      page.save!
+      temp_file.close!
+      temp_file.unlink
+
+      ActionCable.server.broadcast('progresses:1', percent: num * 100 / (index + 1))
+    end
+  end
+
   def edit
     @slide = current_user.slides.find(params[:id])
   end
@@ -59,8 +82,7 @@ class Admin::SlidesController < ApplicationController
   end
 
   def destroy
-    # @slide = current_user.slides.lock.find(params[:id])
-    @slide = current_user.slides.find(params[:id])
+    @slide = current_user.slides.lock.find(params[:id])
     @slide.destroy
     redirect_to admin_slides_path
   end

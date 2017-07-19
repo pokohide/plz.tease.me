@@ -52,11 +52,21 @@ $('.slides.new, .slides.create').ready(() => {
   }
 
   /* PDFの処理を要求するAPIを叩く */
-  const processPDF = () => {
-    return new Promsie((resolve, reject) => {
+  const processPDF = (slideId) => {
+    return new Promise((resolve, reject) => {
+      request
+        .post('/process-pdf')
+        .set('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content') )
+        .send({ slide_id: slideId })
+        .end((err, res) => {
+          if(err) return reject(err)
+          console.log('done', res)
+          return resolve(res)
+        })
     })
   }
 
+  processPDF(8)
 
   /* stepは1, 2とする */
   const changeStep = step => {
