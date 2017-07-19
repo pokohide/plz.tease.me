@@ -7,6 +7,7 @@
 #  body       :text(16777215)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  note       :text
 #
 # Indexes
 #

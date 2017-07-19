@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170719060732) do
+ActiveRecord::Schema.define(version: 20170719120346) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
@@ -36,22 +36,35 @@ ActiveRecord::Schema.define(version: 20170719060732) do
     t.text     "body",       limit: 16777215
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.text     "note"
     t.index ["slide_id"], name: "index_slide_outlines_on_slide_id"
   end
 
   create_table "slides", force: :cascade do |t|
-    t.integer  "user_id",                      null: false
+    t.integer  "user_id",                        null: false
     t.string   "title"
     t.string   "slug"
-    t.boolean  "is_public",    default: false, null: false
+    t.boolean  "is_public",      default: false, null: false
     t.string   "pdf_file"
     t.string   "image_file"
     t.datetime "published_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.integer  "page_view",    default: 0
-    t.boolean  "uploaded",     default: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "page_view",      default: 0
+    t.boolean  "uploaded",       default: false
+    t.integer  "comments_count", default: 0
+    t.integer  "likes_count",    default: 0
     t.index ["user_id"], name: "index_slides_on_user_id"
+  end
+
+  create_table "statistics", force: :cascade do |t|
+    t.integer  "slide_id"
+    t.integer  "download_count", default: 0
+    t.integer  "embed_views",    default: 0
+    t.integer  "share_count",    default: 0
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["slide_id"], name: "index_statistics_on_slide_id"
   end
 
   create_table "taggings", force: :cascade do |t|
