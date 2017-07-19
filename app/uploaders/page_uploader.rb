@@ -20,7 +20,11 @@ class PageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    "#{secure_token}.#{file.extension}" if original_filename.present?
+    "#{secure_token}.jpg" if original_filename.present?
+  end
+
+  def store_dir
+    "uploads/slides/#{model.slide.id}/#{model.class.to_s.underscore}"
   end
 
   private

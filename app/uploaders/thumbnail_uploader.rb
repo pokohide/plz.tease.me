@@ -30,10 +30,6 @@ class ThumbnailUploader < CarrierWave::Uploader::Base
     name = time.strftime('%Y%m%d%H%M%S') + '.png'
     name.downcase
   end
-  # 拡張子が同じでないとGIFをJPGとかにコンバートできないので、ファイル名を変更
-  def filename
-    super.chomp(File.extname(super)) + '.png' if original_filename.present?
-  end
 
   # jpg,jpeg,gif,pngしか受け付けない
   def extension_white_list
