@@ -23,6 +23,7 @@ class Slide < ApplicationRecord
   acts_as_taggable_on :tags
   belongs_to :user
   has_many :comments, dependent: :destroy
+  has_many :pages, dependent: :destroy
   has_one :slide_outline, dependent: :destroy
 
   # Uploader
