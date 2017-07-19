@@ -18,6 +18,7 @@ class SlidesController < ApplicationController
     # @slide.access_count.increment
     gon.pdf_url = @slide.pdf_file.to_s
     gon.total_pages = @slide.pages.size
+    @slide.increment!(:page_view)
   end
 
   def search

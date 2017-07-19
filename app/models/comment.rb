@@ -18,6 +18,7 @@
 class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :slide
+  counter_culture :slide
 
   scope :desc, -> { order(created_at: :desc) }
 
