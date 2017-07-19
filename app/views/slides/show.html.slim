@@ -45,8 +45,7 @@
         == render partial: 'note_tab', locals: { slide: @slide }
 
       .ui.segment
-        / = simple_format(@slide.slide_outline.body)
-        = @slide.slide_outline.body.strip
+        = outline_format(@slide.slide_outline.body)
 
     .six.wide.column
       .ui.divided.items

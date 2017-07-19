@@ -1,6 +1,12 @@
 const request = require('superagent')
 
 $('.slides.new, .slides.create').ready(() => {
+  $('#slide-tags').tagit({
+    fieldName: 'slide[tag_list]',
+    singleField: true,
+    availableTags: gon.available_tags || []
+  })
+
   Dropzone.autoDiscover = false
   const dropzone = new Dropzone('.drag-and-drop-area', {
     url                  : '/upload-pdf',
@@ -26,14 +32,12 @@ $('.slides.new, .slides.create').ready(() => {
 
       uploadPDF(file)
       .then(({ id, title, slug, pdf_url }) => {
-        //console.log(slide)
-        //const { id, title, slug, pdf_url } = slide
         $('#slide_id').val(id)
         $('#slide_title').val(title)
         $('#slide_slug').val(slug)
-        changeStep(2)
         $('.upload-indicator').removeClass('active')
         $('.proccess-indicator').addClass('active')
+        changeStep(2)
         return processPDF(id)
       })
       .then((res) => {
@@ -88,7 +92,4 @@ $('.slides.new, .slides.create').ready(() => {
     $(`.step.${nowStep}`).addClass('active')
     $(`.step-content.${nowStep}`).addClass('active')
   }
-
-    changeStep(2)
-
 })

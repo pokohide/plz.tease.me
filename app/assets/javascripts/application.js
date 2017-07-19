@@ -1,8 +1,10 @@
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require semantic-ui
 //= require jquery.readyselector
 //= require jquery.fullscreen
+//= require tag-it
 //= require pdf
 //= require pdf.worker
 //= require dropzone

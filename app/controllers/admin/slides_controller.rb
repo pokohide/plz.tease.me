@@ -1,5 +1,7 @@
 class Admin::SlidesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_slide_tags_to_gon, only: [:edit]
+  before_action :set_available_tags_to_gon, only: [:new, :edit]
 
   def index
     @slides = current_user.slides.preload(:user).
@@ -11,26 +13,23 @@ class Admin::SlidesController < ApplicationController
   def new; end
 
   def create
-    # slide = current_user.slides.create!(create_slide_params)
-    # Ppt2pdfJob.perform_later(slide)
-    
-    binding.pry
+    @slide = current_user.slides.lock.find(params[:slide][:id])
 
-    # slide = current_user.slides.new(create_slide_params)
-    # original_filename = create_slide_params[:pdf_file]
+    # 非同期でPDF -> Outlineを実行
+    Pdf2outlineJob.perform_later(@slide.id)
+    # 非同期でサムネイル画像作成
+    Pdf2pngJob.perform_later(@slide.id)
 
-    # slide.with_lock do
-    #   slide.slide_outline = pdf2outline(original_filename)
-    #   slide.image_file = pdf2png(original_filename)
-    #   slide.save!
-    # end
-
-    redirect_to edit_admin_slide_path(slide)
+    if @slide.update(update_slide_params)
+      redirect_to admin_slide_path(@slide), notice: 'スライドを投稿しました。'
+    else
+      render :edit
+    end
   end
 
   def upload_pdf
-    @slide = current_user.slides.new(create_slide_params)
-    pdf_file = create_slide_params[:pdf_file]
+    @slide = current_user.slides.new(create_pdf_params)
+    pdf_file = create_pdf_params[:pdf_file]
 
     @slide.with_lock do
       # @slide.image_file = pdf2png(pdf_file)
@@ -41,26 +40,22 @@ class Admin::SlidesController < ApplicationController
   def process_pdf
     #binding.pry
     @slide = Slide.find(params[:slide_id])
-    # ActionCable.server.broadcast('progresses:1', percent: 100)
-
-    # \blob = open(@slide.pdf_file.to_s).read
-    # pdf = Magick::ImageList.new.from_blob(blob)
+    pdf = Magick::ImageList.new.from_blob(open(@slide.pdf_file.to_s).read)
 
     # num = pdf.size
+    pdf.each_with_index do |page_img, index|
+      page = @slide.pages.new(num: index)
 
-    # pdf.each_with_index do |page_img, index|
-    #   page = @slide.pages.new(num: index)
+      temp_file = Tempfile.new([ 'temp', '.png' ])
+      page_img.write(temp_file.path)
 
-    #   temp_file = Tempfile.new([ 'temp', '.png' ])
-    #   page_img.write(temp_file.path)
+      page.image = temp_file
+      page.save!
+      temp_file.close!
+      temp_file.unlink
 
-    #   page.image = temp_file
-    #   page.save!
-    #   temp_file.close!
-    #   temp_file.unlink
-
-    #   ActionCable.server.broadcast('progresses:1', percent: num * 100 / (index + 1))
-    # end
+      # ActionCable.server.broadcast('progresses:1', percent: num * 100 / (index + 1))
+    end
   end
 
   def edit
@@ -92,18 +87,12 @@ class Admin::SlidesController < ApplicationController
 
   private
 
-  def pdf2outline file
-    pdf_file_path = file.path
-    # pdf -> txt に xpdf を使う
-    # text = `pdftotext -nopgbrk #{pdf_file_path} -`
-    # SlideOutline.new(body: text)
-    pdf = Poppler::Document.new(pdf_file_path)
-    outline = ''
-    pdf.pages.each_with_index do |page, index|
-      outline += "#{index + 1}. #{page.get_text}"
-      outline += "\n" if index != pdf.size - 1
-    end
-    SlideOutline.new(body: outline)
+  def set_slide_tags_to_gon
+    gon.slide_tags = @slide.tag_list
+  end
+
+  def set_available_tags_to_gon
+    gon.available_tags = Slide.tags_on(:tags).pluck(:name)
   end
 
   def pdf2png file
@@ -116,7 +105,7 @@ class Admin::SlidesController < ApplicationController
     end
   end
 
-  def create_slide_params
+  def create_pdf_params
     title = File.basename(params[:slide][:pdf_file].original_filename, '.*')
     title.encode!('UTF-8', 'UTF-8-MAC')
     params[:slide][:title] = title
@@ -125,6 +114,6 @@ class Admin::SlidesController < ApplicationController
   end
 
   def update_slide_params
-    params.require(:slide).permit(:title, :is_public, :published_at, :slug, :tag_list)
+    params.require(:slide).permit(:title, :slug, :is_public, :tag_list, :published_at, :uploaded)
   end
 end
