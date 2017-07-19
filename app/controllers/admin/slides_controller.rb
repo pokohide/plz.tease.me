@@ -13,15 +13,17 @@ class Admin::SlidesController < ApplicationController
   def create
     # slide = current_user.slides.create!(create_slide_params)
     # Ppt2pdfJob.perform_later(slide)
+    
+    binding.pry
 
-    slide = current_user.slides.new(create_slide_params)
-    original_filename = create_slide_params[:pdf_file]
+    # slide = current_user.slides.new(create_slide_params)
+    # original_filename = create_slide_params[:pdf_file]
 
-    slide.with_lock do
-      slide.slide_outline = pdf2outline(original_filename)
-      slide.image_file = pdf2png(original_filename)
-      slide.save!
-    end
+    # slide.with_lock do
+    #   slide.slide_outline = pdf2outline(original_filename)
+    #   slide.image_file = pdf2png(original_filename)
+    #   slide.save!
+    # end
 
     redirect_to edit_admin_slide_path(slide)
   end
@@ -31,33 +33,34 @@ class Admin::SlidesController < ApplicationController
     pdf_file = create_slide_params[:pdf_file]
 
     @slide.with_lock do
-      @slide.image_file = pdf2png(pdf_file)
+      # @slide.image_file = pdf2png(pdf_file)
       @slide.save!
     end
   end
 
   def process_pdf
-    binding.pry
+    #binding.pry
     @slide = Slide.find(params[:slide_id])
+    # ActionCable.server.broadcast('progresses:1', percent: 100)
 
-    blob = open(@slide.pdf_file.to_s).read
-    pdf = Magick::ImageList.new.from_blob(blob)
+    # \blob = open(@slide.pdf_file.to_s).read
+    # pdf = Magick::ImageList.new.from_blob(blob)
 
-    num = pdf.size
+    # num = pdf.size
 
-    pdf.each_with_index do |page_img, index|
-      page = @slide.pages.new(num: index)
+    # pdf.each_with_index do |page_img, index|
+    #   page = @slide.pages.new(num: index)
 
-      temp_file = Tempfile.new([ 'temp', '.png' ])
-      page_img.write(temp_file.path)
+    #   temp_file = Tempfile.new([ 'temp', '.png' ])
+    #   page_img.write(temp_file.path)
 
-      page.image = temp_file
-      page.save!
-      temp_file.close!
-      temp_file.unlink
+    #   page.image = temp_file
+    #   page.save!
+    #   temp_file.close!
+    #   temp_file.unlink
 
-      ActionCable.server.broadcast('progresses:1', percent: num * 100 / (index + 1))
-    end
+    #   ActionCable.server.broadcast('progresses:1', percent: num * 100 / (index + 1))
+    # end
   end
 
   def edit

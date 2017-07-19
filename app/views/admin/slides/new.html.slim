@@ -22,6 +22,9 @@
               i.file.icon
             | Drag and Drop your files
 
+        .ui.dimmer.upload-indicator
+          .ui.text.loader Uploading...
+
         = f.hidden_field :id
 
     .step-content.two
@@ -31,8 +34,12 @@
             .slide-preview
               .ui.top.attached.teal.progress
                 .bar
+            .ui.inverted.dimmer.proccess-indicator
+              .ui.medium.text.loader スライドを変換中...
 
           .eight.wide.column
+            = f.hidden_field :uploaded
+
             .field
               label = f.label :title, 'タイトル'
               .ui.fluid.input
@@ -53,4 +60,4 @@
                 = f.check_box :is_public, class: 'hidden'
                 label 公開する
 
-        = f.submit '登録', class: 'ui fluid button', style: 'margin-top: 60px'
+        = f.submit '登録', class: 'ui fluid positive disabled button upload-button', style: 'margin-top: 60px'

@@ -13,6 +13,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  page_view    :integer          default(0)
+#  uploaded     :boolean          default(FALSE)
 #
 # Indexes
 #

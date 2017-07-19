@@ -22,6 +22,8 @@ $('.slides.new, .slides.create').ready(() => {
     addedfile: (file) => {
       console.log('addedFile', file)
 
+      $('.upload-indicator').addClass('active')
+
       uploadPDF(file)
       .then(({ id, title, slug, pdf_url }) => {
         //console.log(slide)
@@ -30,6 +32,13 @@ $('.slides.new, .slides.create').ready(() => {
         $('#slide_title').val(title)
         $('#slide_slug').val(slug)
         changeStep(2)
+        $('.upload-indicator').removeClass('active')
+        $('.proccess-indicator').addClass('active')
+        return processPDF(id)
+      })
+      .then((res) => {
+        $('.proccess-indicator').removeClass('active')
+        $('.upload-button').removeClass('disabled')
       })
       .catch((err) => { alert(err) })
     }
@@ -66,7 +75,7 @@ $('.slides.new, .slides.create').ready(() => {
     })
   }
 
-  processPDF(8)
+  // processPDF(8)
 
   /* stepは1, 2とする */
   const changeStep = step => {
@@ -79,5 +88,7 @@ $('.slides.new, .slides.create').ready(() => {
     $(`.step.${nowStep}`).addClass('active')
     $(`.step-content.${nowStep}`).addClass('active')
   }
+
+    changeStep(2)
 
 })

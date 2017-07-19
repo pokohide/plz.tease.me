@@ -1,7 +1,11 @@
 App.progresses = App.cable.subscriptions.create('ProgressChannel', {
   connected: () => {
-    this.install()
-    return this.follow()
+    console.log('connected')
+    // this.install()
+    // return this.follow()
+  },
+  disconnected: () => {
+    console.log('disconnected')
   },
   received: (data) => {
     console.log(data)
@@ -11,11 +15,6 @@ App.progresses = App.cable.subscriptions.create('ProgressChannel', {
   follow: () => {
     return this.perform('follow', {
       progress_id: 1
-    })
-  },
-  install: () => {
-    return $(document).on('page:change', () => {
-      return App.progresses.follow()
     })
   }
 })
