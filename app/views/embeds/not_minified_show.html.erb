@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="ja" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= @slide.title %></title>
+  <!--&#91;if lt IE 9&#93;>
+  <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <!&#91;endif&#93;-->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js'></script>
+  <link rel='canonical' href='http://localhost:3000/slides/<%= @slide.id %>'>
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <script type="text/javascript">
+  <!--
+  $(document).ready(function() {
+
+  });
+  // -->
+  </script>
+</head>
+<body style="margin:0;padding:0">
+  <div class="slide-viewer-container">
+    <div class="slide-viewer">
+      <% @slide.pages.each do |page| %>
+        <div><%= image_tag page.image_url(:medium) %></div>
+      <% end %>
+      <div class="ui inverted dimmer slide-loader">
+        <div class="ui large text loader">Loading</div>
+      </div>
+    </div>
+    <div class="slide-toolbar-container">
+      <div class="slide-progress ui teal tiny progress">
+        <div class="bar"></div>
+      </div>
+      <div class="slide-toolbar">
+        <div class="brand-title">
+          <%= link_to 'Tease.Me', root_path %>
+        </div>
+        <div class="slide-pager">
+          <button class="tool-item" id="prev">
+            <i class="angle double left icon"></i>
+          </button>
+          <div class="page-conter"></div>
+          <button class="tool-item" id="next">
+            <i class="angle double right icon"></i>
+          </button>
+        </div>
+        <button class="tool-item" id="fullscreen">
+          <i class="expand icon"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
