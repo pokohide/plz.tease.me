@@ -6,7 +6,6 @@
 //= require jquery.fullscreen
 //= require tag-it
 //= require dropzone
-//= require slick
 //= require alertify
 //= require action_cable
 //= require lightslider
