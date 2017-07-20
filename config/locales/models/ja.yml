@@ -13,6 +13,7 @@ ja:
         email: メールアドレス
         provider: プロバイダー
         username: ユーザ名
+        display_name: 表示名
         thumbnail: サムネイル画像
         password: パスワード
       comment:

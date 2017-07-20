@@ -31,6 +31,10 @@ module ApplicationHelper
     end
   end
 
+  def field(object, attribute)
+    "field#{object.errors[attribute].empty? ? '' : ' error'}"
+  end
+
   private
 
   def flash_class level

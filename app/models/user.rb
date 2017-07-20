@@ -41,7 +41,9 @@ class User < ApplicationRecord
          :confirmable, :omniauthable, omniauth_providers: [:twitter, :facebook]
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :username, presence: true, uniqueness: true
+  VALID_DISPLAY_NAME_REGEX = /\A[a-zA-Z0-9]+\z/i
+  validates :display_name, presence: true
+  validates :username, presence: true, format: { with: VALID_DISPLAY_NAME_REGEX }, uniqueness: true
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
 
   # Reference

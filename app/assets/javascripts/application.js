@@ -23,5 +23,9 @@ $(document).ready(() => {
     $(this).parent('.flash-message').fadeOut(500)
   })
 
+  /* data-load指定のボタンはクリックしたらローディングにする */
+  $('[data-loading="true"]').on('click', function() {
+    $(this).addClass('loading')
+  })
   // $('img.lazy').lazyload({ effect : "fadeIn" })
 })
