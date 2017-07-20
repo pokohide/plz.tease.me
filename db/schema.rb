@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170720091012) do
+ActiveRecord::Schema.define(version: 20170720211857) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20170720091012) do
     t.boolean  "uploaded",       default: false
     t.integer  "comments_count", default: 0
     t.integer  "likes_count",    default: 0
+    t.integer  "category",       default: 1,     null: false
     t.index ["user_id"], name: "index_slides_on_user_id"
   end
 

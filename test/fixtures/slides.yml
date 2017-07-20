@@ -16,6 +16,7 @@
 #  uploaded       :boolean          default(FALSE)
 #  comments_count :integer          default(0)
 #  likes_count    :integer          default(0)
+#  category       :integer          default(1), not null
 #
 # Indexes
 #

@@ -27,8 +27,10 @@ $('.slides.new, .slides.create').ready(() => {
     dictCancelUpload     : 'アップロードできませんでした',
     addedfile: (file) => {
       console.log('addedFile', file)
-
       $('.upload-indicator').addClass('active')
+      $(window).on('beforeunload', () => {
+        return 'このページを離れると、入力したデータが削除されます。本当に移動しますか。'
+      })
 
       uploadPDF(file)
       .then(({ id, title, slug, pdf_url }) => {
@@ -107,4 +109,6 @@ $('.slides.new, .slides.create').ready(() => {
       },
     }
   )
+
+  $('.ui.category-dropdown').dropdown({ on: 'click' })
 })

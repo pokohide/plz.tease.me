@@ -27,5 +27,8 @@ $(document).ready(() => {
   $('[data-loading="true"]').on('click', function() {
     $(this).addClass('loading')
   })
+  $('a, input[type=submit]').on('click', () => {
+    $(window).off('beforeunload')
+  })
   // $('img.lazy').lazyload({ effect : "fadeIn" })
 })

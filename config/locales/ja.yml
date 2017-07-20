@@ -1,5 +1,24 @@
 ---
 ja:
+  enums:
+    slide:
+      category:
+        books: 図書
+        business: ビジネス
+        design: デザイン
+        education: 教育
+        entertainment: エンターテイメント
+        finance: 経済
+        games: ゲーム
+        health: 健康
+        how_to: ノウハウ
+        humor: ユーモア
+        photos: 写真
+        programming: プログラミング
+        research: 研究
+        science: 科学
+        technology: テクノロジー
+        travel: 旅行
   activerecord:
     errors:
       messages:

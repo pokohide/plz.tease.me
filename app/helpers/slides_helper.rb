@@ -2,7 +2,7 @@ module SlidesHelper
   include ActsAsTaggableOn::TagsHelper
 
   def outline_format(outline)
-    return content_tag(:div, '処理中です。') if outline.nil? || outline.body.empty?
+    return content_tag(:div, '処理中です。') if outline.nil? || outline.body.nil?
     sections = outline.body.split(/\|{6}/)
 
     content_tag_push(:div, class: 'slide-outline-container') do |div|

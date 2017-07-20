@@ -16,6 +16,7 @@
 #  uploaded       :boolean          default(FALSE)
 #  comments_count :integer          default(0)
 #  likes_count    :integer          default(0)
+#  category       :integer          default(1), not null
 #
 # Indexes
 #
@@ -28,6 +29,12 @@ class Slide < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :pages, dependent: :destroy
   has_one :slide_outline, dependent: :destroy
+  accepts_nested_attributes_for :slide_outline
+
+  # Category
+  enum category: { books: 1, business: 2, design: 3, education: 4, entertainment: 5,
+    finance: 6, games: 7, health: 8, how_to: 9, humor: 10, photos: 11,
+    programming: 12, research: 13, science: 14, technology: 15, travel: 16 }
 
   # Uploader
   mount_uploader :pdf_file, PdfUploader
@@ -44,6 +51,7 @@ class Slide < ApplicationRecord
   validates :title,        presence: true
   validates :slug,         presence: true, format: { with: VALID_SLUG_REGEX, message: "英数と-_ のみで入力してください" }
   validates :published_at, presence: true
+  validates :category,     presence: true
 
   # redis-objects override AR lock method
   class << self

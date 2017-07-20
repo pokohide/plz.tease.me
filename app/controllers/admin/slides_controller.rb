@@ -12,6 +12,8 @@ class Admin::SlidesController < ApplicationController
   end
 
   def new
+    @slide = current_user.slides.new
+    @slide.build_slide_outline
     gon.user_id = current_user.id
   end
 
@@ -111,6 +113,7 @@ class Admin::SlidesController < ApplicationController
   end
 
   def update_slide_params
-    params.require(:slide).permit(:title, :slug, :is_public, :tag_list, :published_at, :uploaded)
+    params.require(:slide).permit(:title, :slug, :is_public, :tag_list, :category,
+      :published_at, :uploaded, slide_outline_attributes: [:note])
   end
 end

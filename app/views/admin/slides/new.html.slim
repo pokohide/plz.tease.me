@@ -13,7 +13,7 @@
         .title 詳細
         .description タイトルを入力
 
-  = form_for(current_user.slides.new, url: admin_slides_path, class: 'ui large form') do |f|
+  = form_for(@slide, url: admin_slides_path, class: 'ui large form') do |f|
 
     .step-content.active.one
       .ui.segment
@@ -52,8 +52,24 @@
             /     = f.text_field :slug, class: 'input'
 
             .field
+              label = f.label :category, 'カテゴリー'
+              .ui.fluid.selection.dropdown.category-dropdown
+                = f.hidden_field :category
+                i.dropdown.icon
+                .text
+                .menu
+                  - Slide.categories_i18n.invert.to_a.each do |key, value|
+                    .item(data-value="#{value}")
+                      = key
+
+            .field
               label = f.label :tag_list, 'タグ'
               ul#slide-tags.ui.fluid.input
+
+            = f.fields_for :slide_outline, @slide.slide_outline do |sf|
+              .field
+                label = sf.label :note, '概要'
+                = sf.text_area :note, rows: 4, placeholder: '...'
 
             .field
               .ui.toggle.checkbox
