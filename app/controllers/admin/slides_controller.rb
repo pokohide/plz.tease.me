@@ -5,6 +5,7 @@ class Admin::SlidesController < ApplicationController
 
   def index
     @slides = current_user.slides.preload(:user).
+                not_public.
                 published_at_desc.
                 page(params[:page])
     render 'slides/index'

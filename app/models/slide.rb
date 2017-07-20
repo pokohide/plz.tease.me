@@ -34,7 +34,8 @@ class Slide < ApplicationRecord
   mount_uploader :image_file, ImageUploader
 
   # Scope
-  scope :is_public, -> { where(is_public: true) }
+  scope :is_public, -> { where(uploaded: true, is_public: true) }
+  scope :not_public, -> { where(uploaded: true) }
   scope :published_at_desc, -> { order(published_at: :desc) }
 
   # Validate

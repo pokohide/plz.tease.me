@@ -2,7 +2,7 @@ class SlidesController < ApplicationController
 
   def index
     @slides = Slide.preload(:user).
-                # is_public.
+                is_public.
                 published_at_desc.
                 page(params[:page])
     respond_to do |format|
