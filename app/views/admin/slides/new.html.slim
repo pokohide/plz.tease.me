@@ -32,10 +32,11 @@
         .ui.grid
           .eight.wide.column
             .slide-preview
-              .ui.top.attached.teal.progress
-                .bar
-            .ui.inverted.dimmer.proccess-indicator
-              .ui.medium.text.loader スライドを変換中...
+              .progress-container
+                .ui.active.progress
+                  .bar
+                    .progress
+                  .label スライドを変換中...
 
           .eight.wide.column
             = f.hidden_field :uploaded

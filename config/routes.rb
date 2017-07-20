@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :slides, only: [:index, :create, :edit, :update, :destroy]
   end
 
+  get 'embeds/:slug', to: 'embeds#show', as: :embed
   get 'upload', to: 'admin/slides#new', as: :upload
   post 'upload-pdf', to: 'admin/slides#upload_pdf', as: :upload_pdf
   post 'process-pdf', to: 'admin/slides#process_pdf', as: :process_pdf

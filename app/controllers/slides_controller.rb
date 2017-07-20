@@ -15,10 +15,9 @@ class SlidesController < ApplicationController
     @slide = Slide.find(params[:id])
     @comments = @slide.comments.desc
     # @slide = @user.slides.is_public.find_by(slug: params[:slug])
-    # @slide.access_count.increment
     gon.pdf_url = @slide.pdf_file.to_s
     gon.total_pages = @slide.pages.size
-    @slide.increment!(:page_view)
+    @slide.increment(:page_view)
   end
 
   def search

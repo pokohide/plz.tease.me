@@ -5,13 +5,14 @@
 //= require jquery.readyselector
 //= require jquery.fullscreen
 //= require tag-it
-//= require pdf
-//= require pdf.worker
 //= require dropzone
 //= require slick
 //= require alertify
+//= require action_cable
 
-//import 'externals/base'
+window.App || (window.App = {});
+window.App.cable = ActionCable.createConsumer()
+
 import 'components/base'
 
 $(document).ready(() => {

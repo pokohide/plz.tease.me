@@ -10,7 +10,9 @@ class Admin::SlidesController < ApplicationController
     render 'slides/index'
   end
 
-  def new; end
+  def new
+    gon.user_id = current_user.id
+  end
 
   def create
     @slide = current_user.slides.lock.find(params[:slide][:id])
@@ -29,20 +31,14 @@ class Admin::SlidesController < ApplicationController
 
   def upload_pdf
     @slide = current_user.slides.new(create_pdf_params)
-    pdf_file = create_pdf_params[:pdf_file]
-
-    @slide.with_lock do
-      # @slide.image_file = pdf2png(pdf_file)
-      @slide.save!
-    end
+    @slide.save
   end
 
   def process_pdf
-    #binding.pry
     @slide = Slide.find(params[:slide_id])
     pdf = Magick::ImageList.new.from_blob(open(@slide.pdf_file.to_s).read)
+    total = pdf.size
 
-    # num = pdf.size
     pdf.each_with_index do |page_img, index|
       page = @slide.pages.new(num: index)
 
@@ -54,7 +50,7 @@ class Admin::SlidesController < ApplicationController
       temp_file.close!
       temp_file.unlink
 
-      # ActionCable.server.broadcast('progresses:1', percent: num * 100 / (index + 1))
+      ActionCable.server.broadcast "progress_channel_#{current_user.id}", total: total, num: index + 1
     end
   end
 

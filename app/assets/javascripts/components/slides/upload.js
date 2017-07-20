@@ -37,6 +37,9 @@ $('.slides.new, .slides.create').ready(() => {
         $('#slide_slug').val(slug)
         $('.upload-indicator').removeClass('active')
         $('.proccess-indicator').addClass('active')
+        $('.slide-preview .ui.progress').progress({
+          text: { active: 'スライド変換中...' }
+        })
         changeStep(2)
         return processPDF(id)
       })
@@ -79,8 +82,6 @@ $('.slides.new, .slides.create').ready(() => {
     })
   }
 
-  // processPDF(8)
-
   /* stepは1, 2とする */
   const changeStep = step => {
     if (![1, 2].includes(step)) return
@@ -88,8 +89,22 @@ $('.slides.new, .slides.create').ready(() => {
 
     $('.step.active').removeClass('active').addClass('completed')
     $('.step-content.active').removeClass('active')
-
     $(`.step.${nowStep}`).addClass('active')
     $(`.step-content.${nowStep}`).addClass('active')
   }
+
+  /* 進捗を表示 */
+  window.App.progress = window.App.cable.subscriptions.create(
+    { channel: 'ProgressChannel', user_id: gon.user_id }, {
+      connected: () => { console.log('connected') },
+
+      received: (data) => {
+        const { total, num } = data
+        $('.slide-preview .ui.progress').progress({
+          total: total, value: num,
+          text: { active: `${num}/${total} スライド変換中...` }
+        })
+      },
+    }
+  )
 })
