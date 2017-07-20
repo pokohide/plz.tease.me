@@ -1,5 +1,4 @@
 import Fullscreen from '../../utils/fullscreen'
-import Slider from '../../utils/slider'
 
 $('.slides.show').ready(() => {
   $('.comments').on('click', '.reply', function(e) {
@@ -24,18 +23,17 @@ $('.slides.show').ready(() => {
 
   const fs = new Fullscreen($('.slide-viewer-container'), $('#fullscreen'))
   const slider = $('.slide-viewer').lightSlider({
-    adaptiveHeight:true,
-    item: 1,
-    slideMargin:0,
-    currentPagerPosition:'left',
-    keyPress: true,
-    freeMove: false,
-    pager: false,
-    speed: 200,
+    adaptiveHeight: true,
+    item          : 1,
+    slideMargin   : 0,
+    keyPress      : true,
+    freeMove      : false,
+    pager         : false,
+    speed         : 200,
+    addClass      : 'padding-50',
+    prevHtml      : '<i class="angle double left icon"></i>',
+    nextHtml      : '<i class="angle double right icon"></i>',
     slideEndAnimation: false,
-    addClass: 'padding-50',
-    prevHtml: '<i class="angle double left icon"></i>',
-    nextHtml: '<i class="angle double right icon"></i>',
     onBeforeStart: () => {
       $('.slide-loader').addClass('active')
     },
@@ -59,5 +57,5 @@ $('.slides.show').ready(() => {
   $('#prev').on('click', () => { slider.goToPrevSlide() })
   $('#next').on('click', () => { slider.goToNextSlide() })
   $('#fullscreen').on('click', () => { fs.toggle() })
-  //$(window).resize(() => { slider.resize() })
+  $(window).resize(() => { slider.refresh() })
 })
