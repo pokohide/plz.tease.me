@@ -18,6 +18,7 @@ class SlidesController < ApplicationController
     gon.pdf_url = @slide.pdf_file.to_s
     gon.total_pages = @slide.pages.size
     @slide.increment(:page_view)
+    @recommend = Slide.limit(5)
   end
 
   def search

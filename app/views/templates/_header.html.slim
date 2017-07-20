@@ -10,10 +10,10 @@
           .ui.pointing.dropdown.link.item
             .text
               = image_tag current_user.thumbnail_url(:thumb), class: 'ui avatar image'
-              span = current_user.username
+              span = current_user.display_name
             i.dropdown.icon
             .menu
-              = link_to 'マイページ', user_path(current_user), class: 'item'
+              = link_to 'マイページ', account_path, class: 'item'
               = link_to 'プロフィール変更', edit_user_registration_path, class: 'item'
               = link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'item'
         - else

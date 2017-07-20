@@ -1,0 +1,21 @@
+section.ui.segment.slide-info
+  .ui.middle.aligned.divided.list
+    .item
+      .right.floated.content = slide.created_at.to_s(:date)
+      i.calendar.outline.icon
+      .content 投稿日
+
+    .item
+      .right.floated.content = 27
+      i.star.icon
+      .content スター数
+
+    .item
+      .right.floated.content 科学・技術
+      i.book.icon
+      .content カテゴリ
+
+    .item
+      .right.floated.content = "#{slide.page_view} Views"
+      i.bar.chart.icon
+      .content 合計

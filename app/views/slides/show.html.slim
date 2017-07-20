@@ -50,13 +50,7 @@
         = outline_format(@slide.slide_outline)
 
     .six.wide.column
-      .ui.divided.items
-        - ['title1', 'title2', 'title3', 'title1', 'title2', 'title3'].each do |title|
-          .item
-            .image
-              = image_tag 'noimage.png'
-            .content
-              .header = title
-              .meta
-                span ここに作者
-              .description hogehogehogehoge
+      == render partial: 'templates/sidebar/user_info', locals: { user: @slide.user }
+      == render partial: 'templates/sidebar/slide_info', locals: { slide: @slide }
+      == render partial: 'templates/sidebar/share', locals: { slide: @slide }
+      == render partial: 'templates/sidebar/recommend', locals: { slides: @recommend }
