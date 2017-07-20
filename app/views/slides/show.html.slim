@@ -2,12 +2,12 @@
   .ui.grid
     .ten.wide.column
       .slide-viewer-container
-        .slide-viewer
-          - @slide.pages.each do |page|
-            div
+        ul.slide-viewer
+          - @slide.pages.each_with_index do |page, index|
+            li(data-index="#{index}")
               = image_tag page.image_url(:medium)
-          .ui.inverted.dimmer.slide-loader
-            .ui.large.text.loader Loading
+        .ui.inverted.dimmer.slide-loader
+          .ui.large.text.loader Loading
         .slide-toolbar-container
           .slide-progress.ui.teal.tiny.progress
             .bar
@@ -17,7 +17,7 @@
             .slide-pager
               button.tool-item#prev
                i.angle.double.left.icon
-              .page-counter
+              .slide-counter
               button.tool-item#next
                 i.angle.double.right.icon
             button.tool-item#fullscreen

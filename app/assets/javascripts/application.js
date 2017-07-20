@@ -9,6 +9,7 @@
 //= require slick
 //= require alertify
 //= require action_cable
+//= require lightslider
 
 window.App || (window.App = {});
 window.App.cable = ActionCable.createConsumer()

@@ -7,11 +7,24 @@
 
   .slide-viewer {
     height: 100%;
-    padding-bottom: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+
+    img {
+      width: 100%;
+      height: auto;
+      max-height: 100%;
+    }
+  }
+
+  .padding-50 {
+    padding-bottom: 41px;
+  }
+
+  .progress .bar {
+    border-radius: 0;
   }
 
   .slick-list {

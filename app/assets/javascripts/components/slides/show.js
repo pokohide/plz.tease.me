@@ -22,46 +22,42 @@ $('.slides.show').ready(() => {
     $(`.${target}-tab`).fadeIn(500)
   })
 
-  const slider = new Slider({
-    slider       : '.slide-viewer',
-    progressCount: '.page-counter',
-    progressBar  : '.slide-progress',
-    loader       : '.slide-loader',
-    totalPages   : gon.total_pages,
-  })
-
   const fs = new Fullscreen($('.slide-viewer-container'), $('#fullscreen'))
-
-  $('.slide-viewer').slick({
-      accessibility: true,
-      autoplay     : false,
-      cssEase: 'liner',
-      dots: false,
-      draggable: false,
-      arrows: false,
-      initialSlide: 0,
-      lazyLoad: 'ondemand',
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      swipe: true,
-      vertical: false,
-    　centerMode: true,
-      centerPadding: '0',
-  })
-
-  $('#prev').on('click', () => { slider.goPrev() })
-  $('#next').on('click', () => { slider.goNext() })
-  $('#fullscreen').on('click', () => { fs.toggle() })
-  $(window).resize(() => { slider.resize() })
-
-  $(document).on('keydown', (e) => {
-    const key = e.keyCode
-    if (key == 39 || key == 40 || key == 13) {
-      slider.goNext()
-      e.preventDefault()
-    } else if (key == 37 || key == 38) {
-      slider.goPrev()
-      e.preventDefault()
+  const slider = $('.slide-viewer').lightSlider({
+    adaptiveHeight:true,
+    item: 1,
+    slideMargin:0,
+    currentPagerPosition:'left',
+    keyPress: true,
+    freeMove: false,
+    pager: false,
+    speed: 200,
+    slideEndAnimation: false,
+    addClass: 'padding-50',
+    prevHtml: '<i class="angle double left icon"></i>',
+    nextHtml: '<i class="angle double right icon"></i>',
+    onBeforeStart: () => {
+      $('.slide-loader').addClass('active')
+    },
+    onSliderLoad: (el) => {
+      $('.slide-loader').removeClass('active')
+      _updateProgress(el)
+    },
+    onAfterSlide: (el) => {
+      _updateProgress(el)
     }
   })
+
+  const _updateProgress = (el) => {
+    const currentPage = el.getCurrentSlideCount()
+    const totalPages = el.getTotalSlideCount()
+    console.log()
+    $('.slide-counter').text(`${currentPage} / ${totalPages}`)
+    $('.slide-progress').progress({ percent: currentPage * 100 / totalPages })
+  }
+
+  $('#prev').on('click', () => { slider.goToPrevSlide() })
+  $('#next').on('click', () => { slider.goToNextSlide() })
+  $('#fullscreen').on('click', () => { fs.toggle() })
+  //$(window).resize(() => { slider.resize() })
 })
