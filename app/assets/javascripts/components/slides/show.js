@@ -31,8 +31,8 @@ $('.slides.show').ready(() => {
     pager         : false,
     speed         : 200,
     addClass      : 'padding-50',
-    prevHtml      : '<i class="angle double left icon"></i>',
-    nextHtml      : '<i class="angle double right icon"></i>',
+    prevHtml      : '',
+    nextHtml      : '',
     slideEndAnimation: false,
     onBeforeStart: () => {
       $('.slide-loader').addClass('active')
