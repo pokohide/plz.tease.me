@@ -9,7 +9,7 @@
           = link_to 'アップロード', upload_path, class: 'item'
           .ui.pointing.dropdown.link.item
             .text
-              = image_tag current_user.thumbnail_url(:thumb), class: 'ui avatar image'
+              = thumbail_tag current_user
               span = current_user.display_name
             i.dropdown.icon
             .menu
