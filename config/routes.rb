@@ -5,17 +5,17 @@ Rails.application.routes.draw do
 
   root to: 'root#index'
   devise_for :users, path_names: { sign_in: 'login', sign_out: 'logout' },
-    controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+                     controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
-  resources :tags, only: [:index, :show]
+  resources :tags, only: %i[index show]
   resources :users, only: [:index]
 
-  resources :slides, only: [:index, :show] do
-    resources :comments, only: [:create, :destroy]
+  resources :slides, only: %i[index show] do
+    resources :comments, only: %i[create destroy]
   end
 
   namespace :admin do
-    resources :slides, only: [:index, :create, :edit, :update, :destroy]
+    resources :slides, only: %i[index create edit update destroy]
   end
 
   get '/c/:category', to: 'slides#category', as: :category
