@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 class PageUploader < CarrierWave::Uploader::Base
   include CarrierWave::RMagick
 
@@ -16,7 +17,7 @@ class PageUploader < CarrierWave::Uploader::Base
   storage :fog
 
   def extension_white_list
-    %w(jpg jpeg gif png)
+    %w[jpg jpeg gif png]
   end
 
   def filename
