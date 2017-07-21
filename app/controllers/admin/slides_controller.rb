@@ -1,13 +1,13 @@
 class Admin::SlidesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_slide_tags_to_gon, only: [:edit]
-  before_action :set_available_tags_to_gon, only: [:new, :edit]
+  before_action :set_available_tags_to_gon, only: %i[new edit]
 
   def index
-    @slides = current_user.slides.preload(:user).
-                not_public.
-                published_at_desc.
-                page(params[:page])
+    @slides = current_user.slides.preload(:user)
+                          .not_public
+                          .published_at_desc
+                          .page(params[:page])
     render 'slides/index'
   end
 
@@ -34,6 +34,7 @@ class Admin::SlidesController < ApplicationController
 
   def upload_pdf
     @slide = current_user.slides.new(create_pdf_params)
+    @slide.build_statistic
     @slide.save
   end
 
@@ -45,13 +46,10 @@ class Admin::SlidesController < ApplicationController
     pdf.each_with_index do |page_img, index|
       page = @slide.pages.new(num: index)
 
-      temp_file = Tempfile.new([ 'temp', '.png' ])
-      page_img.write(temp_file.path)
-
-      page.image = temp_file
-      page.save!
-      temp_file.close!
-      temp_file.unlink
+      page_to_img(page_img) do |img|
+        page.image = img
+        page.save
+      end
 
       ActionCable.server.broadcast "progress_channel_#{current_user.id}", total: total, num: index + 1
     end
@@ -63,19 +61,14 @@ class Admin::SlidesController < ApplicationController
 
   def update
     @slide = current_user.slides.lock.find(params[:id])
-    if (original_filename = params[:slide][:pdf_file])
+    if params[:slide][:pdf_file].present?
       @slide.reupload(pdf_file)
       redirect_to edit_admin_slide_path(@slide)
+    elsif @slide.update(update_slide_params)
+      redirect_to admin_slides_path
     else
-      if @slide.update(update_slide_params)
-        redirect_to admin_slides_path
-      else
-        render :edit
-      end
+      render :edit
     end
-  rescue ActiveRecord::RecordNotUnique
-    @slide.errors.add(:slug, I18n.t('errors.messages.taken'))
-    render :edit
   end
 
   def destroy
@@ -94,13 +87,14 @@ class Admin::SlidesController < ApplicationController
     gon.available_tags = Slide.tags_on(:tags).pluck(:name)
   end
 
-  def pdf2png file
-    pdf_file_path = file.path
-    Dir.mktmpdir do |dir|
-      png_basename = File.basename(pdf_file_path = file.path, '.*')
-      # pdf の 1 ページ目のみを png に変換
-      `pdftocairo -png -singlefile #{pdf_file_path} #{dir}/#{png_basename}`
-      return File.open("#{dir}/#{png_basename}.png")
+  def page_to_img(page_img)
+    file = Tempfile.new(['temp', '.png'])
+    page_img.write(file.path)
+    begin
+      yield(file)
+    ensure
+      file.close
+      file.unlink
     end
   end
 
@@ -114,6 +108,6 @@ class Admin::SlidesController < ApplicationController
 
   def update_slide_params
     params.require(:slide).permit(:title, :slug, :is_public, :tag_list, :category,
-      :published_at, :uploaded, slide_outline_attributes: [:note])
+                                  :published_at, :uploaded, slide_outline_attributes: [:note])
   end
 end

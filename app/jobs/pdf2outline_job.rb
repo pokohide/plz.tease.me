@@ -1,4 +1,4 @@
-class Pdf2outlineJob < ActiveJob::Base
+class Pdf2outlineJob < ApplicationJob
   queue_as :default
 
   def perform(slide_id)

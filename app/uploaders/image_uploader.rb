@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::RMagick
 
@@ -18,7 +19,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # jpg,jpeg,gif,pngしか受け付けない
   def extension_white_list
-    %w(jpg jpeg gif png)
+    %w[jpg jpeg gif png]
   end
 
   private

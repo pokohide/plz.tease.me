@@ -7,6 +7,5 @@ class ProgressChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
   end
 
-  def notify_progress(data)
-  end
+  def notify_progress(data); end
 end

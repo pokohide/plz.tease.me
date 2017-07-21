@@ -20,10 +20,10 @@ class Page < ApplicationRecord
   mount_uploader :image, PageUploader
 
   def next
-    Page.find_by(num: self.num + 1)
+    Page.find_by(num: num + 1)
   end
 
   def prev
-    Page.find_by(num: self.num - 1)
+    Page.find_by(num: num - 1)
   end
 end

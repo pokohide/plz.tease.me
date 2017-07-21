@@ -1,10 +1,9 @@
 class SlidesController < ApplicationController
-
   def index
-    @slides = Slide.preload(:user).
-                is_public.
-                published_at_desc.
-                page(params[:page])
+    @slides = Slide.preload(:user)
+                   .is_public
+                   .published_at_desc
+                   .page(params[:page])
   end
 
   def show
@@ -12,8 +11,9 @@ class SlidesController < ApplicationController
     @comments = @slide.comments.desc
     # @slide = @user.slides.is_public.find_by(slug: params[:slug])
     gon.pdf_url = @slide.pdf_file.to_s
-    @slide.increment!(:page_view)
     @recommend = Slide.limit(5)
+
+    @slide.increment(:page_view).save
   end
 
   def category
@@ -23,9 +23,9 @@ class SlidesController < ApplicationController
 
   def search
     search_param = { query: { bool: { must: [
-      { multi_match: { minimum_should_match: "100%", query: params[:q], fields: %w(tags title outline) } },
+      { multi_match: { minimum_should_match: '100%', query: params[:q], fields: %w[tags title outline] } }
     ] } } }
     @slides = Slide.search(search_param).page(params[:page]).records
-    render "index"
+    render 'index'
   end
 end

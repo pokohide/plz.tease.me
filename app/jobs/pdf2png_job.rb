@@ -1,4 +1,4 @@
-class Pdf2pngJob < ActiveJob::Base
+class Pdf2pngJob < ApplicationJob
   queue_as :default
 
   def perform(slide_id)

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
 
@@ -14,8 +14,8 @@ gem 'puma', '~> 3.0'
 # Image
 gem 'aws-sdk', '< 2.0'
 gem 'carrierwave'
-gem 'rmagick', '~> 2.13.1'
 gem 'fog'
+gem 'rmagick', '~> 2.13.1'
 
 # ENUM
 gem 'enum_help'
@@ -25,6 +25,7 @@ gem 'meta-tags'
 gem 'sitemap_generator'
 
 # Data
+gem 'acts-as-taggable-on', '~> 4.0'
 gem 'counter_culture', '~> 1.0'
 gem 'redis'
 gem 'redis-namespace'
@@ -33,60 +34,67 @@ gem 'sidekiq'
 # gem 'dalli'
 
 # PDF Library
-gem 'poppler'
 gem 'pdfjs_rails'
+gem 'poppler'
 
 # Frontend
-gem 'gon'
-gem 'kaminari'
-gem 'slim-rails'
-gem 'sprockets-commoner'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'acts-as-taggable-on', '~> 4.0'
-gem 'uglifier', '>= 1.3.0'
 gem 'sass-rails', '~> 5.0'
+gem 'slim-rails'
+
+# Frontend Library
+gem 'alertifyjs-rails'
+gem 'kaminari'
 gem 'sass-globbing'
 gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass'
-gem 'alertifyjs-rails'
+
+# Frontend Utils
+gem 'gon'
+gem 'sprockets-commoner'
+gem 'uglifier', '>= 1.3.0'
 
 # User
-gem 'devise'
-gem 'omniauth-twitter'
-gem 'omniauth-facebook'
 gem 'bcrypt'
+gem 'devise'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 
 # API
 gem 'jbuilder', '~> 2.5'
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'byebug', platform: :mri
-  gem 'pry-rails'
-  gem 'pry-doc'
-  gem 'pry-byebug'
-  gem 'pry-stack_explorer'
-  gem 'rails-erd'
-  gem 'scss_lint', require: false
+  gem 'dotenv-rails'
   gem 'faker'
   gem 'gimei'
-  gem 'dotenv-rails'
+  gem 'pry-byebug'
+  gem 'pry-doc'
+  gem 'pry-rails'
+  gem 'pry-stack_explorer'
+  gem 'rails-erd'
   gem 'rails_best_practices'
+  gem 'scss_lint', require: false
+  gem 'sqlite3'
 end
 
 group :development do
-  gem 'web-console', '>= 3.3.0'
+  gem 'annotate'
+  gem 'bullet'
+  gem 'letter_opener'
+  gem 'letter_opener_web'
   gem 'listen', '~> 3.0.5'
+  gem 'rubocop', require: false
+  gem 'brakeman', require: false
+  gem 'scss_lint', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'annotate'
-  gem 'letter_opener'
-  gem 'rubocop', require: false
-  gem 'bullet'
+  gem 'web-console', '>= 3.3.0'
+  gem 'rails_best_practices'
 end
 
 group :production do
   gem 'pg'
 end
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
