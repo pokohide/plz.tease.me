@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :slides, only: [:index, :create, :edit, :update, :destroy]
   end
 
+  get '/c/:category', to: 'slides#category', as: :category
   get '/account', to: 'users#account', as: :account
   get '/upload', to: 'admin/slides#new', as: :upload
   post '/upload-pdf', to: 'admin/slides#upload_pdf', as: :upload_pdf

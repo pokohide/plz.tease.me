@@ -1,2 +1,21 @@
-h1 Users#index
-p Find me in app/views/users/index.html.slim
+.ui.container
+  section.ui.segment
+    h3.ui.header
+      = image_tag @user.thumbnail_url(:medium), class: 'ui large image'
+    .content
+      = link_to @user.display_name, user_path(@user.username)
+      .sub.header = "#{@user.slides.size}スライド"
+
+  .ui.items
+    - @slides.each do |slide|
+      .item
+        .image
+          = image_tag slide.image_file_url(:medium)
+        .content
+          .header = slide.title
+          .meta
+            span = slide.created_at.to_s(:date)
+          .description
+            p ~~~
+          .extra
+            = slide.category

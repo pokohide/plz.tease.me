@@ -16,6 +16,11 @@ class SlidesController < ApplicationController
     @recommend = Slide.limit(5)
   end
 
+  def category
+    @slides = Slide.where(category: params[:category])
+    render :index
+  end
+
   def search
     search_param = { query: { bool: { must: [
       { multi_match: { minimum_should_match: "100%", query: params[:q], fields: %w(tags title outline) } },
