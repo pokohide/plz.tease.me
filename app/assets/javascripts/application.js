@@ -16,7 +16,8 @@ window.App.cable = ActionCable.createConsumer()
 import 'components/base'
 
 $(document).ready(() => {
-  $('.ui.dropdown').dropdown({ on: 'hover' })
+  $('.ui.dropdown.profile').dropdown({ on: 'hover' })
+  $('.ui.dropdown.categories').dropdown({ on: 'hover' })
   $('.ui.checkbox').checkbox()
 
   $('.flash-message .close.icon').on('click', function(e) {

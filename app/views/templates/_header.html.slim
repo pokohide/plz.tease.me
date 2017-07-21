@@ -2,12 +2,17 @@
   .ui.container.grid
     .computer.only.row
       = link_to 'Tease.me', root_path, class: 'item header'
-      = link_to 'Theme', '#', class: 'item'
+      .ui.pointing.dropdown.link.item.categories
+        .text カテゴリ
+        i.dropdown.icon
+        .menu
+          - Slide.categories_i18n.invert.to_a.each do |key, value|
+            = link_to key, category_path(value), class: 'item'
 
       .right.menu
         - if user_signed_in?
           = link_to 'アップロード', upload_path, class: 'item'
-          .ui.pointing.dropdown.link.item
+          .ui.pointing.dropdown.link.item.profile
             .text
               = thumbail_tag current_user
               span = current_user.display_name

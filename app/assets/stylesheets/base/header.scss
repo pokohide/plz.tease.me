@@ -1,4 +1,11 @@
 header .header {
   height: 60px;
   max-height: 60px;
+
+  .ui.dropdown.categories {
+    .menu {
+      height: 250px;
+      overflow: scroll;
+    }
+  }
 }
