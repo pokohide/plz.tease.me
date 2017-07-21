@@ -11,8 +11,9 @@ class SlidesController < ApplicationController
     @comments = @slide.comments.desc
     # @slide = @user.slides.is_public.find_by(slug: params[:slug])
     gon.pdf_url = @slide.pdf_file.to_s
-    @slide.increment!(:page_view)
     @recommend = Slide.limit(5)
+
+    @slide.increment(:page_view).save
   end
 
   def category

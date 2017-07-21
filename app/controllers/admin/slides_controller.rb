@@ -63,15 +63,13 @@ class Admin::SlidesController < ApplicationController
 
   def update
     @slide = current_user.slides.lock.find(params[:id])
-    if (original_filename = params[:slide][:pdf_file])
+    if params[:slide][:pdf_file].present?
       @slide.reupload(pdf_file)
       redirect_to edit_admin_slide_path(@slide)
+    elsif @slide.update(update_slide_params)
+      redirect_to admin_slides_path
     else
-      if @slide.update(update_slide_params)
-        redirect_to admin_slides_path
-      else
-        render :edit
-      end
+      render :edit
     end
   rescue ActiveRecord::RecordNotUnique
     @slide.errors.add(:slug, I18n.t('errors.messages.taken'))

@@ -88,10 +88,5 @@ class Slide < ApplicationRecord
 
     # self.slug = Zipang.to_slug(title)
     self.slug = SecureRandom.urlsafe_base64
-    if user.slides.where(slug: slug).exists?
-      # slug が重複していた場合は現在時刻を付与して重複回避。
-      # これで重複したら諦めてエラー
-      self.slug += Time.current.strftime('%Y%m%d%H%M%S')
-    end
   end
 end
