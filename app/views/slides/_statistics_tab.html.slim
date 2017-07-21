@@ -2,46 +2,43 @@ section.tab.statistics-tab(data-tab='statistics' style='display:none')
   .ui.container
     .ui.grid.container
       .eight.wide.column
+        h3.ui.header Views
         .ui.middle.aligned.relaxed.list
           .item
             .right.floated.content
-              | 444
+              b = slide.page_view + statistics.embed_views
             .content
-              | View
+              | 合計View
           .item
             .right.floated.content
-              | 444
+              b = slide.page_view
             .content
-              | View
+              | ページView
           .item
             .right.floated.content
-              | 444
+              b = statistics.embed_views
             .content
-              | View
-          .item
-            .right.floated.content
-              | 444
-            .content
-              | View
+              | 埋め込みView
       .eight.wide.column
+        h3.ui.header Actions
         .ui.middle.aligned.relaxed.list
           .item
             .right.floated.content
-              | 444
+              b = statistics.share_count
             .content
-              | View
+              | シェア数
           .item
             .right.floated.content
-              | 444
+              b = statistics.download_count
             .content
-              | View
+              | ダウンロード数
           .item
             .right.floated.content
-              | 444
+              b = slide.comments_count
             .content
-              | View
+              | コメント数
           .item
             .right.floated.content
-              | 444
+              b = slide.likes_count
             .content
-              | View
+              | いいね数

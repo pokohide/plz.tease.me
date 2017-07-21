@@ -43,7 +43,7 @@
 
       .ui.segment
         == render partial: 'comment_tab', locals: { slide: @slide, comments: @comments }
-        == render partial: 'statistics_tab', locals: { slide: @slide }
+        == render partial: 'statistics_tab', locals: { slide: @slide, statistics: @slide.statistic }
         == render partial: 'likes_tab', locals: { slide: @slide }
         == render partial: 'note_tab', locals: { slide: @slide }
 

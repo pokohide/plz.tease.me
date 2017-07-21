@@ -16,7 +16,7 @@
 #  uploaded       :boolean          default(FALSE)
 #  comments_count :integer          default(0)
 #  likes_count    :integer          default(0)
-#  category       :integer          default(1), not null
+#  category       :integer          default("books"), not null
 #
 # Indexes
 #
@@ -29,6 +29,7 @@ class Slide < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :pages, dependent: :destroy
   has_one :slide_outline, dependent: :destroy
+  has_one :statistic, dependent: :destroy
   accepts_nested_attributes_for :slide_outline
 
   # Category
