@@ -2,9 +2,9 @@
   section.ui.segment
     h3.ui.header
       = image_tag @user.thumbnail_url(:medium), class: 'ui large image'
-    .content
-      = link_to @user.display_name, user_path(@user.username)
-      .sub.header = "#{@user.slides.size}スライド"
+      .content
+        = link_to @user.display_name, user_path(@user.username)
+        .sub.header = "#{@user.slides.size}スライド"
 
   h2.ui.header 投稿スライド(直近5件)
   .ui.divided.items
@@ -22,3 +22,4 @@
             = link_to category_path(slide.category) do
               .ui.label
                 = "# #{slide.category_i18n}"
+  = paginate @slides

@@ -1,2 +1,7 @@
-h1 Tags#index
-p Find me in app/views/tags/index.html.slim
+.ui.container.tags-container
+  .ui.segment
+    - tag_cloud(@tags, %w(tiny medium big huge)) do |tag, css_class|
+      = link_to tag_path(tag.name), class: 'tag' do
+        .ui.label class="#{css_class}"
+          = "##{tag.name}"
+          .detail = tag.taggings_count

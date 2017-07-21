@@ -4,9 +4,9 @@ class TagsController < ApplicationController
   end
 
   def show
-    @slides = Slide.tagged_with(params[:tag]).
+    @slides = Slide.tagged_with(params[:id]).
               # is_public.
-              order(published_at: :desc).
+              published_at_desc.
               page(params[:page])
     render 'slides/index'
   end

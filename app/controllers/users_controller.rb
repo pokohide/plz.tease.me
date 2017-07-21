@@ -6,9 +6,9 @@ class UsersController < ApplicationController
   def account
     @user = current_user
     @slides = @user.slides.preload(:user).
-              is_public.
+              # is_public.
               published_at_desc.
-              page(params[:page])
+              page(params[:page]).per(5)
   end
 
   def show

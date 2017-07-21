@@ -25,23 +25,32 @@
               i.expand.icon
 
       .ui.segment
-        h1.ui.header = @slide.title
+        h1.ui.justifiedheader
+          = @slide.title
+        p
+          = "公開日: #{@slide.created_at.to_s(:date)} in "
+          = link_to @slide.category_i18n, category_path(@slide.category)
 
-      .ui.secondary.pointing.menu#tabs
-        .item.active(data-tab='comment')
-          i.comment.outline.icon
-          | コメント
-        .item(data-tab='likes')
-          i.empty.heart.icon
-          | いいね
-        .item(data-tab='statistics')
-          i.bar.chart.icon
-          | 統計
-        .item(data-tab='note')
-          i.file.text.outline.icon
-          | ノート
+        - @slide.tag_list.each do |tag|
+          = link_to tag_path(tag), class: 'tag' do
+            .ui.label
+              = "# #{tag}"
 
       .ui.segment
+        .ui.secondary.pointing.menu#tabs
+          .item.active(data-tab='comment')
+            i.comment.outline.icon
+            | コメント
+          .item(data-tab='likes')
+            i.empty.heart.icon
+            | いいね
+          .item(data-tab='statistics')
+            i.bar.chart.icon
+            | 統計
+          .item(data-tab='note')
+            i.file.text.outline.icon
+            | ノート
+
         == render partial: 'comment_tab', locals: { slide: @slide, comments: @comments }
         == render partial: 'statistics_tab', locals: { slide: @slide, statistics: @slide.statistic }
         == render partial: 'likes_tab', locals: { slide: @slide }
