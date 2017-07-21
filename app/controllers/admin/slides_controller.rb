@@ -1,13 +1,13 @@
 class Admin::SlidesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_slide_tags_to_gon, only: [:edit]
-  before_action :set_available_tags_to_gon, only: [:new, :edit]
+  before_action :set_available_tags_to_gon, only: %i[new edit]
 
   def index
-    @slides = current_user.slides.preload(:user).
-                not_public.
-                published_at_desc.
-                page(params[:page])
+    @slides = current_user.slides.preload(:user)
+                          .not_public
+                          .published_at_desc
+                          .page(params[:page])
     render 'slides/index'
   end
 
@@ -45,7 +45,7 @@ class Admin::SlidesController < ApplicationController
     pdf.each_with_index do |page_img, index|
       page = @slide.pages.new(num: index)
 
-      temp_file = Tempfile.new([ 'temp', '.png' ])
+      temp_file = Tempfile.new(['temp', '.png'])
       page_img.write(temp_file.path)
 
       page.image = temp_file
@@ -94,7 +94,7 @@ class Admin::SlidesController < ApplicationController
     gon.available_tags = Slide.tags_on(:tags).pluck(:name)
   end
 
-  def pdf2png file
+  def pdf2png(file)
     pdf_file_path = file.path
     Dir.mktmpdir do |dir|
       png_basename = File.basename(pdf_file_path = file.path, '.*')
@@ -114,6 +114,6 @@ class Admin::SlidesController < ApplicationController
 
   def update_slide_params
     params.require(:slide).permit(:title, :slug, :is_public, :tag_list, :category,
-      :published_at, :uploaded, slide_outline_attributes: [:note])
+                                  :published_at, :uploaded, slide_outline_attributes: [:note])
   end
 end
