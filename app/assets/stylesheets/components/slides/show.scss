@@ -24,4 +24,12 @@
       }
     }
   }
+
+  .slide-page-number {
+    font-size: 1.2em;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }

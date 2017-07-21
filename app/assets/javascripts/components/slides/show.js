@@ -49,7 +49,6 @@ $('.slides.show').ready(() => {
   const _updateProgress = (el) => {
     const currentPage = el.getCurrentSlideCount()
     const totalPages = el.getTotalSlideCount()
-    console.log()
     $('.slide-counter').text(`${currentPage} / ${totalPages}`)
     $('.slide-progress').progress({ percent: currentPage * 100 / totalPages })
   }
@@ -58,4 +57,9 @@ $('.slides.show').ready(() => {
   $('#next').on('click', () => { slider.goToNextSlide() })
   $('#fullscreen').on('click', () => { fs.toggle() })
   $(window).resize(() => { slider.refresh() })
+
+  $('.slide-page-number').on('click', function() {
+    const pageNum = parseInt($(this).attr('data-num'), 10)
+    slider.goToSlide(pageNum - 1)
+  })
 })

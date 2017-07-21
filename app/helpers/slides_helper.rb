@@ -9,8 +9,8 @@ module SlidesHelper
       sections.each do |section|
         section =~ /\[-(\d+)-\]/
         div << content_tag_push(:p) do |p_tag|
-          p_tag << content_tag(:a, "#{$1}")
-          p_tag << content_tag(:span, "#{$'}")
+          p_tag << content_tag(:a, $1, class: 'slide-page-number', data: { num: $1.to_i })
+          p_tag << content_tag(:span, $')
         end
       end
     end
