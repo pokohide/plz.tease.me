@@ -25,6 +25,7 @@ gem 'meta-tags'
 gem 'sitemap_generator'
 
 # Data
+gem 'acts-as-taggable-on', '~> 4.0'
 gem 'counter_culture', '~> 1.0'
 gem 'redis'
 gem 'redis-namespace'
@@ -37,18 +38,21 @@ gem 'pdfjs_rails'
 gem 'poppler'
 
 # Frontend
-gem 'gon'
-gem 'kaminari'
-gem 'slim-rails'
-gem 'sprockets-commoner'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'acts-as-taggable-on', '~> 4.0'
-gem 'uglifier', '>= 1.3.0'
 gem 'sass-rails', '~> 5.0'
+gem 'slim-rails'
+
+# Frontend Library
+gem 'alertifyjs-rails'
+gem 'kaminari'
 gem 'sass-globbing'
 gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass'
-gem 'alertifyjs-rails'
+
+# Frontend Utils
+gem 'gon'
+gem 'sprockets-commoner'
+gem 'uglifier', '>= 1.3.0'
 
 # User
 gem 'bcrypt'
