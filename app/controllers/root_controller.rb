@@ -6,6 +6,10 @@ class RootController < ApplicationController
                 page(params[:page])
   end
 
+  def categories
+    @categories = Slide.categories_i18n.to_a
+  end
+
   def about
   end
 

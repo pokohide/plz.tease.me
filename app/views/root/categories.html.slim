@@ -1,0 +1,7 @@
+.ui.container.categories-container
+  h1.ui.header.center.aligned カテゴリ一覧
+  .ui.segment
+    ul.ui.very.relaxed.large.list
+      - @categories.each do |key, value|
+        li
+          = link_to value, category_path(key)

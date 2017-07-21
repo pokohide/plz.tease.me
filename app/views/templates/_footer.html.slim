@@ -1,26 +1,19 @@
 .ui.vertical.inverted.black.footer.segment
   .container
     .ui.stackable.inverted.divided.relaxed.grid
-      .three.wide.column
-        h5.ui.blue.inverted.header Theme
+      .five.wide.column
+        h5.ui.blue.inverted.header 検索
         .ui.inverted.link.list
-          = link_to 'TOP', root_path, class: 'item'
-          = link_to 'TOP', root_path, class: 'item'
-          = link_to 'TOP', root_path, class: 'item'
+          = link_to 'タグ一覧', tags_path, class: 'item'
+          = link_to 'カテゴリ一覧', categories_path, class: 'item'
+          = link_to '詳細検索', root_path, class: 'item'
 
-      .three.wide.column
-        h5.ui.orange.inverted.header Theme
+      .five.wide.column
+        h5.ui.orange.inverted.header サイト
         .ui.inverted.link.list
           = link_to 'TOP', root_path, class: 'item'
-          = link_to 'TOP', root_path, class: 'item'
-          = link_to 'TOP', root_path, class: 'item'
-
-      .three.wide.column
-        h5.ui.orange.inverted.header Theme
-        .ui.inverted.link.list
-          = link_to 'TOP', root_path, class: 'item'
-          = link_to 'TOP', root_path, class: 'item'
-          = link_to 'TOP', root_path, class: 'item'
+          = link_to '規約', root_path, class: 'item'
+          = link_to 'お問い合わせ', root_path, class: 'item'
 
       .six.wide.column
         h5.ui.inverted.header Tease.me
