@@ -34,6 +34,7 @@ class Admin::SlidesController < ApplicationController
 
   def upload_pdf
     @slide = current_user.slides.new(create_pdf_params)
+    @slide.build_statistic
     @slide.save
   end
 
@@ -45,13 +46,10 @@ class Admin::SlidesController < ApplicationController
     pdf.each_with_index do |page_img, index|
       page = @slide.pages.new(num: index)
 
-      temp_file = Tempfile.new(['temp', '.png'])
-      page_img.write(temp_file.path)
-
-      page.image = temp_file
-      page.save!
-      temp_file.close!
-      temp_file.unlink
+      page_to_img(page_img) do |img|
+        page.image = img
+        page.save
+      end
 
       ActionCable.server.broadcast "progress_channel_#{current_user.id}", total: total, num: index + 1
     end
@@ -71,9 +69,6 @@ class Admin::SlidesController < ApplicationController
     else
       render :edit
     end
-  rescue ActiveRecord::RecordNotUnique
-    @slide.errors.add(:slug, I18n.t('errors.messages.taken'))
-    render :edit
   end
 
   def destroy
@@ -92,13 +87,14 @@ class Admin::SlidesController < ApplicationController
     gon.available_tags = Slide.tags_on(:tags).pluck(:name)
   end
 
-  def pdf2png(file)
-    pdf_file_path = file.path
-    Dir.mktmpdir do |dir|
-      png_basename = File.basename(pdf_file_path = file.path, '.*')
-      # pdf の 1 ページ目のみを png に変換
-      `pdftocairo -png -singlefile #{pdf_file_path} #{dir}/#{png_basename}`
-      return File.open("#{dir}/#{png_basename}.png")
+  def page_to_img(page_img)
+    file = Tempfile.new(['temp', '.png'])
+    page_img.write(file.path)
+    begin
+      yield(file)
+    ensure
+      file.close
+      file.unlink
     end
   end
 
