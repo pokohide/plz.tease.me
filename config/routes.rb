@@ -2,6 +2,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
   mount ActionCable.server => '/cable'
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
   root to: 'root#index'
   devise_for :users, path_names: { sign_in: 'login', sign_out: 'logout' },

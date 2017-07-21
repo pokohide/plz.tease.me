@@ -2,3 +2,8 @@
 :warnings_remove: []
 :warnings_add:
 - :rubocop
+- :rails_best_practices
+- :brakeman
+:checks_remove: []
+:checks_add:
+- :rubocop
