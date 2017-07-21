@@ -16,6 +16,12 @@ module SlidesHelper
     end
   end
 
+  def note_format(outline)
+    return content_tag(:div, 'ノートは登録されていません') if outline.nil? || outline.note.nil?
+
+    content_tag(:div, outline.note, class: 'slide-note-container')
+  end
+
   private
 
   def content_tag_push(type, *option)
