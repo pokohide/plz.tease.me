@@ -1,6 +1,5 @@
 module ApplicationHelper
-
-  def slide_image_tag slide
+  def slide_image_tag(slide)
     if slide.image_file?
       image_tag slide.image_file_url(:medium)
     else
@@ -9,7 +8,7 @@ module ApplicationHelper
     end
   end
 
-  def thumbail_tag user, options = {}
+  def thumbail_tag(user, options = {})
     class_name = options[:class].blank? ? 'thumbnail' : options[:class].to_s + ' thumbnail'
     if user.try(:thumbnail).present?
       image_tag user.thumbnail, class: class_name
@@ -24,7 +23,7 @@ module ApplicationHelper
         concat(
           content_tag(:div, class: flash_class(type)) do
             concat content_tag(:p, msg)
-            concat content_tag(:i,'', class: 'close icon')
+            concat content_tag(:i, '', class: 'close icon')
           end
         )
       end
@@ -37,7 +36,7 @@ module ApplicationHelper
 
   private
 
-  def flash_class level
+  def flash_class(level)
     case level
     when 'success' then 'ui green message flash-message'
     when 'error', 'danger', 'alert' then 'ui red message flash-message'

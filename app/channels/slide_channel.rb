@@ -3,9 +3,7 @@ class SlideChannel < ApplicationCable::Channel
     stream_from "slide_channel_#{params[:slide_id]}"
   end
 
-  def unsubscribed
-  end
+  def unsubscribed; end
 
-  def follow
-  end
+  def follow; end
 end
