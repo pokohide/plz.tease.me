@@ -25,6 +25,15 @@
               i.expand.icon
 
       .ui.segment
+        - if @slide.owner?(current_user)
+          .ui.two.buttons
+            = link_to edit_admin_slide_path(@slide), class: 'ui teal button' do
+              i.edit.icon
+              | 編集
+            = link_to '#', class: 'ui olive button' do
+              i.play.icon
+              | スライドモード
+
         h1.ui.justifiedheader
           = @slide.title
         p

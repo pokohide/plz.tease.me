@@ -55,9 +55,7 @@ $('.slides.show').ready(() => {
 
   $('#prev').on('click', () => { slider.goToPrevSlide() })
   $('#next').on('click', () => { slider.goToNextSlide() })
-  $('#fullscreen').on('click', () => {
-    fs.toggle()
-  })
+  $('#fullscreen').on('click', () => { fs.toggle() })
 
   const imgResize = () => {
     const sliderHeight = $('.slider').height()
@@ -77,6 +75,7 @@ $('.slides.show').ready(() => {
         } else {
           $(elem).css({ height: `${sliderHeight - 40}px`, width: 'auto' })
         }
+
       // 縦長の場合
       } else {
         $(elem).css({ height: `${sliderHeight - 40}px`, width: 'auto' })
@@ -88,6 +87,7 @@ $('.slides.show').ready(() => {
       $(elem).css({ 'margin-left': w, 'margin-top': h })
     })
   }
+
   $(window).resize(() => {
     slider.refresh()
     imgResize()

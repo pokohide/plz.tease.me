@@ -1,17 +1,27 @@
 $('.slides.edit, .slides.update').ready(() => {
-  // Dropzone.autoDiscover = false
-  // new Dropzone('#upload-dropzone', {
-  //   uploadMultiple: false,
-  //   paramName: 'slide[original_file]',
-  //   params: {
-  //     'slide[document_id]': 123
-  //   },
-  //   init: function() {
-  //     return this.on('success', (file, json) => {
-  //       console.log(file, json)
-  //     })
-  //   },
-  //   dictDefaultMessage: '<i class="fa fa-file-o fa-2x"></i><br>\n<br>\nファイルをここにドロップするか<br>\nここをクリックして下さい'
-  // })
-  $('#tagList').tagging()
+  $('#tabs').on('click', '.item', function(e) {
+    e.preventDefault()
+    const target = $(this).attr('data-tab')
+    $('#tabs .item.active').removeClass('active')
+    $(this).addClass('active')
+
+    const tabs = ['.detail-tab', '.reupload-tab']
+    for(let i = 0; i < tabs.length; i++) $(tabs[i]).hide()
+    $(`.${target}-tab`).fadeIn(500)
+  })
+
+  $('.ui.category-dropdown').dropdown({ on: 'click' })
+  $('.ui.checkbox').checkbox()
+
+  $('#slide-tags').tagit({
+    fieldName: 'slide[tag_list]',
+    singleField: true,
+    availableTags: gon.available_tags || []
+  })
+
+  if (gon.slide_tags) {
+    for (let i = 0; i < gon.slide_tags.length; i++) {
+      $('#slide-tags').tagit('createTag', gon.slide_tags[i])
+    }
+  }
 })

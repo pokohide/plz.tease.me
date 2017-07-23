@@ -1,6 +1,7 @@
 class Admin::SlidesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_slide_tags_to_gon, only: [:edit]
+  before_action :set_slide, only: %i[edit update destroy]
+  before_action :set_slide_tags_to_gon, only: %i[edit]
   before_action :set_available_tags_to_gon, only: %i[new edit]
 
   def index
@@ -55,29 +56,31 @@ class Admin::SlidesController < ApplicationController
     end
   end
 
-  def edit
-    @slide = current_user.slides.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @slide = current_user.slides.lock.find(params[:id])
-    if params[:slide][:pdf_file].present?
-      @slide.reupload(pdf_file)
-      redirect_to edit_admin_slide_path(@slide)
-    elsif @slide.update(update_slide_params)
-      redirect_to admin_slides_path
+    # リアップロード機能は後日
+    # if params[:slide][:pdf_file].present?
+    # @slide.reupload(pdf_file)
+    # redirect_to edit_admin_slide_path(@slide)
+
+    if @slide.update(update_slide_params)
+      redirect_to edit_admin_slide_path(@slide), notice: 'スライドを更新しました。'
     else
       render :edit
     end
   end
 
   def destroy
-    @slide = current_user.slides.lock.find(params[:id])
     @slide.destroy
     redirect_to admin_slides_path
   end
 
   private
+
+  def set_slide
+    @slide = current_user.slides.lock.find(params[:id])
+  end
 
   def set_slide_tags_to_gon
     gon.slide_tags = @slide.tag_list

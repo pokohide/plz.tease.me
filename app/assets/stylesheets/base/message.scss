@@ -9,5 +9,13 @@
     top: 100px;
     -webkit-transform: translateY(-50%); /* Safari用 */
     transform: translateY(-50%);
+
+    p {
+      margin: 0
+    }
+
+    .close.icon {
+      line-height: 24px;
+    }
   }
 }

@@ -1,40 +1,52 @@
-.ui.middle.aligned.center.aligned.grid
-  .form-container.ui.segment
-    h2.ui.teal.header
-      .content = "スライドを編集"
+.ui.container.slide-edit-container
+  h2.ui.header
+    = "#{@slide.title}を編集"
 
-    = form_for @slide, url: admin_slide_path, html: { method: :put, class: 'ui large form' } do |f|
-      .ui.grid
-        .eight.wide.column
-          = f.file_field(:pdf_file)
-          = f.submit 'upload'
+  .ui.segment
+    .ui.secondary.pointing.menu#tabs
+      .item.active(data-tab='detail')
+        i.write.icon
+        | 詳細編集
+      .item(data-tab='reupload')
+        i.repeat.icon
+        | 再アップロード
 
-        .eight.wide.column
+    section.detail-tab(data-tab='detail')
+      .ui.container
+        = form_for @slide, url: admin_slide_path, html: { method: :put, class: 'ui large form' } do |f|
+
           .field
             label = f.label :title, 'タイトル'
             .ui.fluid.input
               = f.text_field :title, class: 'input'
 
           .field
-            label = f.label :tag_list, 'タグ'
-            .ui.fluid.input
-              = f.text_field :tag_list, id: 'tagList'
+            label = f.label :category, 'カテゴリー'
+            .ui.fluid.selection.dropdown.category-dropdown
+              = f.hidden_field :category
+              i.dropdown.icon
+              .text
+                = @slide.category_i18n
+              .menu
+                - Slide.categories_i18n.invert.to_a.each do |key, value|
+                  .item(data-value="#{value}")
+                    = key
 
           .field
+            label = f.label :tag_list, 'タグ'
+            ul#slide-tags.ui.fluid.input
+
+          = f.fields_for :slide_outline, @slide.slide_outline do |sf|
+            .field
+              label = sf.label :note, '概要'
+              = sf.text_area :note, rows: 4, placeholder: '...'
+
+          .field(style='text-align:center')
             .ui.toggle.checkbox
               = f.check_box :is_public, class: 'hidden'
               label 公開する
 
-        .sixteen.wide.column
           = f.submit '更新', class: 'ui fluid large teal submit button'
 
-/ #  user_id       :integer          not null
-/ #  title         :string
-/ #  slug          :string
-/ #  is_public     :boolean          default(FALSE), not null
-/ #  original_file :string
-/ #  pdf_file      :string
-/ #  image_file    :string
-/ #  published_at  :datetime
-/ #  created_at    :datetime         not null
-/ #  updated_at    :datetime         not null
+    section.reupload-tab(data-tab='reupload' style='display:none')
+      p まだ実装されていません
