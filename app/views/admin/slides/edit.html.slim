@@ -1,4 +1,9 @@
 - breadcrumb :edit_slide, @slide
+- title = '編集'
+- assign_meta_tags ({ title: title,
+  open_graph: { title: title },
+  og: { title: title },
+  twitter: { title: title } })
 
 .ui.container.slide-edit-container
   h2.ui.header

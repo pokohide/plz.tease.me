@@ -1,4 +1,10 @@
 - breadcrumb :contact
+- title = 'お問い合わせ'
+- description = 'お問い合わせページです。'
+- assign_meta_tags ({ title: title, description: description,
+  open_graph: { title: title },
+  og: { title: title, description: description },
+  twitter: { title: title, description: description } })
 
 h1 Root#contact
 p Find me in app/views/root/contact.html.slim

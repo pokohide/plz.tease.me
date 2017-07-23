@@ -1,4 +1,11 @@
 - breadcrumb :about
+- title = 'About'
+- description = "xxについてのページです"
+- assign_meta_tags ({ title: title, description: description,
+  open_graph: { title: title },
+  og: { title: title, description: description },
+  twitter: { title: title, description: description } })
+
 
 h1 Root#about
 p Find me in app/views/root/about.html.slim

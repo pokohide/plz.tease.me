@@ -1,4 +1,10 @@
 - breadcrumb :tags
+- title = 'タグ一覧'
+- description = 'スライドにタグ付けされたタグ一覧です。'
+- assign_meta_tags ({ title: title, description: description,
+  open_graph: { title: title },
+  og: { title: title, description: description },
+  twitter: { title: title, description: description } })
 
 .ui.container.tags-container
   .ui.segment

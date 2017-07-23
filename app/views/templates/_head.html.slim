@@ -5,10 +5,5 @@
 / = javascript_include_tag '//www.google.com/jsapi'
 / = javascript_include_tag 'http://code.highcharts.com/highcharts.js', 'chartkick'
 
-= csrf_meta_tags
-/ - if content_for(:page_title)
-/   - set_meta_tags site: 'Patymoo', title: yield(:page_title), reverse: true
-/ - else
-/   - set_meta_tags site: 'Patymoo'
-/ = favicon_link_tag 'favicon.ico'
-/ = display_meta_tags default_meta_tags
+= show_meta_tags
+= favicon_link_tag 'favicon.ico'

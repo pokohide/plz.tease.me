@@ -1,3 +1,10 @@
+- title = 'スライド一覧'
+- description = 'スライド一覧ページ'
+- assign_meta_tags ({ title: title, description: description,
+  open_graph: { title: title },
+  og: { title: title, description: description },
+  twitter: { title: title, description: description } })
+
 .ui.container.slides-container
   .ui.link.cards
     - cache(['slides', @slides.map(&:id), @slides.maximum(:updated_at)]) do

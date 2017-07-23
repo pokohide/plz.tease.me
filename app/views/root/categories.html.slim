@@ -1,4 +1,11 @@
 - breadcrumb :categories
+- title = 'カテゴリ一覧'
+- description = 'カテゴリ一覧ページです。'
+- assign_meta_tags ({ title: title, description: description,
+  open_graph: { title: title },
+  og: { title: title, description: description },
+  twitter: { title: title, description: description } })
+
 
 .ui.container.categories-container
   h1.ui.header.center.aligned カテゴリ一覧

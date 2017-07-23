@@ -1,16 +1,8 @@
-/ - content_for :header do
-/   = render 'templates/breadcrumb', breadcrumb: { \
-/     "ユーザ一覧": users_path,
-/     "ログイン": new_user_session_path }
-
-/ - content_for :sidebar do
-/   = render "templates/sidebar/tagcloud", tags: @tags
-/   = render "templates/sidebar/search"
-/   = render "templates/sidebar/ranking", evideos: @ranking, daily_evideos: @daily_ranking, monthly_evideos: @monthly_ranking
-
-/ - content_for :page_title, "ログインページ"
-/ - set_meta_tags description: "ユーザのログインページです。[ついまな]はyoutubeの動画を楽しむついでに字幕で英語を学ぶサービスです。"
-
+- title = 'ログイン画面'
+- assign_meta_tags ({ title: title,
+  open_graph: { title: title },
+  og: { title: title },
+  twitter: { title: title } })
 
 .ui.middle.aligned.center.aligned.grid
   .form-container

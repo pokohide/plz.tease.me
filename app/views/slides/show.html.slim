@@ -1,4 +1,11 @@
 - breadcrumb :slide, @slide
+- title = @slide.title
+- description = "#{@slide.title}です"
+- image = @slide.try(:image_file_url, :medium)
+- assign_meta_tags ({ title: title, description: description,
+  open_graph: { title: title },
+  og: { title: title, description: description, image: image },
+  twitter: { title: title, description: description, image: image } })
 
 .ui.container.slide-container
   .ui.grid
