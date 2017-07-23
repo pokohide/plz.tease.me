@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     resources :slides, only: %i[index create edit update destroy]
   end
 
+  get '/contact', to: 'root#contact', as: :contact
+  get '/about', to: 'root#about', as: :about
+
   get '/c/:category', to: 'slides#category', as: :category
   get '/featured', to: 'root#categories', as: :categories
   get '/account', to: 'users#account', as: :account

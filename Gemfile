@@ -46,6 +46,7 @@ gem 'slim-rails'
 # Frontend Library
 gem 'alertifyjs-rails'
 gem 'kaminari'
+gem 'gretel'
 gem 'sass-globbing'
 gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass'
 

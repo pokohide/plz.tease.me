@@ -6,6 +6,7 @@ body class="#{controller_name} #{action_name}"
     == render 'templates/header'
   main
     = flash_messages
+    = breadcrumbs(separator: ' <i class="right angle icon divider"></i>').to_s.html_safe
     section.main
       == yield
   footer
