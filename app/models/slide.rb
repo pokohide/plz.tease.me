@@ -66,6 +66,14 @@ class Slide < ApplicationRecord
   end
   include RedisObjectsDestroyable
 
+  def owner_display_name
+    user.try(:display_name) || '未登録'
+  end
+
+  def owner_username
+    user.try(:username)
+  end
+
   def owner?(user)
     user_id == user.try!(:id)
   end

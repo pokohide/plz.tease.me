@@ -51,16 +51,16 @@
             i.file.text.outline.icon
             | ノート
 
-        == render partial: 'comment_tab', locals: { slide: @slide, comments: @comments }
-        == render partial: 'statistics_tab', locals: { slide: @slide, statistics: @slide.statistic }
-        == render partial: 'likes_tab', locals: { slide: @slide }
-        == render partial: 'note_tab', locals: { slide: @slide }
+        == render 'comment_tab', slide: @slide, comments: @comments
+        == render 'statistics_tab', slide: @slide, statistics: @slide.statistic
+        == render 'likes_tab', slide: @slide
+        == render 'note_tab', slide: @slide
 
       .ui.segment
         = outline_format(@slide.slide_outline)
 
     .six.wide.column
-      == render partial: 'templates/sidebar/user_info', locals: { user: @slide.user }
-      == render partial: 'templates/sidebar/slide_info', locals: { slide: @slide }
-      == render partial: 'templates/sidebar/share', locals: { slide: @slide }
-      == render partial: 'templates/sidebar/recommend', locals: { slides: @recommend }
+      == render 'templates/sidebar/user_info', user: @slide.user
+      == render 'templates/sidebar/slide_info', slide: @slide
+      == render 'templates/sidebar/share', slide: @slide
+      == render 'templates/sidebar/recommend', slides: @recommend

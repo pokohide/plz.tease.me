@@ -7,6 +7,6 @@ section.recomment-section
         .content
           .header = slide.title
           .meta
-            span = link_to slide.user.display_name, user_path(slide.user.username)
+            span = link_to slide.owner_display_name, user_path(slide.owner_username)
           .extra
             | ほげ
