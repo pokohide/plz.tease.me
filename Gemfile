@@ -87,6 +87,8 @@ group :development do
   gem 'rubocop', require: false
   gem 'brakeman', require: false
   gem 'scss_lint', require: false
+  gem 'bundler-audit'
+  gem 'rack-mini-profiler', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
