@@ -13,13 +13,22 @@ export default class Fullscreen {
   toggle() {
     if (!this._canFullscreen()) return alert('フルスクリーンモードは使用できません。')
 
-    if( this._nowFullscreen() ) {
-      this.$elem.fullScreen(false)
+    if( this.nowFullscreen() ) {
+      this.$elem.css('height', 'auto').fullScreen(false)
       this.$button.children('.icon').removeClass('compress').addClass('expand')
     } else {
-      this.$elem.fullScreen(true)
+      this.$elem.css('height', '100%').fullScreen(true)
       this.$button.children('.icon').removeClass('expand').addClass('compress')
     }
+  }
+
+  // フルスクリーン中かどうか
+  nowFullscreen() {
+    return document.fullScreen ||
+           document.mozFullScreen ||
+           document.webkitIsFullScreen ||
+           document.msFullScreen ||
+           false
   }
 
   /* Private */
@@ -28,15 +37,6 @@ export default class Fullscreen {
   _check() {
     if (this._canFullscreen()) return
     this.$button.addClass('disabled')
-  }
-
-  // フルスクリーン中かどうか
-  _nowFullscreen() {
-    return document.fullScreen ||
-           document.mozFullScreen ||
-           document.webkitIsFullScreen ||
-           document.msFullScreen ||
-           false
   }
 
   // フルスクリーン可能かどうか

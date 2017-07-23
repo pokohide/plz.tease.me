@@ -30,7 +30,7 @@ $('.slides.show').ready(() => {
     freeMove      : false,
     pager         : false,
     speed         : 200,
-    addClass      : 'padding-50',
+    addClass      : 'slider',
     prevHtml      : '',
     nextHtml      : '',
     slideEndAnimation: false,
@@ -55,8 +55,43 @@ $('.slides.show').ready(() => {
 
   $('#prev').on('click', () => { slider.goToPrevSlide() })
   $('#next').on('click', () => { slider.goToNextSlide() })
-  $('#fullscreen').on('click', () => { fs.toggle() })
-  $(window).resize(() => { slider.refresh() })
+  $('#fullscreen').on('click', () => {
+    fs.toggle()
+  })
+
+  const imgResize = () => {
+    const sliderHeight = $('.slider').height()
+    const sliderWidth = $('.slider').width()
+    const sliderRatio = sliderWidth / sliderHeight
+
+    $('.slider img').each((_index, elem) => {
+      const height = $(elem).height()
+      const width = $(elem).width()
+      const ratio = width / height
+
+      // 横長の場合
+      if (ratio >= 1) {
+
+        if (ratio >= sliderRatio) {
+          $(elem).css({ width: `${sliderWidth}px`, height: 'auto' })
+        } else {
+          $(elem).css({ height: `${sliderHeight - 40}px`, width: 'auto' })
+        }
+      // 縦長の場合
+      } else {
+        $(elem).css({ height: `${sliderHeight - 40}px`, width: 'auto' })
+      }
+
+      // 中央配置
+      const w = Math.floor((sliderWidth - $(elem).width()) / 2)
+      const h = Math.floor((sliderHeight - $(elem).height()) / 2)
+      $(elem).css({ 'margin-left': w, 'margin-top': h })
+    })
+  }
+  $(window).resize(() => {
+    slider.refresh()
+    imgResize()
+  })
 
   $('.slide-page-number').on('click', function() {
     const pageNum = parseInt($(this).attr('data-num'), 10)

@@ -9,25 +9,18 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
   <!&#91;endif&#93;-->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js'></script>
-  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
-  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/components/progress.js"></script>
+  <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/js/lightslider.min.js"></script>
+
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/css/lightslider.min.css" />
   <link rel='canonical' href='http://localhost:3000/slides/<%= @slide.id %>'>
   <script type="text/javascript">
   <!--
   $(document).ready(function() {
-
-'use strict';
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+(var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/*
- https://github.com/kayahr/jquery-fullscreen-plugin
- に依存
- */
 
 var Fullscreen = function () {
   function Fullscreen(target, button) {
@@ -42,7 +35,6 @@ var Fullscreen = function () {
     key: 'toggle',
     value: function toggle() {
       if (!this._canFullscreen()) return alert('フルスクリーンモードは使用できません。');
-
       if (this._nowFullscreen()) {
         this.$elem.fullScreen(false);
         this.$button.children('.icon').removeClass('compress').addClass('expand');
@@ -53,7 +45,6 @@ var Fullscreen = function () {
     }
 
     /* Private */
-
     // フルスクリーン使用可能かチェック
 
   }, {
@@ -62,7 +53,6 @@ var Fullscreen = function () {
       if (this._canFullscreen()) return;
       this.$button.addClass('disabled');
     }
-
     // フルスクリーン中かどうか
 
   }, {
@@ -70,7 +60,6 @@ var Fullscreen = function () {
     value: function _nowFullscreen() {
       return document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen || document.msFullScreen || false;
     }
-
     // フルスクリーン可能かどうか
 
   }, {
@@ -83,201 +72,56 @@ var Fullscreen = function () {
   return Fullscreen;
 }();
 
-var Slider = function () {
-  function Slider(_ref) {
-    var slider = _ref.slider;
-    var totalPages = _ref.totalPages;
-    var progressCount = _ref.progressCount;
-    var progressBar = _ref.progressBar;
-    var loader = _ref.loader;
-
-    _classCallCheck(this, Slider);
-
-    this.dom = {
-      slider: $(slider),
-      progressCount: $(progressCount),
-      progressBar: $(progressBar),
-      loader: $(loader)
-    };
-
-    this.currentPage = 1;
-    this.totalPages = totalPages;
-    this.loading = false;
-    this._updateProgress();
-  }
-
-  _createClass(Slider, [{
-    key: 'goNext',
-    value: function goNext() {
-      console.log(this.currentPage + ' / ' + this.totalPages);
-      if (this.currentPage >= this.totalPages) return;
-      console.log('next!!');
-      this.currentPage += 1;
-      this.dom.slider.slick('slickNext');
-      this._updateProgress();
-    }
-  }, {
-    key: 'goPrev',
-    value: function goPrev() {
-      console.log(this.currentPage + ' / ' + this.totalPages);
-      if (this.currentPage <= 1) return;
-      console.log('prev!!');
-      this.currentPage -= 1;
-      this.dom.slider.slick('slickPrev');
-      this._updateProgress();
-    }
-  }, {
-    key: 'resize',
-    value: function resize() {
-      this.dom.slider.slick('setPosition');
-    }
-
-    /* Private */
-
-  }, {
-    key: '_updateProgress',
-    value: function _updateProgress() {
-      this.dom.progressCount.text(this.currentPage + ' / ' + this.totalPages);
-      this.dom.progressBar.progress({ percent: this.currentPage * 100 / this.totalPages });
-    }
-  }]);
-
-  return Slider;
-}();
-
-var slider = new Slider({
-  slider: '.slide-viewer',
-  progressCount: '.page-counter',
-  progressBar: '.slide-progress',
-  loader: '.slide-loader',
-  totalPages: <%= @slide.pages.size %>
-});
-
 var fs = new Fullscreen($('.slide-viewer-container'), $('#fullscreen'));
-
-$('.slide-viewer').slick({
-  accessibility: true,
-  autoplay: false,
-  cssEase: 'liner',
-  dots: false,
-  draggable: false,
-  arrows: false,
-  initialSlide: 0,
-  lazyLoad: 'ondemand',
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  swipe: true,
-  vertical: false,
-  centerMode: true,
-  centerPadding: '0'
+var slider = $('.slide-viewer').lightSlider({
+  adaptiveHeight: true,
+  item: 1,
+  slideMargin: 0,
+  keyPress: true,
+  freeMove: false,
+  pager: false,
+  speed: 200,
+  addClass: 'padding-50',
+  prevHtml: '',
+  nextHtml: '',
+  slideEndAnimation: false,
+  onBeforeStart: function onBeforeStart() {
+    $('.slide-loader').addClass('active');
+  },
+  onSliderLoad: function onSliderLoad(el) {
+    $('.slide-loader').removeClass('active');
+    _updateProgress(el);
+  },
+  onAfterSlide: function onAfterSlide(el) {
+    _updateProgress(el);
+  }
 });
+
+var _updateProgress = function _updateProgress(el) {
+  var currentPage = el.getCurrentSlideCount();
+  var totalPages = el.getTotalSlideCount();
+  $('.slide-counter').text(currentPage + ' / ' + totalPages);
+  $('.slide-progress').progress({ percent: currentPage * 100 / totalPages });
+};
 
 $('#prev').on('click', function () {
-  slider.goPrev();
+  slider.goToPrevSlide();
 });
 $('#next').on('click', function () {
-  slider.goNext();
+  slider.goToNextSlide();
 });
 $('#fullscreen').on('click', function () {
   fs.toggle();
 });
 $(window).resize(function () {
-  slider.resize();
+  slider.refresh();
 });
-
-$(document).on('keydown', function (e) {
-  var key = e.keyCode;
-  if (key == 39 || key == 40 || key == 13) {
-    slider.goNext();
-    e.preventDefault();
-  } else if (key == 37 || key == 38) {
-    slider.goPrev();
-    e.preventDefault();
-  }
-});
-
   })
   // -->
   </script>
 
   <style type="text/css">
-.slide-viewer-container {
-  width: 100%;
-  max-height: 100%;
-  background: #fff;
-  border: 1px solid #333;
-  position: relative;
-  /* Full Screen */
-}
-.slide-viewer-container .slide-viewer {
-  height: 100%;
-  padding-bottom: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-.slide-viewer-container .slick-list {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-.slide-viewer-container .slick-list .slick-slide img {
-  width: 100%;
-  height: auto;
-}
-.slide-viewer-container .slide-toolbar-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10000;
-}
-.slide-viewer-container .slide-toolbar-container .slide-progress.ui.tiny.progress {
-  margin: 0;
-  border-radius: 0;
-}
-.slide-viewer-container .slide-toolbar-container .slide-toolbar {
-  margin: 0;
-  padding: 0 5px;
-  width: 100%;
-  min-height: 40px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  background: #323232;
-  position: relative;
-}
-.slide-viewer-container .slide-toolbar-container .slide-toolbar .brand-title {
-  position: absolute;
-  left: 0;
-  padding: 0 10px;
-}
-.slide-viewer-container .slide-toolbar-container .slide-toolbar .tool-item {
-  border: none;
-  background: transparent;
-  padding: 10px;
-}
-.slide-viewer-container .slide-toolbar-container .slide-toolbar .slide-pager {
-  display: flex;
-  align-items: center;
-  margin: 0 auto;
-}
-.slide-viewer-container .slide-toolbar-container .slide-toolbar #fullscreen {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  height: 40px;
-}
-.slide-viewer-container:-webkit-full-screen, .slide-viewer-container:-moz-full-screen, .slide-viewer-container:-ms-fullscreen, .slide-viewer-container:fullscreen {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
+
   </style>
 </head>
 <body style="margin:0;padding:0">
