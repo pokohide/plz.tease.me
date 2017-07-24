@@ -1,5 +1,4 @@
 import Fullscreen from '../../utils/fullscreen'
-import '../../utils/jlider'
 
 $('.slides.show').ready(() => {
   $('.comments').on('click', '.reply', function(e) {
@@ -22,7 +21,6 @@ $('.slides.show').ready(() => {
     $(`.${target}-tab`).fadeIn(500)
   })
 
-  // const fs = new Fullscreen($('.slide-viewer-container'), $('#fullscreen'))
   const _updateProgress = (total, current) => {
     $('.slide-counter').text(`${current} / ${total}`)
     $('.slide-progress').progress({ percent: current * 100 / total })
@@ -37,7 +35,6 @@ $('.slides.show').ready(() => {
     $('.slider-pro').sliderPro('nextSlide')
   })
   $('#fullscreen').on('click', () => {
-    // fs.toggle()
     $('.sp-full-screen-button').click()
   })
 
@@ -148,10 +145,12 @@ $('.slides.show').ready(() => {
   })
 
   $(document).bind('fullscreenchange mozfullscreenchange webkitfullscreenchange', (e) => {
-    if (fs.nowFullscreen()) {
+    if ($(document).fullScreen()) {
 
     } else {
-
+      $('.sp-image').each((_, elem) => {
+        $(elem).css('margin-top', 0)
+      })
     }
   })
 
