@@ -28,6 +28,8 @@ class Slide < ApplicationRecord
   belongs_to :user
   has_many :comments, dependent: :destroy
   has_many :pages, dependent: :destroy
+  has_many :stars, dependent: :destroy
+  has_many :users, through: :stars
   has_one :slide_outline, dependent: :destroy
   has_one :statistic, dependent: :destroy
   accepts_nested_attributes_for :slide_outline
@@ -65,6 +67,14 @@ class Slide < ApplicationRecord
     remove_method :ar_lock
   end
   include RedisObjectsDestroyable
+
+  def stared_time(user_id)
+    stars.find_by(user_id: user_id).created_at
+  end
+
+  def stared_by?(user_id)
+    stars.find_by(user_id: user_id)
+  end
 
   def owner_display_name
     user.try(:display_name) || '未登録'

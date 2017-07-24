@@ -17,4 +17,5 @@
 class Star < ApplicationRecord
   belongs_to :user
   belongs_to :slide
+  counter_culture :slide
 end

@@ -49,6 +49,7 @@ class User < ApplicationRecord
   # Reference
   has_many :slides
   has_many :comments
+  has_many :stars
 
   def self.find_for_oauth(auth)
     # providerとuidでUserレコードを取得する。存在しない場合は、ブロック内のコードを実行して作成

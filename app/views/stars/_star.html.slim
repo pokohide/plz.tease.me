@@ -1,0 +1,15 @@
+- if user_signed_in?
+  - if slide.stared_by?(current_user.id)
+    - star ||= Star.find_by(user_id: current_user.id, slide_id: slide.id)
+    = link_to star_path(slide_id: slide.id, authenticity_token: form_authenticity_token),
+      method: :delete, id: 'star-button', remote: true do
+      i.star.icon style='color:#FFB70A'
+      b = slide.stars_count
+  - else
+    = link_to unstar_path(slide_id: slide.id, authenticity_token: form_authenticity_token),
+      method: :post, id: 'star-button', remote: true do
+      i.empty.star.icon
+      b = slide.stars_count
+- else
+  i.empty.star.icon
+  b = slide.stars_count

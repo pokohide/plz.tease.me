@@ -14,7 +14,7 @@ $('.slides.show').ready(() => {
     $('#tabs .item.active').removeClass('active')
     $(this).addClass('active')
 
-    const tabs = ['.comment-tab', '.likes-tab' ,'.statistics-tab', '.note-tab']
+    const tabs = ['.comment-tab', '.stars-tab', '.statistics-tab', '.note-tab']
     for(let i = 0; i < tabs.length; i++) $(tabs[i]).hide()
     $(`.${target}-tab`).fadeIn(500)
   })

@@ -60,9 +60,9 @@
           .item.active(data-tab='comment')
             i.comment.outline.icon
             | コメント
-          .item(data-tab='likes')
-            i.empty.heart.icon
-            | いいね
+          .item(data-tab='stars')
+            i.empty.star.icon
+            | スター
           .item(data-tab='statistics')
             i.bar.chart.icon
             | 統計
@@ -72,7 +72,7 @@
 
         == render 'comment_tab', slide: @slide, comments: @comments
         == render 'statistics_tab', slide: @slide, statistics: @slide.statistic
-        == render 'likes_tab', slide: @slide
+        == render 'stars_tab', slide: @slide
         == render 'note_tab', slide: @slide
 
       .ui.segment
