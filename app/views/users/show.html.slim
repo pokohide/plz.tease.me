@@ -15,6 +15,24 @@
         = link_to @user.display_name, user_path(@user.username)
         .sub.header = "#{@user.slides.size}スライド"
 
+  h2.ui.header スターしたスライド(直近5件)
+  .ui.divided.items
+    - @stared_slides.each do |slide|
+      .item
+        .image
+          = slide_image_tag slide
+        .content
+          .header = slide.title
+          .meta
+            span = slide.created_at.to_s(:date)
+          .description
+            p ~~~
+          .extra
+            = link_to category_path(slide.category) do
+              .ui.label
+                = "# #{slide.category_i18n}"
+  = paginate @stared_slides
+
   h2.ui.header 投稿スライド(直近5件)
   .ui.divided.items
     - @slides.each do |slide|

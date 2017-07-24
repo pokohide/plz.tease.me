@@ -1,5 +1,5 @@
 .card.slide id="slide-#{slide.id}"
-  .image
+  = link_to slide_path(slide), class: 'image'
     = slide_image_tag slide
   .content
     .header

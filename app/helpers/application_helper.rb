@@ -4,7 +4,6 @@ module ApplicationHelper
       image_tag slide.image_file_url(:medium)
     else
       image_tag 'noimage.png', alt: '変換中'
-      # link_to(image_tag('noimage', alt: '変換中'), slide_path(slide))
     end
   end
 
