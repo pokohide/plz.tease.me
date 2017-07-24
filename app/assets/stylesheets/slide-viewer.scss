@@ -4,7 +4,13 @@
   background: #fff;
   border: 1px solid #333;
   position: relative;
-  padding-bottom: 46px;
+  padding-bottom: 4px;
+  max-height: 100%;
+  max-width: 100%;
+
+  .slider-pro {
+    padding-bottom: 42px;
+  }
 
   .slide-toolbar-container {
     position: absolute;

@@ -1,12 +1,18 @@
-section.recomment-section
-  .ui.divided.items
+section.ui.segment.recomment-section
+  .ui.relaxed.items
     - slides.each do |slide|
       .item
-        .image
+        .ui.small.image
           = slide_image_tag(slide)
         .content
-          .header = slide.title
+          .ui.header = truncate(slide.title, length: 10)
           .meta
-            span = link_to slide.owner_display_name, user_path(slide.owner_username)
+            span
+              = "#{slide.created_at.to_s(:en_date)} by "
+              = link_to slide.owner_display_name, user_path(slide.owner_username)
           .extra
-            | ほげ
+            .ui.labels
+            - slide.tag_list.each do |tag|
+              = link_to tag_path(tag), class: 'tag' do
+                .ui.mini.label(style='margin-bottom:10px')
+                  = "# #{tag}"

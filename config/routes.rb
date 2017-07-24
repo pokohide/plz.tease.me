@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     resources :slides, only: %i[index create edit update destroy]
   end
 
+  post '/star/:slide_id', to: 'stars#create', as: :star
+  delete '/star/:slide_id', to: 'stars#destroy', as: :unstar
+
   get '/contact', to: 'root#contact', as: :contact
   get '/about', to: 'root#about', as: :about
 

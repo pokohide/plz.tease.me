@@ -1,5 +1,5 @@
-.card.slide
-  .image
+.card.slide id="slide-#{slide.id}"
+  = link_to slide_path(slide), class: 'image'
     = slide_image_tag slide
   .content
     .header
@@ -7,6 +7,5 @@
     .description Matthew is an interior designer living in New York.
   .extra.content
     span.right.floated #{slide.page_view} views
-    span
-      i.user.icon
-      | 5 Likes
+    span.star-field
+      == render 'stars/star', slide: slide

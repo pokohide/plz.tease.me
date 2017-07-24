@@ -1,0 +1,10 @@
+section.tab.stars-tab(data-tab='stars' style='display:none')
+  .ui.container
+    .ui.feed
+      - slide.users.each do |user|
+        .event
+          .label
+            = thumbail_tag user
+          .content
+            .date #{distance_of_time_in_words_to_now slide.stared_time(user)}前
+            .summary #{slide.title}をいいねしました。

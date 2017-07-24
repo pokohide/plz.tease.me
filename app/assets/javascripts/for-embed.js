@@ -1,23 +1,10 @@
-$('.slides.show').ready(() => {
-  $('.comments').on('click', '.reply', function(e) {
-    e.preventDefault()
-    const username = $(this).attr('data-user')
-    let value = $('#comment_body').val()
-    value = `@${username}　` + value
-    $('#comment_body').val(value)
-    $('#comment_body').focus()
-  })
+//= require jquery
+//= require jquery-ui
+//= require semantic-ui/progress
+//= require jquery.fullscreen
+//= require slider-pro
 
-  $('#tabs').on('click', '.item', function(e) {
-    e.preventDefault()
-    const target = $(this).attr('data-tab')
-    $('#tabs .item.active').removeClass('active')
-    $(this).addClass('active')
-
-    const tabs = ['.comment-tab', '.stars-tab', '.statistics-tab', '.note-tab']
-    for(let i = 0; i < tabs.length; i++) $(tabs[i]).hide()
-    $(`.${target}-tab`).fadeIn(500)
-  })
+$(document).ready(() => {
 
   const _updateProgress = (total, current) => {
     $('.slide-counter').text(`${current} / ${total}`)
@@ -57,6 +44,13 @@ $('.slides.show').ready(() => {
       totalPages = $(this).get(0).getTotalSlides()
       _updateProgress(totalPages, 1)
     }
+  })
+
+  $('.slider-pro').hover(() => {
+    console.log('hover')
+    //$('.slide-toolbar-container').show()
+  }, () => {
+    //$('.slide-toolbar-container').hide()
   })
 
   $('.slider-pro').on('gotoSlide', function(e) {
@@ -100,10 +94,5 @@ $('.slides.show').ready(() => {
         $(elem).css({ 'margin-top': 0, 'margin-left': 0 })
       })
     }
-  })
-
-  $('.slide-page-number').on('click', function() {
-    const pageNum = parseInt($(this).attr('data-num'), 10)
-    $('.slider-pro').sliderPro('gotoSlide', pageNum - 1)
   })
 })

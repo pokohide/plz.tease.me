@@ -1,0 +1,26 @@
+/*
+ *= require slider-pro
+ *= require_self
+*/
+@import 'semantic-ui';
+@import './slide-viewer';
+
+.slide-viewer-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  padding-top: 0;
+
+  .slider-pro {
+    max-height: 100%;
+    position: relative;
+    // padding-bottom: 46px;
+
+    .sp-slides-container {
+      height: 100%;
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+}

@@ -10,29 +10,6 @@
 .ui.container.slide-container
   .ui.grid
     .ten.wide.column
-      / .slide-viewer-container
-      /   ul.slide-viewer
-      /     - @slide.pages.each do |page|
-      /       li(data-thumb="#{page.image_url(:medium)}")
-      /         = image_tag page.image_url(:medium)
-
-      /   .ui.inverted.dimmer.slide-loader
-      /     .ui.large.text.loader Loading
-      /   .slide-toolbar-container
-      /     .slide-progress.ui.teal.tiny.progress
-      /       .bar
-      /     .slide-toolbar
-      /       .brand-title
-      /         = link_to 'Tease.Me', root_path
-      /       .slide-pager
-      /         button.tool-item#prev
-      /          i.angle.double.left.icon
-      /         .slide-counter
-      /         button.tool-item#next
-      /           i.angle.double.right.icon
-      /       button.tool-item#fullscreen
-      /         i.expand.icon
-
       .slide-viewer-container
         .slider-pro
           .sp-slides
@@ -83,9 +60,9 @@
           .item.active(data-tab='comment')
             i.comment.outline.icon
             | コメント
-          .item(data-tab='likes')
-            i.empty.heart.icon
-            | いいね
+          .item(data-tab='stars')
+            i.empty.star.icon
+            | スター
           .item(data-tab='statistics')
             i.bar.chart.icon
             | 統計
@@ -95,7 +72,7 @@
 
         == render 'comment_tab', slide: @slide, comments: @comments
         == render 'statistics_tab', slide: @slide, statistics: @slide.statistic
-        == render 'likes_tab', slide: @slide
+        == render 'stars_tab', slide: @slide
         == render 'note_tab', slide: @slide
 
       .ui.segment
