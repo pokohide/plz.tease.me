@@ -1,5 +1,3 @@
-import Fullscreen from '../../utils/fullscreen'
-
 $('.slides.show').ready(() => {
   $('.comments').on('click', '.reply', function(e) {
     e.preventDefault()
@@ -34,58 +32,7 @@ $('.slides.show').ready(() => {
     if ($(this).hasClass('disabled')) return
     $('.slider-pro').sliderPro('nextSlide')
   })
-  $('#fullscreen').on('click', () => {
-    $('.sp-full-screen-button').click()
-  })
-
-  const initial = {
-    slider: {
-      width: $('.slide-viewer-container').width(),
-      height: $('.slide-viewer-container').height()
-    },
-    sliderImg: {
-      width: $('.slider img').width(),
-      height: $('.slider img').height()
-    }
-  }
-
-  const imgResize = () => {
-    const sliderHeight = $('.slide-viewer-container').height()
-    const sliderWidth = $('.slide-viewer-container').width()
-    const sliderRatio = sliderWidth / sliderHeight
-    console.log('imgResize', sliderWidth, sliderHeight)
-
-    $('.slider img').each((_index, elem) => {
-      const height = $(elem).height()
-      const width = $(elem).width()
-      const ratio = width / height
-
-      // 横長の場合
-      if (ratio >= 1) {
-
-        if (ratio >= sliderRatio) {
-          $(elem).css({ width: `${sliderWidth}px`, height: 'auto' })
-        } else {
-          $(elem).css({ height: `${sliderHeight - 40}px`, width: 'auto' })
-        }
-
-      // 縦長の場合
-      } else {
-        if (ratio >= sliderRatio) {
-          $(elem).css({ height: `${sliderHeight - 40}px`, width: 'auto' })
-        } else {
-          $(elem).css({ width: `${sliderWidth}px`, height: 'auto' })
-        }
-      }
-
-      // 中央配置
-      let w = Math.floor((sliderWidth - width) / 2)
-      let h = Math.floor((sliderHeight - height) / 2)
-      if (w < 0) w = 0
-      if (h < 0) h = 0
-      $(elem).css({ 'margin-left': w, 'margin-top': h })
-    })
-  }
+  $('#fullscreen').on('click', () => { $('.sp-full-screen-button').click() })
 
   let totalPages
 
@@ -146,10 +93,11 @@ $('.slides.show').ready(() => {
 
   $(document).bind('fullscreenchange mozfullscreenchange webkitfullscreenchange', (e) => {
     if ($(document).fullScreen()) {
-
+      $('.slider-pro').css({ 'padding-bottom': '60px' })
     } else {
+      $('.slider-pro').css({ 'padding-bottom': 0 })
       $('.sp-image').each((_, elem) => {
-        $(elem).css('margin-top', 0)
+        $(elem).css({ 'margin-top': 0, 'margin-left': 0 })
       })
     }
   })

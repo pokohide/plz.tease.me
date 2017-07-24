@@ -6,44 +6,12 @@
   position: relative;
   padding-bottom: 46px;
 
-  .slide-viewer {
-    height: 100%;
-
-    img {
-      width: 100%;
-      height: auto;
-      max-height: 100%;
-    }
-  }
-
-  .slider {
-    position: relative;
-    // .sp-slide {
-    //   width: 100%;
-    //   height: auto;
-
-    //   img {
-    //     width: 100%;
-    //     height: auto;
-    //   }
-    // }
-  }
-
-  .jlider {
-    padding: 0;
-    list-style: none;
-
-    img {
-      width: 100%;
-    }
-  }
-
   .slide-toolbar-container {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 10000;
+    z-index: 2147483648;
 
     .slide-progress.ui.tiny.progress {
       margin: 0;
