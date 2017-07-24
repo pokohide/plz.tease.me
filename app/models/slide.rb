@@ -15,8 +15,8 @@
 #  page_view      :integer          default(0)
 #  uploaded       :boolean          default(FALSE)
 #  comments_count :integer          default(0)
-#  likes_count    :integer          default(0)
 #  category       :integer          default("books"), not null
+#  stars_count    :integer          default(0)
 #
 # Indexes
 #
