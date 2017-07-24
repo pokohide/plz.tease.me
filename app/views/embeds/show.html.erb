@@ -8,128 +8,21 @@
   <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
   <!&#91;endif&#93;-->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js'></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/components/progress.js"></script>
-  <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/js/lightslider.min.js"></script>
-
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/css/lightslider.min.css" />
+  <%= stylesheet_link_tag 'for-embed', media: 'all', debug: false %>
+  <%= javascript_include_tag 'for-embed', debug: false %>
   <link rel='canonical' href='http://localhost:3000/slides/<%= @slide.id %>'>
-  <script type="text/javascript">
-  <!--
-  $(document).ready(function() {
-(var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Fullscreen = function () {
-  function Fullscreen(target, button) {
-    _classCallCheck(this, Fullscreen);
-
-    this.$elem = target;
-    this.$button = button;
-    this._check();
-  }
-
-  _createClass(Fullscreen, [{
-    key: 'toggle',
-    value: function toggle() {
-      if (!this._canFullscreen()) return alert('フルスクリーンモードは使用できません。');
-      if (this._nowFullscreen()) {
-        this.$elem.fullScreen(false);
-        this.$button.children('.icon').removeClass('compress').addClass('expand');
-      } else {
-        this.$elem.fullScreen(true);
-        this.$button.children('.icon').removeClass('expand').addClass('compress');
-      }
-    }
-
-    /* Private */
-    // フルスクリーン使用可能かチェック
-
-  }, {
-    key: '_check',
-    value: function _check() {
-      if (this._canFullscreen()) return;
-      this.$button.addClass('disabled');
-    }
-    // フルスクリーン中かどうか
-
-  }, {
-    key: '_nowFullscreen',
-    value: function _nowFullscreen() {
-      return document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen || document.msFullScreen || false;
-    }
-    // フルスクリーン可能かどうか
-
-  }, {
-    key: '_canFullscreen',
-    value: function _canFullscreen() {
-      return document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled || false;
-    }
-  }]);
-
-  return Fullscreen;
-}();
-
-var fs = new Fullscreen($('.slide-viewer-container'), $('#fullscreen'));
-var slider = $('.slide-viewer').lightSlider({
-  adaptiveHeight: true,
-  item: 1,
-  slideMargin: 0,
-  keyPress: true,
-  freeMove: false,
-  pager: false,
-  speed: 200,
-  addClass: 'padding-50',
-  prevHtml: '',
-  nextHtml: '',
-  slideEndAnimation: false,
-  onBeforeStart: function onBeforeStart() {
-    $('.slide-loader').addClass('active');
-  },
-  onSliderLoad: function onSliderLoad(el) {
-    $('.slide-loader').removeClass('active');
-    _updateProgress(el);
-  },
-  onAfterSlide: function onAfterSlide(el) {
-    _updateProgress(el);
-  }
-});
-
-var _updateProgress = function _updateProgress(el) {
-  var currentPage = el.getCurrentSlideCount();
-  var totalPages = el.getTotalSlideCount();
-  $('.slide-counter').text(currentPage + ' / ' + totalPages);
-  $('.slide-progress').progress({ percent: currentPage * 100 / totalPages });
-};
-
-$('#prev').on('click', function () {
-  slider.goToPrevSlide();
-});
-$('#next').on('click', function () {
-  slider.goToNextSlide();
-});
-$('#fullscreen').on('click', function () {
-  fs.toggle();
-});
-$(window).resize(function () {
-  slider.refresh();
-});
-  })
-  // -->
-  </script>
-
-  <style type="text/css">
-
-  </style>
 </head>
 <body style="margin:0;padding:0">
-  <div class="slide-viewer-container">
-    <div class="slide-viewer">
-      <% @slide.pages.each do |page| %>
-        <div><%= image_tag page.image_url(:medium) %></div>
-      <% end %>
+  <div class="slide-viewer-container" style="background-color: <%= '#333' || '#fff' %>">
+    <div class="slider-pro">
+      <div class="sp-slides">
+        <% @slide.pages.each do |page| %>
+          <div class="sp-slide">
+            <%= image_tag page.image_url(:medium), class: 'sp-image',
+              data: { src: page.image_url(:medium), medium: page.image_url(:medium), large: page.image_url(:large) } %>
+          </div>
+        <% end %>
+      </div>
       <div class="ui inverted dimmer slide-loader">
         <div class="ui large text loader">Loading</div>
       </div>
@@ -140,13 +33,13 @@ $(window).resize(function () {
       </div>
       <div class="slide-toolbar">
         <div class="brand-title">
-          <%= link_to 'Tease.Me', root_path %>
+          <%= link_to 'Tease.Me', root_path, target: '_blank' %>
         </div>
         <div class="slide-pager">
           <button class="tool-item" id="prev">
             <i class="angle double left icon"></i>
           </button>
-          <div class="page-conter"></div>
+          <div class="slide-counter"></div>
           <button class="tool-item" id="next">
             <i class="angle double right icon"></i>
           </button>
