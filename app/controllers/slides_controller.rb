@@ -1,18 +1,17 @@
 class SlidesController < ApplicationController
   def index
-    @slides = Slide.preload(:user)
+    @slides = Slide.includes(:user)
                    .is_public
                    .published_at_desc
                    .page(params[:page])
   end
 
   def show
-    @slide = Slide.find(params[:id])
+    @slide = Slide.preload(:user).find(params[:id])
     @comments = @slide.comments.desc
     # @slide = @user.slides.is_public.find_by(slug: params[:slug])
     gon.pdf_url = @slide.pdf_file.to_s
-    @recommend = Slide.limit(5)
-
+    @recommend = Slide.limit(5).includes(:taggings)
     @slide.increment(:page_view).save
   end
 

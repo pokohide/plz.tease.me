@@ -34,9 +34,7 @@ module ApplicationHelper
   end
 
   def show_meta_tags
-    if display_meta_tags.blank?
-      assign_meta_tags
-    end
+    assign_meta_tags if display_meta_tags.blank?
     display_meta_tags
   end
 
@@ -71,7 +69,7 @@ module ApplicationHelper
       },
       twitter: {
         site: '@twitter_account',
-        card: 'summary',
+        card: 'summary'
       }
     }
     set_meta_tags(configs)

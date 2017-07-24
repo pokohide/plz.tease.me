@@ -10,9 +10,9 @@ class UsersController < ApplicationController
               published_at_desc
                    .page(params[:page]).per(5)
     @stared_slides = @user.stared_slides.
-              # is_public.
-              published_at_desc
-                   .page(params[:page]).per(5)
+                     # is_public.
+                     published_at_desc
+                          .page(params[:page]).per(5)
   end
 
   def show
@@ -22,8 +22,8 @@ class UsersController < ApplicationController
               published_at_desc
                    .page(params[:page]).per(5)
     @stared_slides = @user.stared_slides.preload(:user).
-              # is_public.
-              published_at_desc
-                   .page(params[:page]).per(5)
+                     # is_public.
+                     published_at_desc
+                          .page(params[:page]).per(5)
   end
 end

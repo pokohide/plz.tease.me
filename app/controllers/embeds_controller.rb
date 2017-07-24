@@ -20,7 +20,7 @@ class EmbedsController < ApplicationController
       'fs' => 1, # フルスクリーン表示をONにするか
       'modestbranding' => 0, # ブランド画像を消すかどうか
       'start' => 0, # 開始スライド
-      'controls' => 1, # ツールバーを表示するかどうか
+      'controls' => 1 # ツールバーを表示するかどうか
     }
   end
 end
