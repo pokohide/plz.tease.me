@@ -13,6 +13,7 @@
  *= require jquery.tagit
  *= require tagit.ui-zendesk
  *= require lightslider
+ *= require slider-pro
  *= require_self
  */
 // $import-google-fonts: false;
@@ -21,5 +22,4 @@
 @import 'alertify';
 @import './slide-viewer';
 @import './base/**/*';
-//@import './externals/**/*';
 @import './components/**/*';

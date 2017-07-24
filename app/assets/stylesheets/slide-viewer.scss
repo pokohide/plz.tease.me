@@ -4,13 +4,10 @@
   background: #fff;
   border: 1px solid #333;
   position: relative;
+  padding-bottom: 46px;
 
   .slide-viewer {
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
 
     img {
       width: 100%;
@@ -20,8 +17,25 @@
   }
 
   .slider {
-    height: 100%;
-    padding-bottom: 41px;
+    position: relative;
+    // .sp-slide {
+    //   width: 100%;
+    //   height: auto;
+
+    //   img {
+    //     width: 100%;
+    //     height: auto;
+    //   }
+    // }
+  }
+
+  .jlider {
+    padding: 0;
+    list-style: none;
+
+    img {
+      width: 100%;
+    }
   }
 
   .slide-toolbar-container {
@@ -61,6 +75,14 @@
         border: none;
         background: transparent;
         padding: 10px;
+
+        &.disabled {
+          color: #333;
+
+          &:hover {
+            cursor: 'not-allowed'
+          }
+        }
       }
 
       .slide-pager {

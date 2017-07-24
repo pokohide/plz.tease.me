@@ -10,12 +10,36 @@
 .ui.container.slide-container
   .ui.grid
     .ten.wide.column
-      .slide-viewer-container
-        ul.slide-viewer
-          - @slide.pages.each do |page|
-            li(data-thumb="#{page.image_url(:medium)}")
-              = image_tag page.image_url(:medium)
+      / .slide-viewer-container
+      /   ul.slide-viewer
+      /     - @slide.pages.each do |page|
+      /       li(data-thumb="#{page.image_url(:medium)}")
+      /         = image_tag page.image_url(:medium)
 
+      /   .ui.inverted.dimmer.slide-loader
+      /     .ui.large.text.loader Loading
+      /   .slide-toolbar-container
+      /     .slide-progress.ui.teal.tiny.progress
+      /       .bar
+      /     .slide-toolbar
+      /       .brand-title
+      /         = link_to 'Tease.Me', root_path
+      /       .slide-pager
+      /         button.tool-item#prev
+      /          i.angle.double.left.icon
+      /         .slide-counter
+      /         button.tool-item#next
+      /           i.angle.double.right.icon
+      /       button.tool-item#fullscreen
+      /         i.expand.icon
+
+      .slide-viewer-container
+        .slider-pro
+          .sp-slides
+            - @slide.pages.each do |page|
+              .sp-slide
+                = image_tag page.image_url(:medium), class: 'sp-image',
+                  data: { src: page.image_url(:medium), medium: page.image_url(:medium), large: page.image_url(:large) }
         .ui.inverted.dimmer.slide-loader
           .ui.large.text.loader Loading
         .slide-toolbar-container

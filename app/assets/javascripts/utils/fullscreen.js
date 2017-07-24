@@ -24,11 +24,12 @@ export default class Fullscreen {
 
   // フルスクリーン中かどうか
   nowFullscreen() {
-    return document.fullScreen ||
-           document.mozFullScreen ||
-           document.webkitIsFullScreen ||
-           document.msFullScreen ||
-           false
+    // return document.fullScreen ||
+    //        document.mozFullScreen ||
+    //        document.webkitIsFullScreen ||
+    //        document.msFullScreen ||
+    //        false
+    return $(document).fullScreen()
   }
 
   /* Private */

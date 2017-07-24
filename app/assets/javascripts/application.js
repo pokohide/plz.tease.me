@@ -9,6 +9,7 @@
 //= require alertify
 //= require action_cable
 //= require lightslider
+//= require slider-pro
 
 window.App || (window.App = {});
 window.App.cable = ActionCable.createConsumer()

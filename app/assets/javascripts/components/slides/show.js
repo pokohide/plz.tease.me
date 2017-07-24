@@ -1,4 +1,5 @@
 import Fullscreen from '../../utils/fullscreen'
+import '../../utils/jlider'
 
 $('.slides.show').ready(() => {
   $('.comments').on('click', '.reply', function(e) {
@@ -21,46 +22,41 @@ $('.slides.show').ready(() => {
     $(`.${target}-tab`).fadeIn(500)
   })
 
-  const fs = new Fullscreen($('.slide-viewer-container'), $('#fullscreen'))
-  const slider = $('.slide-viewer').lightSlider({
-    adaptiveHeight: true,
-    item          : 1,
-    slideMargin   : 0,
-    keyPress      : true,
-    freeMove      : false,
-    pager         : false,
-    speed         : 200,
-    addClass      : 'slider',
-    prevHtml      : '',
-    nextHtml      : '',
-    slideEndAnimation: false,
-    onBeforeStart: () => {
-      $('.slide-loader').addClass('active')
-    },
-    onSliderLoad: (el) => {
-      $('.slide-loader').removeClass('active')
-      _updateProgress(el)
-    },
-    onAfterSlide: (el) => {
-      _updateProgress(el)
-    }
-  })
-
-  const _updateProgress = (el) => {
-    const currentPage = el.getCurrentSlideCount()
-    const totalPages = el.getTotalSlideCount()
-    $('.slide-counter').text(`${currentPage} / ${totalPages}`)
-    $('.slide-progress').progress({ percent: currentPage * 100 / totalPages })
+  // const fs = new Fullscreen($('.slide-viewer-container'), $('#fullscreen'))
+  const _updateProgress = (total, current) => {
+    $('.slide-counter').text(`${current} / ${total}`)
+    $('.slide-progress').progress({ percent: current * 100 / total })
   }
 
-  $('#prev').on('click', () => { slider.goToPrevSlide() })
-  $('#next').on('click', () => { slider.goToNextSlide() })
-  $('#fullscreen').on('click', () => { fs.toggle() })
+  $('#prev').on('click', function() {
+    if ($(this).hasClass('disabled')) return
+    $('.slider-pro').sliderPro('previousSlide')
+  })
+  $('#next').on('click', function() {
+    if ($(this).hasClass('disabled')) return
+    $('.slider-pro').sliderPro('nextSlide')
+  })
+  $('#fullscreen').on('click', () => {
+    // fs.toggle()
+    $('.sp-full-screen-button').click()
+  })
+
+  const initial = {
+    slider: {
+      width: $('.slide-viewer-container').width(),
+      height: $('.slide-viewer-container').height()
+    },
+    sliderImg: {
+      width: $('.slider img').width(),
+      height: $('.slider img').height()
+    }
+  }
 
   const imgResize = () => {
-    const sliderHeight = $('.slider').height()
-    const sliderWidth = $('.slider').width()
+    const sliderHeight = $('.slide-viewer-container').height()
+    const sliderWidth = $('.slide-viewer-container').width()
     const sliderRatio = sliderWidth / sliderHeight
+    console.log('imgResize', sliderWidth, sliderHeight)
 
     $('.slider img').each((_index, elem) => {
       const height = $(elem).height()
@@ -78,23 +74,89 @@ $('.slides.show').ready(() => {
 
       // 縦長の場合
       } else {
-        $(elem).css({ height: `${sliderHeight - 40}px`, width: 'auto' })
+        if (ratio >= sliderRatio) {
+          $(elem).css({ height: `${sliderHeight - 40}px`, width: 'auto' })
+        } else {
+          $(elem).css({ width: `${sliderWidth}px`, height: 'auto' })
+        }
       }
 
       // 中央配置
-      const w = Math.floor((sliderWidth - $(elem).width()) / 2)
-      const h = Math.floor((sliderHeight - $(elem).height()) / 2)
+      let w = Math.floor((sliderWidth - width) / 2)
+      let h = Math.floor((sliderHeight - height) / 2)
+      if (w < 0) w = 0
+      if (h < 0) h = 0
       $(elem).css({ 'margin-left': w, 'margin-top': h })
     })
   }
 
-  $(window).resize(() => {
-    slider.refresh()
-    imgResize()
+  let totalPages
+
+  $('.slider-pro').sliderPro({
+    width: '100%',
+    responsive: true,
+    imageScaleMode: 'contain',
+    centerImage: true,
+    autoHeight: true,
+    startSlide: 0,
+    slideDistance: 0,
+    lideAnimationDuration: 500,
+    waitForLayers: true,
+    autoScaleLayers: false,
+    autoplay: false,
+    arrows: true,
+    buttons: false,
+    keyboard: false,
+    fullScreen: true,
+    loop: false,
+    init: function(e) {
+      totalPages = $(this).get(0).getTotalSlides()
+      _updateProgress(totalPages, 1)
+    }
+  })
+
+  $('.slider-pro').on('gotoSlide', function(e) {
+    console.log(totalPages)
+    if (e.index + 1 === totalPages) {
+      $('#next').addClass('disabled')
+    } else {
+      $('#next').removeClass('disabled')
+    }
+
+    if (e.index === 0) {
+      $('#prev').addClass('disabled')
+    } else {
+      $('#prev').removeClass('disabled')
+    }
+
+    _updateProgress(totalPages, e.index + 1)
+  })
+
+  $(document).on('keydown', (e) => {
+    switch(e.keyCode) {
+      case $.ui.keyCode.LEFT:
+        if ($('.slider-pro').data('sliderPro').getSelectedSlide() !== 0) {
+          $('.slider-pro').data('sliderPro').previousSlide()
+        }
+        break
+      case $.ui.keyCode.RIGHT:
+        if ($('.slider-pro').data('sliderPro').getSelectedSlide() + 1 !== totalPages) {
+          $('.slider-pro').data('sliderPro').nextSlide()
+        }
+        break
+    }
+  })
+
+  $(document).bind('fullscreenchange mozfullscreenchange webkitfullscreenchange', (e) => {
+    if (fs.nowFullscreen()) {
+
+    } else {
+
+    }
   })
 
   $('.slide-page-number').on('click', function() {
     const pageNum = parseInt($(this).attr('data-num'), 10)
-    slider.goToSlide(pageNum - 1)
+    $('.slider-pro').sliderPro('gotoSlide', pageNum - 1)
   })
 })
