@@ -43,12 +43,16 @@ module ApplicationHelper
     options.reverse_merge!(defaults)
     image = options[:image].presence || image_url('noimage.png')
 
+    site = options[:site]
+    title = options[:title]
+    description = options[:description]
+
     configs = {
       separator: '|',
       reverse: true,
-      site: options[:site],
-      title: options[:title],
-      description: options[:description],
+      site: site,
+      title: title,
+      description: description,
       keywords: options[:keywords],
       canonical: request.original_url,
       og: {

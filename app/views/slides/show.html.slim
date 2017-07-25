@@ -9,7 +9,7 @@
 
 .ui.container.slide-container
   .ui.grid
-    .ten.wide.column
+    .eleven.wide.column
       .slide-viewer-container
         .slider-pro
           .sp-slides
@@ -78,7 +78,7 @@
       .ui.segment
         = outline_format(@slide.slide_outline)
 
-    .six.wide.column
+    .five.wide.column
       == render 'templates/sidebar/user_info', user: @slide.user
       == render 'templates/sidebar/slide_info', slide: @slide
       == render 'templates/sidebar/share', slide: @slide
