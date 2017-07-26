@@ -549,6 +549,8 @@ DEPENDENCIES
   faker
   fog
   gimei
+  gio2
+  gobject-introspection
   gon
   gretel
   jbuilder (~> 2.5)
