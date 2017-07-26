@@ -20,7 +20,7 @@ module TeaseMe
     config.i18n.default_locale = :ja
 
     config.active_job.queue_adapter = :sidekiq
-    config.autoload_paths += %W[#{config.root}/lib]
+    config.autoload_paths += %W[#{config.root}/lib #{config.root}/app/validators]
     config.action_view.field_error_proc = proc { |html_tag, _instance| html_tag }
   end
 end

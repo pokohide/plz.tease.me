@@ -43,7 +43,7 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_DISPLAY_NAME_REGEX = /\A[a-zA-Z0-9]+\z/i
   validates :display_name, presence: true
-  validates :username, presence: true, format: { with: VALID_DISPLAY_NAME_REGEX }, uniqueness: true
+  validates :username, presence: true, username: true, uniqueness: true
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
 
   # Reference
