@@ -64,9 +64,10 @@ gem 'omniauth-twitter'
 # API
 gem 'jbuilder', '~> 2.5'
 
+gem 'dotenv-rails', require: 'dotenv/rails-now'
+
 group :development, :test do
   gem 'byebug', platform: :mri
-  gem 'dotenv-rails'
   gem 'faker'
   gem 'gimei'
   gem 'pry-byebug'
