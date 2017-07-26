@@ -34,9 +34,6 @@ gem 'sidekiq'
 # gem 'dalli'
 
 # PDF Library
-gem 'gobject-introspection'
-gem 'gio2'
-gem 'pdfjs_rails'
 gem 'poppler'
 
 # Frontend
