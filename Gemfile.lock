@@ -555,7 +555,7 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-twitter
   pg
-  poppler (= 3.0.8)
+  poppler
   pry-byebug
   pry-doc
   pry-rails
