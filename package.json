@@ -1,7 +1,27 @@
 {
-  "scripts": {
-    "lint": "eslint app/assets/javascripts/**/*"
+  "name": "Recho",
+  "description": "Recho",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyde2able/plz.tease.me.git"
   },
+  "keywords": [],
+  "author": "pokohide",
+  "license": "ISC",
+  "scripts": {
+    "lint": "eslint app/assets/javascripts/**/*",
+    "postinstall": "npm install --ignore-scripts"
+  },
+  "engines": {
+    "node": "7.6.0",
+    "npm": "4.3.0",
+    "yarn": "0.21.0"
+  },
+  "cacheDirectories": [
+    "node_modules"
+  ],
   "dependencies": {
     "babel-core": "^6.25.0",
     "babel-preset-es2015": "^6.24.1",
