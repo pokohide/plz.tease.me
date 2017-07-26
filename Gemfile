@@ -35,7 +35,7 @@ gem 'sidekiq'
 # gem 'dalli'
 
 # PDF Library
-gem 'poppler'
+# gem 'poppler'
 
 # Frontend
 gem 'jquery-rails'
