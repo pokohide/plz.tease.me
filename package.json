@@ -12,7 +12,7 @@
   "license": "ISC",
   "scripts": {
     "lint": "eslint app/assets/javascripts/**/*",
-    "postinstall": "yarn install"
+    "heroku-prebuild": "yarn install"
   },
   "engines": {
     "node": "7.6.0",
