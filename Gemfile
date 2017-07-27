@@ -15,8 +15,9 @@ gem 'puma', '~> 3.0'
 gem 'aws-sdk', '< 2.0'
 gem 'carrierwave'
 gem 'fog'
+gem 'rmagick', '2.14.0'
 # gem 'rmagick', '~> 2.13.1'
-gem 'rmagick', require: 'RMagick'
+# gem 'rmagick', require: 'RMagick'
 
 # ENUM
 gem 'enum_help'
