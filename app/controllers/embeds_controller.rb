@@ -3,7 +3,7 @@ class EmbedsController < ApplicationController
 
   def show
     @slide = Slide.find_by(slug: params[:slug])
-    @slide.statistic.increment(:embed_views).save
+    @slide.statistics.increment(:embed_view).save
     render layout: false
   end
 

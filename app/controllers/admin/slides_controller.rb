@@ -35,7 +35,7 @@ class Admin::SlidesController < ApplicationController
 
   def upload_pdf
     @slide = current_user.slides.new(create_pdf_params)
-    @slide.build_statistic
+    @slide.build_statistics
     @slide.save
   end
 

@@ -31,7 +31,7 @@ class Slide < ApplicationRecord
   has_many :stars, dependent: :destroy
   has_many :users, through: :stars
   has_one :slide_outline, dependent: :destroy
-  has_one :statistic, dependent: :destroy
+  has_one :statistics, dependent: :destroy
   accepts_nested_attributes_for :slide_outline
 
   # Category
