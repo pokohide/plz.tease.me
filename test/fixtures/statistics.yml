@@ -5,7 +5,7 @@
 #  id             :integer          not null, primary key
 #  slide_id       :integer
 #  download_count :integer          default(0)
-#  embed_views    :integer          default(0)
+#  embed_view     :integer          default(0)
 #  share_count    :integer          default(0)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -20,11 +20,11 @@
 one:
   slide: one
   download_count: 1
-  embed_views: 1
+  embed_view: 1
   share_count: 1
 
 two:
   slide: two
   download_count: 1
-  embed_views: 1
+  embed_view: 1
   share_count: 1

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724170119) do
+ActiveRecord::Schema.define(version: 20170728030821) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20170724170119) do
   create_table "statistics", force: :cascade do |t|
     t.integer  "slide_id"
     t.integer  "download_count", default: 0
-    t.integer  "embed_views",    default: 0
+    t.integer  "embed_view",     default: 0
     t.integer  "share_count",    default: 0
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
